@@ -15,11 +15,11 @@ class User(AbstractUser):
     email = models.EmailField(blank=True, null=True, max_length=254)
     # the friends_list is setup to allow users to 'follow' one another
     # so they can add each other in the date model
-    friends_list = models.ManyToManyField('self', symmetrical=False, related_name='friends_list')
+    friends_list = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='friends')
     # the date preferences model may need adjusted depending on future code
-    date_preferences = models.ManyToManyField('preferences.Preferences', symmetrical=False, related_name='date_preferences')
+    date_preferences = models.ManyToManyField('preferences.Preferences', blank=True, symmetrical=False, related_name='date_ideas')
     # the location may be updated later to utilize a geolocation field
     location = models.CharField(blank=True, null=True, max_length=50)
     
     def __str__(self):
-        return self.name
+        return f'{self.full_name}'
