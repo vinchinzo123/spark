@@ -68,4 +68,4 @@ class Preferences(models.Model):
     stay_home = models.ManyToManyField(StayHome)
 
     def __str__(self):
-        return f"{self.entertainment} "
+        return f"{self.entertainment}"

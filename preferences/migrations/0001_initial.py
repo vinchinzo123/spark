@@ -7,46 +7,129 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Dining',
+            name="Dining",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dining_choices', models.CharField(choices=[('American', 'American'), ('Mexican', 'Mexican'), ('Jamican', 'Jamican'), ('Take out', 'Take out'), ('Desert', 'Desert'), ('Breakfast', 'Breakfast')], max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "dining_choices",
+                    models.CharField(
+                        choices=[
+                            ("American", "American"),
+                            ("Mexican", "Mexican"),
+                            ("Jamican", "Jamican"),
+                            ("Take out", "Take out"),
+                            ("Desert", "Desert"),
+                            ("Breakfast", "Breakfast"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Entertainment',
+            name="Entertainment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('entertainment_choices', models.CharField(choices=[('Netflix', 'Netflix'), ('Movies', 'Movies'), ('Concert', 'Concert'), ('Local Bar', 'Local Bar')], max_length=15)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "entertainment_choices",
+                    models.CharField(
+                        choices=[
+                            ("Netflix", "Netflix"),
+                            ("Movies", "Movies"),
+                            ("Concert", "Concert"),
+                            ("Local Bar", "Local Bar"),
+                        ],
+                        max_length=15,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='OutDoors',
+            name="OutDoors",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('outdoor_choices', models.CharField(choices=[('Picnic', 'Picnic'), ('Park', 'Park'), ('Hiking', 'Hiking'), ('Lake', 'Lake'), ('Swimming', 'Swimming')], max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "outdoor_choices",
+                    models.CharField(
+                        choices=[
+                            ("Picnic", "Picnic"),
+                            ("Park", "Park"),
+                            ("Hiking", "Hiking"),
+                            ("Lake", "Lake"),
+                            ("Swimming", "Swimming"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='StayHome',
+            name="StayHome",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('stay_home_choices', models.CharField(choices=[('Board Games', 'Board Games')], max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "stay_home_choices",
+                    models.CharField(
+                        choices=[("Board Games", "Board Games")], max_length=50
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Preferences',
+            name="Preferences",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dining', models.ManyToManyField(to='preferences.Dining')),
-                ('entertainment', models.ManyToManyField(to='preferences.Entertainment')),
-                ('outdoors', models.ManyToManyField(to='preferences.OutDoors')),
-                ('stay_home', models.ManyToManyField(to='preferences.StayHome')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("dining", models.ManyToManyField(to="preferences.Dining")),
+                (
+                    "entertainment",
+                    models.ManyToManyField(to="preferences.Entertainment"),
+                ),
+                ("outdoors", models.ManyToManyField(to="preferences.OutDoors")),
+                ("stay_home", models.ManyToManyField(to="preferences.StayHome")),
             ],
         ),
     ]
