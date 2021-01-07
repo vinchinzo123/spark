@@ -1,12 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-
 {% if request.user.is_authenticated %}
  <nav>
     <div class="nav-wrapper">
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="">Home</a></li>
-        <li><a href="/profile/">Profile</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile/{{profile.id}}">Profile</a></li>
         <li><a href="/create_a_date/">Create A Date</a></li>
         <li><a href="/preferences/">Preferences</a></li>
         <li><a href="/pending_dates/">Pending Dates</a></li>
@@ -20,8 +19,8 @@
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo center">Spark</a>
       <ul class="left hide-on-med-and-down">
-        <li><a href="">Home</a></li>
-        <li><a href="/profile/">{{Profile.name}}</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile/{{profile.id}}">{{Profile.name}}</a></li>
         <li><a href="/create_a_date/">Create A Date</a></li>
         <li><a href="/preferences/">Preferences</a></li>
         <li><a href="/pending_dates/">Pending Dates</a></li>
@@ -31,3 +30,5 @@
     </div>
   </nav>
  {% endif %}
+
+<h3>user profile</h3>
