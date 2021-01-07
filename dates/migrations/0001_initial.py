@@ -11,20 +11,53 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('preferences', '__first__'),
+        ("preferences", "__first__"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DatesNightModel',
+            name="DatesNightModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('location', models.CharField(max_length=100)),
-                ('when_date_time', models.DateTimeField(default=django.utils.timezone.now)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='preferences.preferences')),
-                ('users_one', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='one', to=settings.AUTH_USER_MODEL)),
-                ('users_two', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='two', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("location", models.CharField(max_length=100)),
+                (
+                    "when_date_time",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="preferences.preferences",
+                    ),
+                ),
+                (
+                    "users_one",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="one",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "users_two",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="two",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
