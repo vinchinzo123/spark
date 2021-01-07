@@ -21,5 +21,5 @@ class Notification(models.Model):
     )
 
     def __str__(self):
-        breakpoint()
+#         breakpoint()
         return f"Date: "
