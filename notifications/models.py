@@ -3,6 +3,9 @@ from dates.models import DatesNightModel
 
 # Create your models here.
 class Notification(models.Model):
+    date_night = models.ForeignKey(
+        "dates.DatesNightModel", null=True, on_delete=models.CASCADE
+    )
     sent_user = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
@@ -16,10 +19,5 @@ class Notification(models.Model):
         null=True,
     )
 
-    date_night = models.ForeignKey(
-        "dates.DatesNightModel", null=True, on_delete=models.CASCADE
-    )
-
     def __str__(self):
-#         breakpoint()
-        return f"Date: "
+        return f"Notification for: {self.date_night.__str__()} "
