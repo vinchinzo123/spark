@@ -2,9 +2,13 @@ from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from users.forms import LoginForm
+from users.models import User
+
 
 def index(request):
     return render (request, "index.html", {})
+
+
 
 
 def login_view(request):
