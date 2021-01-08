@@ -1,9 +1,6 @@
-{% include 'nav_bar.html' %}
+{% comment %} {% include 'nav_bar.html' %} {% endcomment %}
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    {% for f in form  %}
-    {{ f.field }}
-    {% endfor %}
+    {{ form }}
     <input type="submit" value="Login">
 </form>
