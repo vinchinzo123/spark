@@ -2,5 +2,8 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% for f in form  %}
+    {{ f.field }}
+    {% endfor %}
     <input type="submit" value="Login">
 </form>
