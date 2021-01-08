@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from users.forms import LoginForm
-from users.models import User
+from users.forms import LoginForm, SignUpForm
+from users.models import User, SignUp
 
 
 def index(request):
