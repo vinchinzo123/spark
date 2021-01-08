@@ -1,10 +1,28 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from users.forms import LoginForm
+from users.forms import LoginForm, SignUpForm
+from users.models import SignUp
 
 def index(request):
     return render (request, "index.html", {})
+
+
+def sign_up(request):
+    html = "sign_up_form.html"
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_sign_up = SignUp.objects.create(
+                username=data['username'],
+                display_name=data['display_name'],
+                email=data['email'],
+                password=['password'],
+            )
+            return HttpResponseRedirect('homepage'),
+    form = SignUpForm()
+    return render(request, html, {'form': form})
 
 
 def login_view(request):
