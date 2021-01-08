@@ -62,10 +62,24 @@ class StayHome(models.Model):
 
 
 class Preferences(models.Model):
-    entertainment = models.ManyToManyField(Entertainment)
-    dining = models.ManyToManyField(Dining)
-    outdoors = models.ManyToManyField(OutDoors)
-    stay_home = models.ManyToManyField(StayHome)
-
+    # entertainment = models.ManyToManyField(Entertainment)
+    # dining = models.ManyToManyField(Dining)
+    # outdoors = models.ManyToManyField(OutDoors)
+    # stay_home = models.ManyToManyField(StayHome)
+    # choice field options enter, dining, outd, stayhome
+    # then load view for entertainment
+    # ideas for in the  view. On POST of this form,
+    # then if/ elif (s) that call other forms&views
+            # if new_preference == 'dining':
+                # return HttpResponseRedirect(reverse('dining'))
+    # inside of those views we would limit the form output based upon the
+    # category picked
+    P_CHOICES = [
+        ('Entertainment', 'Entertainment'),
+        ('Dining', 'Dining'),
+        ('Outdoors', 'Outdoors'),
+        ('Stay_Home', 'Stay_At_Home')
+    ]
+    choice = models.CharField(max_length=50, choices=P_CHOICES)
     def __str__(self):
-        return f"{self.entertainment}"
+        return f"{self.choice}"

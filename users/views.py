@@ -1,11 +1,27 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from users.forms import LoginForm, SignUpForm
-from users.models import SignUp
+from users.forms import LoginForm
+from users.models import User
+
 
 def index(request):
     return render (request, "index.html", {})
+
+def profile_view(request):
+    return render(request, "profile.html",{})
+
+def create_a_date_view(request):
+    return render (request, "create_A_date.html", {})
+
+
+
+def preferences_view(request):
+    return render (request, "preferences.html", {})
+
+
+def pending_dates_view(request):
+    return render (request, "pending_dates.html", {})
 
 
 def sign_up(request):
