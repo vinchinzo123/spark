@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
 
-    path('profile/', views.profile_view, name='profile'),
+    path('profile/<int:profile_id>/', views.profile_view, name='profile'),
     path('create_a_date/', views.create_a_date_view, name='create_a_date'),
     path('preferences/', views.preferences_view, name='preferences'),
     path('pending_dates/', views.pending_dates_view, name='pending_dates'),

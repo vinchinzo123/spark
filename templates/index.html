@@ -1,2 +1,5 @@
 {% include 'nav_bar.html' %}
 <h1>Home</h1>
+{% if request.user.is_authenticated %}
+		<h4>Welcome, {{ request.user.username }}</h4>
+{% endif %}

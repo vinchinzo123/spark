@@ -1,2 +1,11 @@
 {% include 'nav_bar.html' %}
 <h3>user profile</h3>
+
+<img>
+
+<p>Username: {{request.user.username}}</p>
+<p>Full name: {{request.user.full_name}}</p> 
+<p>Number of Dates: </p>
+<p>Friend: {{request.user.friends}}</p>
+<p>Places Visited: {{request.user.location}}</p>
+<p>Preferences: {{request.user.date_preferences}}</p>
