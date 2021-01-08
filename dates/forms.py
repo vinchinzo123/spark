@@ -1,22 +1,29 @@
 from django import forms
-from preferences.models import Preferences
+from preferences.models import Preferences, Dining
 from dates.models import DatesNightModel
+from users.models import User
 
 
-class ChooseDateCategory(forms.Form):
-    choice = forms.ModelChoiceField(queryset=Preferences.objects.all())
-
-
-class CreateADiningDate(forms.ModelForm):
+class ChooseDateCategory(forms.ModelForm):
     class Meta:
-        model = DatesNightModel
-        fields = [
-            "dining_category",
-            "users_one",
-            "users_two",
-            "location",
-            "when_date_time",
-        ]
+        model = Preferences
+        fields = ["choice"]
+
+
+# class CreateADiningDate(forms.ModelForm):
+#     class Meta:
+#         model = DatesNightModel
+#         fields = [
+#             "dining_category",
+#             "users_two",
+#             "location",
+#         ]
+class CreateADiningDate(forms.Form):
+    dining_category = forms.ModelMultipleChoiceField(queryset=Dining.objects.all())
+    users_two = forms.ModelChoiceField(required=False, queryset=User.objects.all())
+    location = forms.CharField()
+    date_day = forms.CharField()
+    date_time = forms.CharField()
 
 
 class CreateAnEntertainmentDate(forms.ModelForm):

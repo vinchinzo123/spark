@@ -1,0 +1,13 @@
+{% include 'nav_bar.html' %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="choice">Date Night Type</label>
+    <select style="display: inline;" id="choice" name="choice">
+        <option class=browser-default value="" disabled selected>Choose invoice</option>
+        {% for choice in date_night_choices %}
+        <option class=browser-default value="{{ choice }}">{{ choice }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <input type="submit" value="Next" />
+</form>
