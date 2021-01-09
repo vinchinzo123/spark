@@ -1,4 +1,5 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from dates.models import DatesNightModel
 from dates.forms import (
     ChooseDateCategory,
@@ -14,6 +15,7 @@ from preferences.models import Preferences, Dining, OutDoors, StayHome, Entertai
 from users.models import User
 
 
+@login_required()
 def create_a_date_view(request):
     if request.method == "POST":
         form = ChooseDateCategory(request.POST)
@@ -39,6 +41,7 @@ def create_a_date_view(request):
     )
 
 
+@login_required()
 def send_date_view(request):
     """
     takes care of all date types

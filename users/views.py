@@ -1,5 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from users.forms import LoginForm, SignUpForm
 from users.models import User
@@ -29,18 +30,22 @@ def sign_up(request):
     return render(request, html, {"form": form})
 
 
+@login_required(login_url="login")
 def profile_view(request):
     return render(request, "profile.html", {})
 
 
+@login_required(login_url="login")
 def create_a_date_view(request):
     return render(request, "create_A_date.html", {})
 
 
+@login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
 
 
+@login_required(login_url="login")
 def pending_dates_view(request):
     return render(request, "pending_dates.html", {})
 
@@ -60,6 +65,7 @@ def login_view(request):
     return render(request, "form.html", {"form": form})
 
 
+@login_required(login_url="login")
 def logout_view(request):
     logout(request)
     messages.info(request, "successfully logged out")
