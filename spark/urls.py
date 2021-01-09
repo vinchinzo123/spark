@@ -27,12 +27,12 @@ urlpatterns = [
     path("pending_dates/", views.pending_dates_view, name="pending_dates"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
-    path("create_a_date/dining", dateViews.dining_date, name="dining"),
+    path("create_a_date/dining", dateViews.send_date_view, name="dining"),
     path(
         "create_a_date/entertainment",
-        dateViews.entertainment_date,
+        dateViews.send_date_view,
         name="entertainment",
     ),
-    path("create_a_date/outdoors", dateViews.outdoors_date, name="outdoors"),
-    path("create_a_date/stayhome", dateViews.stay_home_date, name="stayhome"),
+    path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
+    path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
 ]

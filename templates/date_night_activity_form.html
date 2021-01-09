@@ -10,13 +10,13 @@
         {% endfor %}
         </select>
         <div class="input-field col s12">
-          <select id="dining_category" name="dining_category" required multiple>
+          <select id="{{category}}" name="{{category}}" required multiple>
           <option class=browser-default value="" disabled selected>Fun date to pick</option>
           {% for date_activity in dates_to_pick %}
             <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
           {% endfor %}
           </select>
-          <label for="dining_category">Date Night Type</label>
+          <label for="{{category}}">Date Night Type</label>
         </div>
     <label for="location" class="active">Location</label>
     <input type="text" name="location" maxlength="100" required="" id="location">
@@ -30,8 +30,7 @@
     <input  type="submit" value="Login">
 
 </form>
-{{ form.errors }}
-{{ form.non_field_errors }}
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {

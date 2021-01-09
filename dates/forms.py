@@ -1,5 +1,5 @@
 from django import forms
-from preferences.models import Preferences, Dining
+from preferences.models import Preferences, Dining, Entertainment, OutDoors, StayHome
 from dates.models import DatesNightModel
 from users.models import User
 
@@ -26,37 +26,27 @@ class CreateADiningDate(forms.Form):
     date_time = forms.CharField()
 
 
-class CreateAnEntertainmentDate(forms.ModelForm):
-    class Meta:
-        model = DatesNightModel
-        fields = [
-            "entertainment_category",
-            "users_one",
-            "users_two",
-            "location",
-            "when_date_time",
-        ]
+class CreateAnEntertainmentDate(forms.Form):
+    entertainment_category = forms.ModelMultipleChoiceField(
+        queryset=Entertainment.objects.all()
+    )
+    users_two = forms.ModelChoiceField(required=False, queryset=User.objects.all())
+    location = forms.CharField()
+    date_day = forms.CharField()
+    date_time = forms.CharField()
 
 
-class CreateAnOutdoorsDate(forms.ModelForm):
-    class Meta:
-        model = DatesNightModel
-        fields = [
-            "out_doors_category",
-            "users_one",
-            "users_two",
-            "location",
-            "when_date_time",
-        ]
+class CreateAnOutdoorsDate(forms.Form):
+    out_doors_category = forms.ModelMultipleChoiceField(queryset=OutDoors.objects.all())
+    users_two = forms.ModelChoiceField(required=False, queryset=User.objects.all())
+    location = forms.CharField()
+    date_day = forms.CharField()
+    date_time = forms.CharField()
 
 
-class CreateAStayHomeDate(forms.ModelForm):
-    class Meta:
-        model = DatesNightModel
-        fields = [
-            "stay_home_category",
-            "users_one",
-            "users_two",
-            "location",
-            "when_date_time",
-        ]
+class CreateAStayHomeDate(forms.Form):
+    stay_home_category = forms.ModelMultipleChoiceField(queryset=StayHome.objects.all())
+    users_two = forms.ModelChoiceField(required=False, queryset=User.objects.all())
+    location = forms.CharField()
+    date_day = forms.CharField()
+    date_time = forms.CharField()
