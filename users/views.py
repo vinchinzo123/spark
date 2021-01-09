@@ -29,6 +29,22 @@ def sign_up(request):
     return render(request, html, {"form": form})
 
 
+def profile_view(request):
+    return render(request, "profile.html", {})
+
+
+def create_a_date_view(request):
+    return render(request, "create_A_date.html", {})
+
+
+def preferences_view(request):
+    return render(request, "preferences.html", {})
+
+
+def pending_dates_view(request):
+    return render(request, "pending_dates.html", {})
+
+
 def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
