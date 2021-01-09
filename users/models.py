@@ -23,3 +23,6 @@ class User(AbstractUser):
     
     def __str__(self):
         return f'{self.full_name}'
+
+class ImageModel(models.Model):
+    picture = models.ImageField(upload_to = 'image')

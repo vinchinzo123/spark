@@ -15,6 +15,14 @@
 	background-color: rgb(231, 86, 86);
 	padding: 10px 25px;
 }
+#photo_profile{
+	background-color: rgb(99, 179, 245);
+	padding: 10px 25px;
+}
+.color_text{
+	color: azure;
+}
+
 </style>
 {% include 'nav_bar.html' %}
 
@@ -29,6 +37,7 @@
 	<p>Places Visited: {{request.user.location}}</p>
 </div>
 <div class="profile_buttons">
-	<button id="update_profile"><a href="/update_profile/{{user.id}}/">update profile</a></button>
-	<button id="delete_profile"><a href="/delete_profile/{{user.id}}/">delete profile</a></button>
+	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
+	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
+	<button id="photo_profile"><a class="color_text" href="">add photo</a></button>
 </div>
