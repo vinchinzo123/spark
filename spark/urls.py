@@ -35,4 +35,5 @@ urlpatterns = [
     ),
     path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
     path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
+    path("sign_up/", views.sign_up, name="sign_up_page"),
 ]
