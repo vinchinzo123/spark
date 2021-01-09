@@ -75,12 +75,14 @@ def send_date_view(request):
             )
             return HttpResponseRedirect(reverse("homepage"))
     date_night_users = [
-        {"instance": x[0], "value": x[1]} for x in form.fields["users_two"].choices
+        {"instance": x[0], "value": x[1]}
+        for x in form.fields["users_two"].choices
+        if x[1] != request.user.full_name
     ][1:]
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
     ][1:]
-
+    breakpoint()
     return render(
         request,
         "date_night_activity_form.html",

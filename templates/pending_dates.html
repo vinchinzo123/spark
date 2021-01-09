@@ -1,15 +1,20 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% include 'nav_bar.html' %}
 <h3>pending dates</h3>
 {% for note in received_notifications  %}
+<br/>
 Sent to {{note.sent_user.username}}
 Date {{note.date_night.when_date_time}}
 Where {{note.date_night.location}}
 {% endfor %}
-<br>
+<br />
 {% for note in sent_notifications  %}
 Received from {{note.sent_user.username}}
 Date {{note.date_night.when_date_time}}
 Where {{note.date_night.location}}
 <a href="#"><button>Confirm</button></a>
 <a href="#"><button>Decline</button></a>
+<br />
 {% endfor %}
