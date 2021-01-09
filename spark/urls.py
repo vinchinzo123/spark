@@ -21,6 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
 
+    path('delete_profile/<int:profile_id>/', views.delete_profile_view, name='delete_profile'),
+    path('update_profile/<int:profile_id>/', views.update_profile_view, name='update_profile'),
+
     path('profile/<int:profile_id>/', views.profile_view, name='profile'),
     path('create_a_date/', views.create_a_date_view, name='create_a_date'),
     path('preferences/', views.preferences_view, name='preferences'),
