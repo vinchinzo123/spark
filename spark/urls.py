@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views
 from dates import views as dateViews
+from notifications.views import notification_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +28,8 @@ urlpatterns = [
     path('profile/<int:profile_id>/', views.profile_view, name='profile'),
   
     path('preferences/', views.preferences_view, name='preferences'),
-    path('pending_dates/', views.pending_dates_view, name='pending_dates'),
+  
+    path("pending_dates/", notification_view, name="pending_dates"),
 
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -38,7 +40,7 @@ urlpatterns = [
     path("sign_up/", views.sign_up, name="sign_up_page"),
   
   
-    path('create_a_date/', views.create_a_date_view, name='create_a_date'),
+    path("create_a_date/", dateViews.create_a_date_view, name="create_a_date"),
     path("create_a_date/dining", dateViews.send_date_view, name="dining"),
     path(
         "create_a_date/entertainment",
