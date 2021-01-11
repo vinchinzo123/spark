@@ -33,10 +33,6 @@ urlpatterns = [
 
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-<<<<<<< HEAD
-    path('sign_up/', views.sign_up, name='sign_up_page')  
-
-=======
     path("sign_up/", views.sign_up, name="sign_up_page"),
   
   
@@ -49,5 +45,4 @@ urlpatterns = [
     ),
     path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
     path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
->>>>>>> af27b5818b4641234d60595a71afdf04cdbba49e
 ]

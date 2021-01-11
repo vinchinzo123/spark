@@ -19,4 +19,4 @@ class UpdateProfileForm(forms.Form):
     location = forms.CharField(max_length=50)
 
 class ImageForm(forms.Form):
-    picture = forms.ImageFields()
+    picture = forms.ImageField()

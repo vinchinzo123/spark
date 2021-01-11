@@ -58,21 +58,20 @@ def update_profile_view(request, profile_id):
             update_profile.email = data['email'],
             update_profile.location = data['location'],
             update_profile.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        return HttpResponseRedirect(f"/profile/{profile_id}/")
     form = UpdateProfileForm()
     return render(request, html, {'form': form})
 
 def add_photo_view(request):
     if request.method == "POST":
-    
-    userImageForm = ImageForm(request.POST, request.FILES)
+        userImageForm = ImageForm(request.POST, request.FILES)
 
-    if MyProfileForm.is_valid():
-        profile = Profile()
-        profile.name = MyProfileForm.cleaned_data["name"]
-        profile.picture = MyProfileForm.cleaned_data["picture"]
-        profile.save()
-        saved = True
+        if MyProfileForm.is_valid():
+            profile = Profile()
+            profile.name = MyProfileForm.cleaned_data["name"]
+            profile.picture = MyProfileForm.cleaned_data["picture"]
+            profile.save()
+            saved = True
 
 
 
