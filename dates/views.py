@@ -82,7 +82,6 @@ def send_date_view(request):
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
     ][1:]
-    breakpoint()
     return render(
         request,
         "date_night_activity_form.html",
