@@ -17,13 +17,14 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User.objects.create(
+            new_user = User.objects.create_user(
                 username=data["username"],
                 full_name=data["display_name"],
                 email=data["email"],
                 password=data["password"],
                 location=data["location"],
             )
+            user = authenticate(request, username=data['username'], password=data['password'])
             if user:
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
@@ -61,7 +62,7 @@ def update_profile_view(request, profile_id):
     form = UpdateProfileForm()
     return render(request, html, {'form': form})
 
-
+  
 @login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
