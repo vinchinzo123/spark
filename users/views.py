@@ -16,7 +16,7 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            new_user = User.objects.create(
+            new_user = User.objects.create_user(
                 username=data["username"],
                 full_name=data["display_name"],
                 email=data["email"],
@@ -24,9 +24,8 @@ def sign_up(request):
                 location=data["location"],
             )
             user = authenticate(request, username=data['username'], password=data['password'])
-            return HttpResponseRedirect(reverse("homepage"))
             if user:
-                login(request, new_user)
+                login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
     form = SignUpForm()
     return render(request, html, {"form": form})
