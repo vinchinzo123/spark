@@ -1,4 +1,5 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from dates.models import DatesNightModel
 from dates.forms import (
     ChooseDateCategory,
@@ -14,6 +15,7 @@ from preferences.models import Preferences, Dining, OutDoors, StayHome, Entertai
 from users.models import User
 
 
+@login_required()
 def create_a_date_view(request):
     if request.method == "POST":
         form = ChooseDateCategory(request.POST)
@@ -39,6 +41,7 @@ def create_a_date_view(request):
     )
 
 
+@login_required()
 def send_date_view(request):
     """
     takes care of all date types
@@ -72,12 +75,13 @@ def send_date_view(request):
             )
             return HttpResponseRedirect(reverse("homepage"))
     date_night_users = [
-        {"instance": x[0], "value": x[1]} for x in form.fields["users_two"].choices
+        {"instance": x[0], "value": x[1]}
+        for x in form.fields["users_two"].choices
+        if x[1] != request.user.full_name
     ][1:]
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
     ][1:]
-
     return render(
         request,
         "date_night_activity_form.html",

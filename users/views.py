@@ -1,5 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from users.forms import LoginForm, UpdateProfileForm, SignUpForm
 from users.models import User
@@ -30,12 +31,14 @@ def sign_up(request):
     form = SignUpForm()
     return render(request, html, {"form": form})
 
-
+ 
+@login_required(login_url="login") 
 def profile_view(request, profile_id):
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
     user_profile = User.objects.filter(id=profile_id).first()
     return render(request, "profile.html",{"datesnight":dates_night, "userprofile":user_profile})
 
+  
 def delete_profile_view(request, profile_id):
     
         delete_profile= User.objects.get(id= profile_id)
@@ -43,6 +46,7 @@ def delete_profile_view(request, profile_id):
 
         return render(request, 'index.html', {'delete_profile':delete_profile}) 
 
+      
 def update_profile_view(request, profile_id):
     html = 'generic_form.html'
     update_profile = User.objects.get(id=profile_id)
@@ -58,20 +62,10 @@ def update_profile_view(request, profile_id):
     form = UpdateProfileForm()
     return render(request, html, {'form': form})
 
-
-
-
-
-def create_a_date_view(request):
-    return render(request, "create_A_date.html", {})
-
-
+  
+@login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
-
-
-def pending_dates_view(request):
-    return render(request, "pending_dates.html", {})
 
 
 def login_view(request):
@@ -89,6 +83,7 @@ def login_view(request):
     return render(request, "form.html", {"form": form})
 
 
+@login_required(login_url="login")
 def logout_view(request):
     logout(request)
     messages.info(request, "successfully logged out")
