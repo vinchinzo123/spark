@@ -1,0 +1,48 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% include 'nav_bar.html' %}
+<form method="post">
+    {% csrf_token %}
+        <label for="users_two">Your Spark</label>
+        <select id="users_two" name="users_two">
+        <option class=browser-default value="" disabled selected>Users to pick</option>
+        {% for user in date_night_users %}
+          <option class=browser-default value="{{ user.instance }}">{{ user.value }}</option>
+        {% endfor %}
+        </select>
+        <div class="input-field col s12">
+          <select id="{{category}}" name="{{category}}" required multiple>
+          <option class=browser-default value="" disabled selected>Fun date to pick</option>
+          {% for date_activity in dates_to_pick %}
+            <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+          {% endfor %}
+          </select>
+          <label for="{{category}}">Date Night Type</label>
+        </div>
+    <label for="location" class="active">Location</label>
+    <input type="text" name="location" maxlength="100" required="" id="location">
+
+    <label for="date_day">Date Night</label>
+    <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker">
+
+    <label for="date_time">Date Time</label>
+    <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
+
+    <input  type="submit" value="Login">
+
+</form>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {format:'m/d/yyyy'});
+  });
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems);
+  });
+</script>

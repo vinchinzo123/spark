@@ -1,0 +1,23 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% include 'nav_bar.html' %}
+<form method="POST">
+    {% csrf_token %}
+        <div class="input-field col s12">
+    <select id="choice" name="choice">
+        <option class=browser-default value="" disabled selected>Date Night Type</option>
+        {% for choice in date_night_choices %}
+        <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
+        {% endfor %}
+    </select>
+    </div>
+    <br><br>
+    <input type="submit" value="Next" />
+</form>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+
+</script>
