@@ -18,6 +18,9 @@ class User(AbstractUser):
         "self", blank=True, symmetrical=False, related_name="friends"
     )
     # the date preferences model may need adjusted depending on future code
+    # Instead of generic date preferences this would be 4 different fields 
+    # example: dining_preferences = models.ManyToManyField("preferences.Dining")
+    
     date_preferences = models.ManyToManyField(
         "preferences.Preferences",
         blank=True,

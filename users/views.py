@@ -30,7 +30,7 @@ def sign_up(request):
     form = SignUpForm()
     return render(request, html, {"form": form})
 
-
+  
 def profile_view(request, profile_id):
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
     user_profile = User.objects.filter(id=profile_id).first()
