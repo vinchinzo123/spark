@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm
-from users.models import User
+from users.forms import LoginForm, UpdateProfileForm, ImageForm
+from users.models import User, ImageModel
 from dates.models import DatesNightModel
 
 
@@ -36,6 +36,17 @@ def update_profile_view(request, profile_id):
     form = UpdateProfileForm()
     return render(request, html, {'form': form})
 
+def add_photo_view(request):
+    if request.method == "POST":
+    
+    userImageForm = ImageForm(request.POST, request.FILES)
+
+    if MyProfileForm.is_valid():
+        profile = Profile()
+        profile.name = MyProfileForm.cleaned_data["name"]
+        profile.picture = MyProfileForm.cleaned_data["picture"]
+        profile.save()
+        saved = True
 
 
 
