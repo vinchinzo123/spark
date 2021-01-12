@@ -8,6 +8,10 @@ from dates.forms import (
     CreateAnOutdoorsDate,
     CreateAStayHomeDate,
     Preferences,
+    AppendOutdoorDate,
+    AppendStayHomeDate,
+    AppendDiningDate,
+    AppendEntertainmentDate,
 )
 from datetime import datetime
 from notifications.models import Notification
@@ -44,7 +48,7 @@ def create_a_date_view(request):
 @login_required()
 def date_detail_view(request, date_id):
     date_night = DatesNightModel.objects.get(id=date_id)
-    activities = determine_activities(date_night)
+    activities, _ = determine_activities(date_night)
     return render(
         request,
         "date_night_detail.html",
@@ -100,6 +104,34 @@ def send_date_view(request):
             "form": form,
             "dates_to_pick": dates_to_pick,
             "date_night_users": date_night_users,
+            "category": category,
+        },
+    )
+
+
+@login_required()
+def receive_date_view(request, date_id):
+    date_night = DatesNightModel.objects.get(id=date_id)
+    activities, category = determine_activities(date_night)
+    form, category = determine_append_choice_form(category, request.POST)
+    breakpoint()
+    if request.method == "POST":
+        if form.is_valid():
+            data = form.cleaned_data
+            breakpoint()
+            # complete logic that adds a confirmed activity
+            # send them back home
+            #  adds a date reminder at home
+    dates_to_pick = [
+        {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
+    ][1:]
+    return render(
+        request,
+        "date_night_activity_form.html",
+        {
+            "receiver": True,
+            "form": form,
+            "dates_to_pick": dates_to_pick,
             "category": category,
         },
     )
@@ -173,15 +205,30 @@ def stay_home_date(request):
 
 def determine_activities(date_night):
     if len(date_night.dining_category.all()) != 0:
-        return [x.dining_choices for x in date_night.dining_category.all()]
+        return [x.dining_choices for x in date_night.dining_category.all()], "dining"
     elif len(date_night.out_doors_category.all()) != 0:
-        return [x.outdoor_choices for x in date_night.out_doors_category.all()]
+        return [
+            x.outdoor_choices for x in date_night.out_doors_category.all()
+        ], "outdoors"
     elif len(date_night.entertainment_category.all()) != 0:
         return [
             x.entertainment_choices for x in date_night.entertainment_category.all()
-        ]
+        ], "entertainment"
     elif len(date_night.stay_home_category.all()) != 0:
-        return [x.stay_home_choices for x in date_night.stay_home_category.all()]
+        return [
+            x.stay_home_choices for x in date_night.stay_home_category.all()
+        ], "stayhome"
+
+
+def determine_append_choice_form(category, post):
+    if category == "dining":
+        return AppendDiningDate(post), "dining_category"
+    elif category == "outdoors":
+        return AppendOutdoorDate(post), "out_doors_category"
+    elif category == "entertainment":
+        return AppendEntertainmentDate(post), "entertainment_category"
+    elif category == "stayhome":
+        return AppendStayHomeDate(post), "stay_home_category"
 
 
 def determine_choice_form(path, post):

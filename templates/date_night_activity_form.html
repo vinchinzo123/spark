@@ -2,6 +2,17 @@
 {% include 'nav_bar.html' %}
 <form method="post">
     {% csrf_token %}
+    {% if receiver %}
+            <div class="input-field col s12">
+          <select id="{{category}}" name="{{category}}" required multiple>
+          <option class=browser-default value="" disabled selected>Fun date to pick</option>
+          {% for date_activity in dates_to_pick %}
+            <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+          {% endfor %}
+          </select>
+          <label for="{{category}}">Date Night Type</label>
+        </div>
+        {% else %}
         <label for="users_two">Your Spark</label>
         <select id="users_two" name="users_two">
         <option class=browser-default value="" disabled selected>Users to pick</option>
@@ -26,6 +37,7 @@
 
     <label for="date_time">Date Time</label>
     <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
+    {% endif %}
 
     <input  type="submit" value="Login">
 
