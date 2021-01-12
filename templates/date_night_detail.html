@@ -1,0 +1,14 @@
+{% include 'nav_bar.html' %}
+<div class=" card-panel">
+DATE ID: {{date_night.id}}
+SENT USER: {{date_night.users_one}}
+RECEIVING USER(PENDING): {{date_night.users_two}}
+LOCATION: {{date_night.location}}
+WHEN {{date_night.when_date_time}}
+<div>
+{% for activity in activities  %}
+<div>{{activity }}</div>
+{% endfor %}
+</div>
+Activities you chose
+</div>

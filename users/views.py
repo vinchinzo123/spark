@@ -2,8 +2,9 @@ from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, SignUpForm
+from users.forms import LoginForm, UpdateProfileForm, SignUpForm
 from users.models import User
+from dates.models import DatesNightModel
 
 
 def index(request):
@@ -16,17 +17,16 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User.objects.create(
+            new_user = User.objects.create_user(
                 username=data["username"],
                 full_name=data["display_name"],
                 email=data["email"],
                 password=data["password"],
                 location=data["location"],
             )
-            authenticated_user = authenticate(data["username"], data["password"])
-            if authenticated_user is not None:
-                authenticated_user
-            breakpoint()
+            user = authenticate(
+                request, username=data["username"], password=data["password"]
+            )
             if user:
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
@@ -35,23 +35,43 @@ def sign_up(request):
 
 
 @login_required(login_url="login")
-def profile_view(request):
-    return render(request, "profile.html", {})
+def profile_view(request, profile_id):
+    dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
+    user_profile = User.objects.filter(id=profile_id).first()
+    return render(
+        request,
+        "profile.html",
+        {"datesnight": dates_night, "userprofile": user_profile},
+    )
 
 
-@login_required(login_url="login")
-def create_a_date_view(request):
-    return render(request, "create_A_date.html", {})
+def delete_profile_view(request, profile_id):
+
+    delete_profile = User.objects.get(id=profile_id)
+    delete_profile.delete()
+
+    return render(request, "index.html", {"delete_profile": delete_profile})
+
+
+def update_profile_view(request, profile_id):
+    html = "generic_form.html"
+    update_profile = User.objects.get(id=profile_id)
+    if request.method == "POST":
+        form = UpdateProfileForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            update_profile.full_name = (data["full_name"],)
+            update_profile.email = (data["email"],)
+            update_profile.location = (data["location"],)
+            update_profile.save()
+        return HttpResponseRedirect(reverse("homepage"))
+    form = UpdateProfileForm()
+    return render(request, html, {"form": form})
 
 
 @login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
-
-
-@login_required(login_url="login")
-def pending_dates_view(request):
-    return render(request, "pending_dates.html", {})
 
 
 def login_view(request):

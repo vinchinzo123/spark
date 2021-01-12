@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse, HttpResponseRedirect
+from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth.decorators import login_required
 from dates.models import DatesNightModel
 from dates.forms import (
@@ -42,6 +42,17 @@ def create_a_date_view(request):
 
 
 @login_required()
+def date_detail_view(request, date_id):
+    date_night = DatesNightModel.objects.get(id=date_id)
+    activities = determine_activities(date_night)
+    return render(
+        request,
+        "date_night_detail.html",
+        {"date_night": date_night, "activities": activities},
+    )
+
+
+@login_required()
 def send_date_view(request):
     """
     takes care of all date types
@@ -73,7 +84,7 @@ def send_date_view(request):
                 sent_user=request.user,
                 received_user=data["users_two"],
             )
-            return HttpResponseRedirect(reverse("homepage"))
+            return redirect(f"/datenight_detail/{new_date.id}")
     date_night_users = [
         {"instance": x[0], "value": x[1]}
         for x in form.fields["users_two"].choices
@@ -111,7 +122,7 @@ def entertainment_date(request):
                 sent_user=request.user,
                 received_user=data["users_two"],
             )
-            return HttpResponseRedirect(reverse("homepage"))
+            return redirect(reverse("homepage"))
     form = CreateAnEntertainmentDate()
     return render(request, "form.html", {"form": form})
 
@@ -158,6 +169,19 @@ def stay_home_date(request):
             return HttpResponseRedirect(reverse("homepage"))
     form = CreateAStayHomeDate()
     return render(request, "date_night_activity_form.html", {"form": form})
+
+
+def determine_activities(date_night):
+    if len(date_night.dining_category.all()) != 0:
+        return [x.dining_choices for x in date_night.dining_category.all()]
+    elif len(date_night.out_doors_category.all()) != 0:
+        return [x.outdoor_choices for x in date_night.out_doors_category.all()]
+    elif len(date_night.entertainment_category.all()) != 0:
+        return [
+            x.entertainment_choices for x in date_night.entertainment_category.all()
+        ]
+    elif len(date_night.stay_home_category.all()) != 0:
+        return [x.stay_home_choices for x in date_night.stay_home_category.all()]
 
 
 def determine_choice_form(path, post):
