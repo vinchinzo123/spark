@@ -44,7 +44,7 @@ def delete_profile_view(request, profile_id):
         delete_profile= User.objects.get(id= profile_id)
         delete_profile.delete()
 
-        return render(request, 'index.html', {'delete_profile':delete_profile}) 
+        return HttpResponseRedirect(f"/")
 
       
 def update_profile_view(request, profile_id):
@@ -54,9 +54,9 @@ def update_profile_view(request, profile_id):
         form = UpdateProfileForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            update_profile.full_name = data['full_name'],
-            update_profile.email = data['email'],
-            update_profile.location = data['location'],
+            update_profile.full_name = data['full_name']
+            update_profile.email = data['email']
+            update_profile.location = data['location']
             update_profile.save()
         return HttpResponseRedirect(f"/profile/{profile_id}/")
     form = UpdateProfileForm()
