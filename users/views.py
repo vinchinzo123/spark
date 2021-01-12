@@ -23,6 +23,10 @@ def sign_up(request):
                 password=data["password"],
                 location=data["location"],
             )
+            authenticated_user = authenticate(data["username"], data["password"])
+            if authenticated_user is not None:
+                authenticated_user
+            breakpoint()
             if user:
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
