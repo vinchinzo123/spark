@@ -31,7 +31,7 @@ class DatesNightModel(models.Model):
 
     when_date_time = models.DateTimeField(default=timezone.now)
     confirmed_activity = models.ForeignKey(
-        ActivityModel, null=True, blank=True, on_delete=ActivityModel
+        ActivityModel, null=True, blank=True, on_delete=models.CASCADE
     )
     # def __str__(self):
     #     date_activity = ""

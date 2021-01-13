@@ -1,4 +1,5 @@
-{% include 'nav_bar.html' %}
+{% extends 'base.html' %}
+{% block date_night_details %}
 <div class=" card-panel">
 DATE ID: {{date_night.id}}
 SENT USER: {{date_night.users_one}}
@@ -12,3 +13,4 @@ WHEN {{date_night.when_date_time}}
 </div>
 Activities you chose
 </div>
+{% endblock date_night_details %}

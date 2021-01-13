@@ -18,7 +18,6 @@ def index(request):
             )
         )
     )
-    breakpoint()
     return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
@@ -58,15 +57,7 @@ def profile_view(request, profile_id):
 
 def delete_profile_view(request, profile_id):
 
-<<<<<<< HEAD
-    delete_profile = User.objects.get(id=profile_id)
-    delete_profile.delete()
-
-    return render(request, "index.html", {"delete_profile": delete_profile})
-
-=======
         return HttpResponseRedirect(f"/")
->>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
 
 def update_profile_view(request, profile_id):
     html = "generic_form.html"
@@ -75,25 +66,15 @@ def update_profile_view(request, profile_id):
         form = UpdateProfileForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-<<<<<<< HEAD
-            update_profile.full_name = (data["full_name"],)
-            update_profile.email = (data["email"],)
-            update_profile.location = (data["location"],)
-            update_profile.save()
-        return HttpResponseRedirect(reverse("homepage"))
-=======
             update_profile.full_name = data['full_name']
             update_profile.email = data['email']
             update_profile.location = data['location']
             update_profile.save()
         return HttpResponseRedirect(f"/profile/{profile_id}/")
->>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
     form = UpdateProfileForm()
     return render(request, html, {"form": form})
 
 
-<<<<<<< HEAD
-=======
 def add_photo_view(request):
     if request.method == "POST":
         userImageForm = ImageForm(request.POST, request.FILES)
@@ -113,7 +94,6 @@ def create_a_date_view(request):
 
 
   
->>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
 @login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
