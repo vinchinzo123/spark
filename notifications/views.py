@@ -7,7 +7,9 @@ from notifications.models import Notification
 
 @login_required()
 def notification_view(request):
-    sent_notifications = Notification.objects.filter(sent_user=request.user.id)
+    sent_notifications = Notification.objects.filter(sent_user=request.user.id).filter(
+        status="Sent"
+    )
     active_notifications = [x for x in sent_notifications if x.status != "Declined"]
     declined_notifications = []
     for note in sent_notifications:
@@ -16,7 +18,9 @@ def notification_view(request):
                 {"date_night": note.date_night, "received_user": note.received_user}
             )
             note.delete()
-    received_notifications = Notification.objects.filter(received_user=request.user.id)
+    received_notifications = Notification.objects.filter(
+        received_user=request.user.id
+    ).filter(status="Sent")
     return render(
         request,
         "pending_dates.html",
