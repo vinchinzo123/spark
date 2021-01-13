@@ -11,9 +11,9 @@
             <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
           {% endfor %}
           </select>
-          <label for="{{category}}">Date Night Type</label>
+          <label for="{{category}}">Date Night Activity</label>
         </div>
-        {% else %}
+    {% else %}
         <label for="users_two">Your Spark</label>
         <select id="users_two" name="users_two">
         <option class=browser-default value="" disabled selected>Users to pick</option>

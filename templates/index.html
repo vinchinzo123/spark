@@ -6,8 +6,11 @@
   {% for notes in confirmed_dates %}
   {{notes.date_night.confirmed_activity.choice}} in {{notes.date_night.location}}
   with 
+  {% if notes.sent_user.username == request.user.username %}
+  {{notes.received_user.username}}
+  {% else %}
   {{notes.sent_user.username}}
-  {{notes.received_user.usernmae}}
+  {% endif %}
   at {{notes.date_night.when_date_time}}
   
   {% endfor %}

@@ -12,12 +12,13 @@ def index(request):
     confirmed_dates = (
         Notification.objects.filter(status="Confirmed")
         .filter(sent_user=request.user.id)
-        .intersection(
+        .union(
             Notification.objects.filter(status="Confirmed").filter(
                 received_user=request.user.id
             )
         )
     )
+    breakpoint()
     return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
@@ -57,7 +58,6 @@ def profile_view(request, profile_id):
     """
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
     user_profile = User.objects.filter(id=profile_id).first()
-    breakpoint()
     return render(
         request,
         "profile.html",
