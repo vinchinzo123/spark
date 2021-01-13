@@ -19,6 +19,9 @@ from users import views
 from dates import views as dateViews
 from notifications.views import notification_view
 
+handler404 = 'users.views.handler404'
+handler500 = 'users.views.handler500'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
@@ -45,4 +48,6 @@ urlpatterns = [
     ),
     path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
     path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
+
+    path('500error/', views.error500_view, name='500_error')
 ]
