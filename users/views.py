@@ -6,8 +6,10 @@ from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
 from users.models import User, ImageModel
 from dates.models import DatesNightModel
 from notifications.models import Notification
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views import View
+
 
 def index(request):
     confirmed_dates = (
@@ -44,9 +46,10 @@ def index(request):
 #     form = SignUpForm()
 #     return render(request, html, {"form": form})
 
+
 class SignupView(View):
     form_class = SignUpForm
-    template = 'sign_up_form.html'
+    template = "sign_up_form.html"
 
     def get(self, request):
         form = self.form_class()
@@ -155,14 +158,15 @@ def preferences_view(request):
 #     form = LoginForm()
 #     return render(request, "form.html", {"form": form})
 
+
 class LoginView(View):
     form_class = LoginForm
-    template = 'form.html'
+    template = "form.html"
 
     def get(self, request):
         form = self.form_class()
-        return render(request, self.template, {'form': form})
-    
+        return render(request, self.template, {"form": form})
+
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -181,10 +185,14 @@ class LoginView(View):
 #     messages.info(request, "successfully logged out")
 #     return redirect("/")
 
-class LogoutView(View):
+
+class LogoutView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request):
         logout(request)
-        return redirect('/')
+        return redirect("/")
 
 
 def handler404(request, exception):
@@ -202,4 +210,4 @@ def handler500(request):
 
 
 def error500_view(request):
-    raise Exception('Make response code 500!')
+    raise Exception("Make response code 500!")
