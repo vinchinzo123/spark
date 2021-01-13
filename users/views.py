@@ -56,7 +56,7 @@ def profile_view(request, profile_id):
 
 
 def delete_profile_view(request, profile_id):
-
+    # go to a pre-delete page/modal
     delete_profile = User.objects.get(id=profile_id)
     delete_profile.delete()
 
@@ -80,6 +80,7 @@ def update_profile_view(request, profile_id):
 
 
 def add_photo_view(request):
+    # needs to be complete
     if request.method == "POST":
         userImageForm = ImageForm(request.POST, request.FILES)
 
