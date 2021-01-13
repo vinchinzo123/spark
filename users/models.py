@@ -20,7 +20,7 @@ class User(AbstractUser):
     # the date preferences model may need adjusted depending on future code
     # Instead of generic date preferences this would be 4 different fields 
     # example: dining_preferences = models.ManyToManyField("preferences.Dining")
-    
+
     date_preferences = models.ManyToManyField(
         "preferences.Preferences",
         blank=True,
@@ -29,6 +29,7 @@ class User(AbstractUser):
     )
     # the location may be updated later to utilize a geolocation field
     location = models.CharField(blank=True, null=True, max_length=50)
-
+    # profile_photo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
+    # level_of_interest = models.BooleanField(_(""))
     def __str__(self):
         return f"{self.full_name}"

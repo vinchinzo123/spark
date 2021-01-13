@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block profile %}
 <style>
 .user_info{
 	text-align: center;
@@ -16,7 +18,6 @@
 	padding: 10px 25px;
 }
 </style>
-{% include 'nav_bar.html' %}
 
 <div class="user_info">
 	<h4>user profile</h4>
@@ -32,3 +33,4 @@
 	<button id="update_profile"><a href="/update_profile/{{user.id}}/">update profile</a></button>
 	<button id="delete_profile"><a href="/delete_profile/{{user.id}}/">delete profile</a></button>
 </div>
+{% endblock profile%}
