@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth.decorators import login_required
-from dates.models import DatesNightModel
+from dates.models import DatesNightModel, ActivityModel
 from dates.forms import (
     ChooseDateCategory,
     CreateADiningDate,
@@ -17,6 +17,8 @@ from datetime import datetime
 from notifications.models import Notification
 from preferences.models import Preferences, Dining, OutDoors, StayHome, Entertainment
 from users.models import User
+
+import random
 
 
 @login_required()
@@ -110,18 +112,42 @@ def send_date_view(request):
 
 
 @login_required()
-def receive_date_view(request, date_id):
-    date_night = DatesNightModel.objects.get(id=date_id)
+def receive_date_view(request, notification_id):
+    notification = Notification.objects.get(id=notification_id)
+    date_night = notification.date_night
     activities, category = determine_activities(date_night)
     form, category = determine_append_choice_form(category, request.POST)
-    breakpoint()
     if request.method == "POST":
         if form.is_valid():
             data = form.cleaned_data
-            breakpoint()
-            # complete logic that adds a confirmed activity
+            receiver_choices = data[category]
+            if category == "dining_category":
+                sender_choices = date_night.dining_category.all()
+                category = Preferences.objects.get(choice="Dining")
+            elif category == "out_doors_category":
+                sender_choices = date_night.out_doors_category.all()
+                category = Preferences.objects.get(choice="Out Doors")
+            elif category == "entertainment_category":
+                sender_choices = date_night.entertainment_category.all()
+                category = Preferences.objects.get(choice="Entertainment")
+            elif category == "stay_home_category":
+                sender_choices = date_night.stay_home_category.all()
+                category = Preferences.objects.get(choice="Stay At Home")
+            matched_choices = receiver_choices.intersection(sender_choices)
+            if matched_choices:
+                random_choice = random.choice(matched_choices)
+                breakpoint()
+                activity = ActivityModel.objects.create(
+                    choice=random_choice.choice, category=category
+                )
+                date_night.confirmed_activity = activity
+                date_night.save()
+                notification.status = "Confirmed"
+                return redirect(reverse("homepage"))
+            # what to do when the choices don't match
+            # complete logic that adds a confirmed activity -check
             # send them back home
-            #  adds a date reminder at home
+            #  adds a date notification at home
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
     ][1:]
@@ -205,19 +231,15 @@ def stay_home_date(request):
 
 def determine_activities(date_night):
     if len(date_night.dining_category.all()) != 0:
-        return [x.dining_choices for x in date_night.dining_category.all()], "dining"
+        return [x.choice for x in date_night.dining_category.all()], "dining"
     elif len(date_night.out_doors_category.all()) != 0:
-        return [
-            x.outdoor_choices for x in date_night.out_doors_category.all()
-        ], "outdoors"
+        return [x.choice for x in date_night.out_doors_category.all()], "outdoors"
     elif len(date_night.entertainment_category.all()) != 0:
         return [
-            x.entertainment_choices for x in date_night.entertainment_category.all()
+            x.choice for x in date_night.entertainment_category.all()
         ], "entertainment"
     elif len(date_night.stay_home_category.all()) != 0:
-        return [
-            x.stay_home_choices for x in date_night.stay_home_category.all()
-        ], "stayhome"
+        return [x.choice for x in date_night.stay_home_category.all()], "stayhome"
 
 
 def determine_append_choice_form(category, post):

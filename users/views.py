@@ -5,10 +5,21 @@ from django.contrib import messages
 from users.forms import LoginForm, UpdateProfileForm, SignUpForm
 from users.models import User
 from dates.models import DatesNightModel
+from notifications.models import Notification
 
 
 def index(request):
-    return render(request, "index.html", {})
+    confirmed_dates = (
+        Notification.objects.filter(status="Confirmed")
+        .filter(sent_user=request.user.id)
+        .intersection(
+            Notification.objects.filter(status="Confirmed").filter(
+                received_user=request.user.id
+            )
+        )
+    )
+    breakpoint()
+    return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
 def sign_up(request):

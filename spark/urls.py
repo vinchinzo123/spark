@@ -56,7 +56,7 @@ urlpatterns = [
         dateViews.date_detail_view,
         name="datenight_detail",
     ),
-    path("append_a_date/<int:date_id>/", dateViews.receive_date_view),
+    path("append_a_date/<int:notification_id>/", dateViews.receive_date_view),
     path("confirm_date/<int:notification_id>/", confirm_date_night_view),
     path("decline_date/<int:notification_id>/", decline_date_night_view),
 ]
