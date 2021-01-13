@@ -18,7 +18,6 @@ def index(request):
             )
         )
     )
-    breakpoint()
     return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
