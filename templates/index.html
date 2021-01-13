@@ -3,7 +3,9 @@
 {% if request.user.is_authenticated %}
 	<h4>Welcome, {{ request.user.username }}</h4>
   <h6>Coming up dates!</h6>
+  <ul>
   {% for notes in confirmed_dates %}
+  <ol>
   {{notes.date_night.confirmed_activity.choice}} in {{notes.date_night.location}}
   with 
   {% if notes.sent_user.username == request.user.username %}
@@ -12,7 +14,8 @@
   {{notes.sent_user.username}}
   {% endif %}
   at {{notes.date_night.when_date_time}}
-  
+  </ol>
   {% endfor %}
+  </ul>
 {% endif %}
 {% endblock index %}
