@@ -15,16 +15,15 @@ def notification_view(request):
         status="Sent"
     )
     active_notifications = [x for x in sent_notifications if x.status != "Declined"]
-    declined_notifications = []
-    for note in sent_notifications:
-        if (
-            note.status == "Declined"
-            and request.user.username != note.received_user.username
-        ):
-            declined_notifications.append(
-                {"date_night": note.date_night, "received_user": note.received_user}
-            )
-            note.delete()
+    declined_notifications = Notification.objects.filter(
+        sent_user=request.user.id
+    ).filter(status="Declined")
+    dec_notes = []
+    for note in declined_notifications:
+        dec_notes.append(
+            {"date_night": note.date_night, "received_user": note.received_user}
+        )
+        note.delete()
     received_notifications = Notification.objects.filter(
         received_user=request.user.id
     ).filter(status="Sent")
@@ -34,7 +33,7 @@ def notification_view(request):
         {
             "received_notifications": received_notifications,
             "active_notifications": active_notifications,
-            "declined_notifications": declined_notifications,
+            "declined_notifications": dec_notes,
         },
     )
 
