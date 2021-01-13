@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block profile %}
 <style>
 .user_info{
 	text-align: center;
@@ -15,9 +17,15 @@
 	background-color: rgb(231, 86, 86);
 	padding: 10px 25px;
 }
-</style>
-{% include 'nav_bar.html' %}
+#photo_profile{
+	background-color: rgb(99, 179, 245);
+	padding: 10px 25px;
+}
+.color_text{
+	color: azure;
+}
 
+</style>
 <div class="user_info">
 	<h4>user profile</h4>
 	<img src="" alt="" width="100" height="100" style="border: 1px solid black">
@@ -29,6 +37,8 @@
 	<p>Places Visited: {{request.user.location}}</p>
 </div>
 <div class="profile_buttons">
-	<button id="update_profile"><a href="/update_profile/{{user.id}}/">update profile</a></button>
-	<button id="delete_profile"><a href="/delete_profile/{{user.id}}/">delete profile</a></button>
+	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
+	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
+	<button id="photo_profile"><a class="color_text" href="">add photo</a></button>
 </div>
+{% endblock profile%}
