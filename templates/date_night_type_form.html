@@ -1,5 +1,6 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-{% include 'nav_bar.html' %}
+{% extends 'base.html' %}
+{% block activity_form %}
+{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
 <form method="POST">
     {% csrf_token %}
         <div class="input-field col s12">
@@ -13,11 +14,4 @@
     <br><br>
     <input type="submit" value="Next" />
 </form>
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems);
-  });
-
-</script>
+{% endblock activity_form %}

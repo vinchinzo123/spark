@@ -1,20 +1,41 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-{% include 'nav_bar.html' %}
-<h3>pending dates</h3>
-{% for note in sent_notifications  %}
+{% extends 'base.html' %}
+{% block pending_dates %}
+{% if declined_notifications %}
+<h3>declined dates</h3>
+{% endif %}
+
+{% for note in declined_notifications  %}
 <br/>
+Date sent to {{note.received_user.received_user.username}} has been declined.
+Try again later or with a different friend!
+{% endfor %}
+<br />
+<h3>pending dates</h3>
+{% for note in active_notifications  %}
+<br/>
+{% if note.status != "Declined" %}
+
 Sent to {{note.received_user.username}}
 Date {{note.date_night.when_date_time}}
 Where {{note.date_night.location}}
+{% else %}
+Date sent to {{note.received_user.username}} has been declined.
+Try again later or with a different friend!
+{% endif %}
 {% endfor %}
 <br />
 {% for note in received_notifications  %}
+{% if note.status == "Declined" %}
+You delined a date sent by {{note.sent_user.username}}.
+Sometimes it just doesn't work out! Try again!
+{% else %}
 Received from {{note.sent_user.username}}
 Date {{note.date_night.when_date_time}}
 Where {{note.date_night.location}}
-<a href="#"><button>Confirm</button></a>
-<a href="#"><button>Decline</button></a>
+<a href="/confirm_date/{{note.id}}"><button>Confirm</button></a>
+<a href="/decline_date/{{note.id}}"><button>Decline</button></a>
 <br />
+{% endif %}
 {% endfor %}
+
+{% endblock pending_dates %}

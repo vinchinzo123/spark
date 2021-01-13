@@ -5,16 +5,19 @@ from users.models import User
 from preferences.models import Preferences, Dining, Entertainment, OutDoors, StayHome
 
 
+class ActivityModel(models.Model):
+    choice = models.CharField(max_length=50)
+    category = models.ForeignKey(Preferences, on_delete=models.CASCADE)
+
+
 class DatesNightModel(models.Model):
     # Only select one of the dating category FKs
-    dining_category = models.ManyToManyField(
-        Dining, null=True, blank=True)
+    dining_category = models.ManyToManyField(Dining, null=True, blank=True)
     entertainment_category = models.ManyToManyField(
-        Entertainment, null=True, blank=True)
-    out_doors_category = models.ManyToManyField(
-        OutDoors, null=True, blank=True)
-    stay_home_category = models.ManyToManyField(
-        StayHome, null=True, blank=True)
+        Entertainment, null=True, blank=True
+    )
+    out_doors_category = models.ManyToManyField(OutDoors, null=True, blank=True)
+    stay_home_category = models.ManyToManyField(StayHome, null=True, blank=True)
 
     users_one = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="one", null=True
@@ -27,7 +30,9 @@ class DatesNightModel(models.Model):
     location = models.CharField(max_length=100)
 
     when_date_time = models.DateTimeField(default=timezone.now)
-
+    confirmed_activity = models.ForeignKey(
+        ActivityModel, null=True, blank=True, on_delete=models.CASCADE
+    )
     # def __str__(self):
     #     date_activity = ""
     #     if self.dining_category != None:
