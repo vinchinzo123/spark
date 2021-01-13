@@ -23,6 +23,9 @@ from notifications.views import (
     confirm_date_night_view,
 )
 
+handler404 = 'users.views.handler404'
+handler500 = 'users.views.handler500'
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="homepage"),
@@ -59,4 +62,7 @@ urlpatterns = [
     path("append_a_date/<int:notification_id>/", dateViews.receive_date_view),
     path("confirm_date/<int:notification_id>/", confirm_date_night_view),
     path("decline_date/<int:notification_id>/", decline_date_night_view),
+
+
+    path('500error/', views.error500_view, name='500_error'),
 ]

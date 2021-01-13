@@ -132,4 +132,23 @@ def login_view(request):
 @login_required(login_url="login")
 def logout_view(request):
     logout(request)
+    messages.info(request, "successfully logged out")
     return redirect("/")
+
+
+def handler404(request, exception):
+    context = {}
+    response = render(request, "404.html", context=context)
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    context = {}
+    response = render(request, "500.html", context=context)
+    response.status_code = 500
+    return response
+
+
+def error500_view(request):
+    raise Exception('Make response code 500!')
