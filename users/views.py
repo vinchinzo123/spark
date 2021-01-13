@@ -54,7 +54,7 @@ def profile_view(request, profile_id):
     but also on (users_two=profile_id),
     perhapes we can use .intersetcion( ) to get a query sets with unique values
 
-    additionally consier calling User.objects.get(id=profile_id)
+    additionally consider calling User.objects.get(id=profile_id)
      as this will return the specific object we want instead of queryset
 
      if user_profile is None then we can throw a 404 or user not found
