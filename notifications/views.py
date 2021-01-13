@@ -7,13 +7,20 @@ from notifications.models import Notification
 
 @login_required()
 def notification_view(request):
+    """
+    needs to fix when the declined note gets deleted
+    and how to filter the notificaitons
+    """
     sent_notifications = Notification.objects.filter(sent_user=request.user.id).filter(
         status="Sent"
     )
     active_notifications = [x for x in sent_notifications if x.status != "Declined"]
     declined_notifications = []
     for note in sent_notifications:
-        if note.status == "Declined":
+        if (
+            note.status == "Declined"
+            and request.user.username != note.received_user.username
+        ):
             declined_notifications.append(
                 {"date_night": note.date_night, "received_user": note.received_user}
             )
