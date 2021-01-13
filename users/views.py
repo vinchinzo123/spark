@@ -46,8 +46,18 @@ def sign_up(request):
 
 @login_required(login_url="login")
 def profile_view(request, profile_id):
+    """
+     look at the profile.html ensure we are NOT using 'request.user'
+    but the variable 'userprofile' defined on line 54.
+
+    additionally consier calling User.objects.get(id=profile_id)
+     as this will return the specific object we want instead of queryset
+
+     if user_profile is None then we can throw a 404 or user not found
+    """
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
     user_profile = User.objects.filter(id=profile_id).first()
+    breakpoint()
     return render(
         request,
         "profile.html",
