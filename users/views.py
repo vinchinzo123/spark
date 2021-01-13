@@ -6,6 +6,9 @@ from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
 from users.models import User, ImageModel
 from dates.models import DatesNightModel
 from notifications.models import Notification
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.views import View
 
 
 def index(request):
@@ -21,10 +24,39 @@ def index(request):
     return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
-def sign_up(request):
-    html = "sign_up_form.html"
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
+# def sign_up(request):
+#     html = "sign_up_form.html"
+#     if request.method == "POST":
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             new_user = User.objects.create_user(
+#                 username=data["username"],
+#                 full_name=data["display_name"],
+#                 email=data["email"],
+#                 password=data["password"],
+#                 location=data["location"],
+#             )
+#             user = authenticate(
+#                 request, username=data["username"], password=data["password"]
+#             )
+#             if user:
+#                 login(request, user)
+#                 return HttpResponseRedirect(reverse("homepage"))
+#     form = SignUpForm()
+#     return render(request, html, {"form": form})
+
+
+class SignupView(View):
+    form_class = SignUpForm
+    template = "sign_up_form.html"
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template, {"form": form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             new_user = User.objects.create_user(
@@ -40,8 +72,6 @@ def sign_up(request):
             if user:
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
-    form = SignUpForm()
-    return render(request, html, {"form": form})
 
 
 @login_required(login_url="login")
@@ -114,9 +144,31 @@ def preferences_view(request):
     return render(request, "preferences.html", {})
 
 
-def login_view(request):
-    if request.method == "POST":
-        form = LoginForm(request.POST)
+# def login_view(request):
+#     if request.method == "POST":
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             user = authenticate(
+#                 request, username=data["username"], password=data["password"]
+#             )
+#             if user:
+#                 login(request, user)
+#                 return HttpResponseRedirect(reverse("homepage"))
+#     form = LoginForm()
+#     return render(request, "form.html", {"form": form})
+
+
+class LoginView(View):
+    form_class = LoginForm
+    template = "form.html"
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template, {"form": form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(
@@ -125,15 +177,22 @@ def login_view(request):
             if user:
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
-    form = LoginForm()
-    return render(request, "form.html", {"form": form})
 
 
-@login_required(login_url="login")
-def logout_view(request):
-    logout(request)
-    messages.info(request, "successfully logged out")
-    return redirect("/")
+# @login_required(login_url="login")
+# def logout_view(request):
+#     logout(request)
+#     messages.info(request, "successfully logged out")
+#     return redirect("/")
+
+
+class LogoutView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
+    def get(self, request):
+        logout(request)
+        return redirect("/")
 
 
 def handler404(request, exception):
@@ -151,4 +210,4 @@ def handler500(request):
 
 
 def error500_view(request):
-    raise Exception('Make response code 500!')
+    raise Exception("Make response code 500!")
