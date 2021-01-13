@@ -18,7 +18,6 @@ def index(request):
             )
         )
     )
-    breakpoint()
     return render(request, "index.html", {"confirmed_dates": confirmed_dates})
 
 
@@ -119,5 +118,4 @@ def login_view(request):
 @login_required(login_url="login")
 def logout_view(request):
     logout(request)
-    messages.info(request, "successfully logged out")
     return redirect("/")

@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block profile %}
 <style>
 .user_info{
 	text-align: center;
@@ -24,9 +26,6 @@
 }
 
 </style>
-
-{% include 'nav_bar.html' %}
-
 <div class="user_info">
 	<h4>user profile</h4>
 	<img src="" alt="" width="100" height="100" style="border: 1px solid black">
@@ -42,3 +41,4 @@
 	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
 	<button id="photo_profile"><a class="color_text" href="">add photo</a></button>
 </div>
+{% endblock profile%}
