@@ -50,12 +50,16 @@ def profile_view(request, profile_id):
      look at the profile.html ensure we are NOT using 'request.user'
     but the variable 'userprofile' defined on line 54.
 
+    for the number of dates night we will not just want to filter on user_one,
+    but also on (users_two=profile_id), 
+    perhapes we can use .intersetcion( ) to get a query sets with unique values
+
     additionally consier calling User.objects.get(id=profile_id)
      as this will return the specific object we want instead of queryset
 
      if user_profile is None then we can throw a 404 or user not found
     """
-    dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
+    dates_night = len(DatesNightModel.objects.filter(users_one=profile_id).in)
     user_profile = User.objects.filter(id=profile_id).first()
     return render(
         request,
