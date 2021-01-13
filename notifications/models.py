@@ -18,6 +18,12 @@ class Notification(models.Model):
         related_name="received_user",
         null=True,
     )
+    STATUS_CHOICES = [
+        ("Sent", "Sent"),
+        ("Confirmed", "Confirmed"),
+        ("Declined", "Declined"),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Sent")
 
     def __str__(self):
         return f"Notification for: {self.date_night.__str__()} "

@@ -1,6 +1,9 @@
-{% include 'index.html' %}
-<form method="post">
+{% extends 'base.html' %}
+{% block form %}
+{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
+<form method="POST">
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>
+{% endblock form %}
