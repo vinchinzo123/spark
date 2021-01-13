@@ -16,10 +16,10 @@ class Entertainment(models.Model):
         ("Trivia Night", "Trivia Night"),
         ("Comedy House", "Comedy House"),
     ]
-    entertainment_choices = models.CharField(max_length=15, choices=E_CHOICES)
+    choice = models.CharField(max_length=15, choices=E_CHOICES)
 
     def __str__(self):
-        return f"{self.entertainment_choices}"
+        return f"{self.choice}"
 
 
 class Dining(models.Model):
@@ -35,10 +35,10 @@ class Dining(models.Model):
         ("Street Food", "Street Food"),
         ("Thai Cusine", "Thai Cusine"),
     ]
-    dining_choices = models.CharField(max_length=50, choices=D_CHOICES)
+    choice = models.CharField(max_length=50, choices=D_CHOICES)
 
     def __str__(self):
-        return f"{self.dining_choices}"
+        return f"{self.choice}"
 
 
 class OutDoors(models.Model):
@@ -50,10 +50,10 @@ class OutDoors(models.Model):
         ("Lake", "Lake"),
         ("Swimming", "Swimming"),
     ]
-    outdoor_choices = models.CharField(max_length=50, choices=O_CHOICES)
+    choice = models.CharField(max_length=50, choices=O_CHOICES)
 
     def __str__(self):
-        return f"{self.outdoor_choices}"
+        return f"{self.choice}"
 
 
 class StayHome(models.Model):
@@ -61,10 +61,10 @@ class StayHome(models.Model):
     SH_CHOICES = [
         ("Board Games", "Board Games"),
     ]
-    stay_home_choices = models.CharField(max_length=50, choices=SH_CHOICES)
+    choice = models.CharField(max_length=50, choices=SH_CHOICES)
 
     def __str__(self):
-        return f"{self.stay_home_choices}"
+        return f"{self.choice}"
 
 
 class Preferences(models.Model):
