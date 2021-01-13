@@ -28,4 +28,7 @@ class User(AbstractUser):
     location = models.CharField(blank=True, null=True, max_length=50)
 
     def __str__(self):
-        return f"{self.full_name}"
+        return f'{self.full_name}'
+
+class ImageModel(models.Model):
+    picture = models.ImageField(upload_to = 'image')

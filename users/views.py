@@ -2,8 +2,8 @@ from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, SignUpForm
-from users.models import User
+from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
+from users.models import User, ImageModel
 from dates.models import DatesNightModel
 from notifications.models import Notification
 
@@ -71,13 +71,29 @@ def update_profile_view(request, profile_id):
         form = UpdateProfileForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            update_profile.full_name = (data["full_name"],)
-            update_profile.email = (data["email"],)
-            update_profile.location = (data["location"],)
+            update_profile.full_name = data["full_name"]
+            update_profile.email = data["email"]
+            update_profile.location = data["location"]
             update_profile.save()
-        return HttpResponseRedirect(reverse("homepage"))
+        return HttpResponseRedirect(f"/profile/{profile_id}/")
     form = UpdateProfileForm()
     return render(request, html, {"form": form})
+
+
+def add_photo_view(request):
+    if request.method == "POST":
+        userImageForm = ImageForm(request.POST, request.FILES)
+
+        if MyProfileForm.is_valid():
+            profile = Profile()
+            profile.name = MyProfileForm.cleaned_data["name"]
+            profile.picture = MyProfileForm.cleaned_data["picture"]
+            profile.save()
+            saved = True
+
+
+def create_a_date_view(request):
+    return render(request, "create_A_date.html", {})
 
 
 @login_required(login_url="login")
