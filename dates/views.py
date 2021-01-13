@@ -136,7 +136,6 @@ def receive_date_view(request, notification_id):
             matched_choices = receiver_choices.intersection(sender_choices)
             if matched_choices:
                 random_choice = random.choice(matched_choices)
-                # breakpoint()
                 activity = ActivityModel.objects.create(
                     choice=random_choice.choice, category=category
                 )
@@ -144,10 +143,12 @@ def receive_date_view(request, notification_id):
                 date_night.save()
                 notification.status = "Confirmed"
                 return redirect(reverse("homepage"))
-            # what to do when the choices don't match
-            # complete logic that adds a confirmed activity -check
-            # send them back home
-            #  adds a date notification at home
+            notification.status = "No Match"
+            notification.save()
+            # NEED TO MAKE THIS SMOOTH
+            # add a message.info sorry there was no match
+            return redirect(reverse("pending_dates"))
+
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
     ][1:]
