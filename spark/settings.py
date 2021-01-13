@@ -21,7 +21,7 @@ DJANGO_SECRET = os.environ["SECRET_KEY"]
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -31,8 +31,16 @@ SECRET_KEY = DJANGO_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+if DEBUG is False:
+    ALLOWED_HOSTS = [
+        "127.0.0.1:8000",
+        "*",
+    ]
+
+if DEBUG is True:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -90,10 +98,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-STATICFILES_DIR = [
-    BASE_DIR / "",
-    'images'
-]
+STATICFILES_DIR = [BASE_DIR / "", "images"]
 
 
 # Password validation
@@ -133,4 +138,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
