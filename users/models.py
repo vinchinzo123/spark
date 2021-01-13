@@ -32,4 +32,7 @@ class User(AbstractUser):
     # profile_photo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
     # level_of_interest = models.BooleanField(_(""))
     def __str__(self):
-        return f"{self.full_name}"
+        return f'{self.full_name}'
+
+class ImageModel(models.Model):
+    picture = models.ImageField(upload_to = 'image')

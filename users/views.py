@@ -2,8 +2,8 @@ from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, SignUpForm
-from users.models import User
+from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
+from users.models import User, ImageModel
 from dates.models import DatesNightModel
 from notifications.models import Notification
 
@@ -58,11 +58,15 @@ def profile_view(request, profile_id):
 
 def delete_profile_view(request, profile_id):
 
+<<<<<<< HEAD
     delete_profile = User.objects.get(id=profile_id)
     delete_profile.delete()
 
     return render(request, "index.html", {"delete_profile": delete_profile})
 
+=======
+        return HttpResponseRedirect(f"/")
+>>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
 
 def update_profile_view(request, profile_id):
     html = "generic_form.html"
@@ -71,15 +75,45 @@ def update_profile_view(request, profile_id):
         form = UpdateProfileForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+<<<<<<< HEAD
             update_profile.full_name = (data["full_name"],)
             update_profile.email = (data["email"],)
             update_profile.location = (data["location"],)
             update_profile.save()
         return HttpResponseRedirect(reverse("homepage"))
+=======
+            update_profile.full_name = data['full_name']
+            update_profile.email = data['email']
+            update_profile.location = data['location']
+            update_profile.save()
+        return HttpResponseRedirect(f"/profile/{profile_id}/")
+>>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
     form = UpdateProfileForm()
     return render(request, html, {"form": form})
 
 
+<<<<<<< HEAD
+=======
+def add_photo_view(request):
+    if request.method == "POST":
+        userImageForm = ImageForm(request.POST, request.FILES)
+
+        if MyProfileForm.is_valid():
+            profile = Profile()
+            profile.name = MyProfileForm.cleaned_data["name"]
+            profile.picture = MyProfileForm.cleaned_data["picture"]
+            profile.save()
+            saved = True
+
+
+
+
+def create_a_date_view(request):
+    return render(request, "create_A_date.html", {})
+
+
+  
+>>>>>>> dda431e47629aef18609c4ac99e8a29e3b47e6f6
 @login_required(login_url="login")
 def preferences_view(request):
     return render(request, "preferences.html", {})
