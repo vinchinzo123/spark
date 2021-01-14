@@ -21,7 +21,19 @@ def index(request):
             )
         )
     )
-    return render(request, "index.html", {"confirmed_dates": confirmed_dates})
+    # the following is to allow users to login from the landing page
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(
+                request, username=data["username"], password=data["password"]
+            )
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse("homepage"))
+    form = LoginForm()
+    return render(request, "index.html", {"confirmed_dates": confirmed_dates, 'form': form})
 
 
 # def sign_up(request):
@@ -49,7 +61,7 @@ def index(request):
 
 class SignupView(View):
     form_class = SignUpForm
-    template = "sign_up_form.html"
+    template = "index.html"
 
     def get(self, request):
         form = self.form_class()
@@ -161,7 +173,7 @@ def preferences_view(request):
 
 class LoginView(View):
     form_class = LoginForm
-    template = "form.html"
+    template = "index.html"
 
     def get(self, request):
         form = self.form_class()
