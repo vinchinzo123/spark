@@ -40,7 +40,7 @@ urlpatterns = [
         name="update_profile",
     ),
     path("profile/<int:profile_id>/", views.profile_view, name="profile"),
-    path("preferences/", views.preferences_view, name="preferences"),
+    path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
     path("pending_dates/", notification_view, name="pending_dates"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
