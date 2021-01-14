@@ -27,6 +27,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+<<<<<<< HEAD
 handler404 = 'users.views.handler404'
 handler500 = 'users.views.handler500'
 
@@ -49,9 +50,41 @@ urlpatterns = [
         name="update_profile",
     ),
     path("profile/<int:profile_id>/", views.profile_view, name="profile"),
+=======
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name='homepage'),
+>>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
 
     path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
 
+<<<<<<< HEAD
+=======
+    path('delete_profile/<int:profile_id>/', views.delete_profile_view, name='delete_profile'),
+    path('update_profile/<int:profile_id>/', views.update_profile_view, name='update_profile'),
+    path('profile/<int:profile_id>/', views.profile_view, name='profile'),
+  
+    path('preferences/', views.preferences_view, name='preferences'),
+  
+handler404 = 'users.views.handler404'
+handler500 = 'users.views.handler500'
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", views.index, name="homepage"),
+    path(
+        "delete_profile/<int:profile_id>/",
+        views.delete_profile_view,
+        name="delete_profile",
+    ),
+    path(
+        "update_profile/<int:profile_id>/",
+        views.update_profile_view,
+        name="update_profile",
+    ),
+    path("profile/<int:profile_id>/", views.profile_view, name="profile"),
+    path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
+>>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
     path("pending_dates/", notification_view, name="pending_dates"),
 
     path("login/", views.LoginView.as_view(), name="login"),
@@ -67,6 +100,11 @@ urlpatterns = [
     ),
     path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
     path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
+<<<<<<< HEAD
+=======
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+>>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
     path(
         "datenight_detail/<int:date_id>/",
         dateViews.date_detail_view,
@@ -79,5 +117,8 @@ urlpatterns = [
 
     path('500error/', views.error500_view, name='500_error'),
 ]
+<<<<<<< HEAD
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+>>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
