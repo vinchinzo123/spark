@@ -155,7 +155,8 @@ def profile_image_view(request):
             current_user.picture = data['picture']
             current_user.save()
             # breakpoint()
-            return redirect('success') 
+            messages.info(request, 'successfully upload!')
+            return HttpResponseRedirect(f"/profile/{current_user.id}/") 
     else: 
         form = ImageForm() 
     return render(request, 'generic_form.html', {'form' : form}) 
