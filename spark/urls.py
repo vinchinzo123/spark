@@ -23,6 +23,24 @@ from notifications.views import (
     confirm_date_night_view,
 )
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name='homepage'),
+
+    path('user_image/', views.user_photo_view, name = 'user_image'),
+    path('image_upload/', views.profile_image_view, name='image_upload'), 
+    path('success/', views.success, name = 'success'),
+
+    path('delete_profile/<int:profile_id>/', views.delete_profile_view, name='delete_profile'),
+    path('update_profile/<int:profile_id>/', views.update_profile_view, name='update_profile'),
+    path('profile/<int:profile_id>/', views.profile_view, name='profile'),
+  
+    path('preferences/', views.preferences_view, name='preferences'),
+  
 handler404 = 'users.views.handler404'
 handler500 = 'users.views.handler500'
 
@@ -54,6 +72,8 @@ urlpatterns = [
     ),
     path("create_a_date/outdoors", dateViews.send_date_view, name="outdoors"),
     path("create_a_date/stayhome", dateViews.send_date_view, name="stayhome"),
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     path(
         "datenight_detail/<int:date_id>/",
         dateViews.date_detail_view,
