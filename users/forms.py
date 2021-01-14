@@ -1,5 +1,6 @@
 from django import forms
-from .models import User
+from users.models import User
+
 
 class SignUpForm(forms.Form):
     username = forms.CharField(max_length=150)

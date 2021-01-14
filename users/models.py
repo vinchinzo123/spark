@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
+from preferences.models import Preferences, Dining, Entertainment, OutDoors, StayHome
+
 
 class User(AbstractUser):
     """Creates a new user with username and password created through the
@@ -18,12 +20,14 @@ class User(AbstractUser):
         "self", blank=True, symmetrical=False, related_name="friends"
     )
     # the date preferences model may need adjusted depending on future code
-    date_preferences = models.ManyToManyField(
-        "preferences.Preferences",
-        blank=True,
-        symmetrical=False,
-        related_name="date_ideas",
+    # Instead of generic date preferences this would be 4 different fields 
+    # example: dining_preferences = models.ManyToManyField("preferences.Dining")
+    dining_preference = models.ManyToManyField(Dining, blank=True)
+    entertainment_preference = models.ManyToManyField(
+        Entertainment, blank=True
     )
+    out_doors_preference = models.ManyToManyField(OutDoors, blank=True)
+    stay_home_preference = models.ManyToManyField(StayHome, blank=True)
     # the location may be updated later to utilize a geolocation field
     location = models.CharField(blank=True, null=True, max_length=50)
 

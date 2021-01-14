@@ -1,0 +1,47 @@
+<head>
+{% comment %} source for cat animation: https://css-tricks.com/loops-css-preprocessors/ {% endcomment %}
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Futura";
+    }
+    h1, h2 {
+      position: absolute;
+      bottom: 410px;
+      z-index: 9;
+      color: #000;
+      font-weight: 100;
+      font-size: 18px;
+      text-align: center;
+    }
+    h2 {
+        bottom: 370px;
+    }
+    .tuna {
+      animation: walk-cycle 1s steps(12) infinite;
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-90/tuna_sprite.png) 0 0 no-repeat;
+      height: 200px;
+      width: 400px;
+      margin: 100px auto 0;
+    }
+
+    @keyframes walk-cycle {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 -2391px;
+      }
+    }
+  </style>
+  <title>Server Error</title>
+</head>
+<body>
+  <h1>Sorry, the server has encountered an error.</h1>
+  <h2>We'll have it fixed as soon as the cat gets to the other side of the screen.</h2>
+  <div class='tuna'></div>
+</body>

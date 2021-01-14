@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block profile %}
 <style>
 .user_info{
 	text-align: center;
@@ -24,9 +26,6 @@
 }
 
 </style>
-
-{% include 'nav_bar.html' %}
-
 <div class="user_info">
 	<h4>user profile</h4>
 	{% if request.user.is_authenticated %}
@@ -43,6 +42,42 @@
 	<p>Email: {{request.user.email}}</p>
 	<p>Number of Dates: {{datesnight}}</p>
 	<p>Places Visited: {{request.user.location}}</p>
+	{% if request.user.dining_preference.values_list %}
+	<p>Prefered Dining: 
+	<ul>
+	{% for pref in request.user.dining_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.entertainment_preference.values_list %}
+	<p>Prefered Entertainment: 
+	<ul>
+	{% for pref in request.user.entertainment_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.out_doors_preference.values_list %}
+	<p>Prefered Out Door Activities: 
+	<ul>
+	{% for pref in request.user.out_doors_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.stay_home_preference.values_list %}
+	<p>Prefered Stay Home Activities: 
+	<ul>
+	{% for pref in request.user.stay_home_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
 </div>
 <div class="profile_buttons">
 	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
@@ -52,3 +87,4 @@
 
 	{% endif %}
 </div>
+{% endblock profile%}
