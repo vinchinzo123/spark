@@ -30,10 +30,10 @@ class User(AbstractUser):
     stay_home_preference = models.ManyToManyField(StayHome, blank=True)
     # the location may be updated later to utilize a geolocation field
     location = models.CharField(blank=True, null=True, max_length=50)
-    # profile_photo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
-    # level_of_interest = models.BooleanField(_(""))
+
+    # upload image for user 
+    picture = models.ImageField(null=True, blank=True, upload_to="images/")
+
     def __str__(self):
         return f'{self.full_name}'
 
-class ImageModel(models.Model):
-    picture = models.ImageField(upload_to = 'image')

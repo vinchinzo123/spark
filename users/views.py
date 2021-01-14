@@ -1,9 +1,11 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
+from django.http import HttpResponse 
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm, PreferencesUpdateForm
-from users.models import User, ImageModel
+from users.models import User
 from dates.models import DatesNightModel
 from notifications.models import Notification
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -134,17 +136,34 @@ def update_profile_view(request, profile_id):
     return render(request, html, {"form": form})
 
 
-def add_photo_view(request):
-    # needs to be complete
-    if request.method == "POST":
-        userImageForm = ImageForm(request.POST, request.FILES)
+def user_photo_view(request):
 
-        if MyProfileForm.is_valid():
-            profile = Profile()
-            profile.name = MyProfileForm.cleaned_data["name"]
-            profile.picture = MyProfileForm.cleaned_data["picture"]
-            profile.save()
-            saved = True
+    if request.method == 'GET':
+        user_image = User.objects.all()
+        
+    return render(request, 'profile.html', {'user_image' : user_image})
+
+def profile_image_view(request): 
+
+    if request.method == 'POST': 
+        form = ImageForm(request.POST, request.FILES) 
+
+        if form.is_valid(): 
+            # form.save() 
+            data = form.cleaned_data
+            current_user = User.objects.get(id=request.user.id)
+            current_user.picture = data['picture']
+            current_user.save()
+            # breakpoint()
+            return redirect('success') 
+    else: 
+        form = ImageForm() 
+    return render(request, 'generic_form.html', {'form' : form}) 
+
+
+def success(request): 
+    return HttpResponse('successfully uploaded')
+
 
 
 class PreferencesUpdateView(LoginRequiredMixin, View):

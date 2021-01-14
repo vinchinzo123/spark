@@ -19,9 +19,6 @@ class UpdateProfileForm(forms.Form):
     email = forms.EmailField( max_length=254)
     location = forms.CharField(max_length=50)
 
-class ImageForm(forms.Form):
-    picture = forms.ImageField()
-
 
 class PreferencesUpdateForm(forms.ModelForm):
     class Meta:
@@ -32,3 +29,9 @@ class PreferencesUpdateForm(forms.ModelForm):
             'out_doors_preference',
             'stay_home_preference'
         ]
+
+        
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['picture']
