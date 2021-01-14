@@ -1,5 +1,5 @@
 from django import forms
-
+from .models import User
 
 class SignUpForm(forms.Form):
     username = forms.CharField(max_length=150)
@@ -18,5 +18,7 @@ class UpdateProfileForm(forms.Form):
     email = forms.EmailField( max_length=254)
     location = forms.CharField(max_length=50)
 
-class ImageForm(forms.Form):
-    picture = forms.ImageField()
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['picture']

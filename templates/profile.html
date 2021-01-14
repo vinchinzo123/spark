@@ -29,7 +29,14 @@
 
 <div class="user_info">
 	<h4>user profile</h4>
-	<img src="" alt="" width="100" height="100" style="border: 1px solid black">
+	{% if request.user.is_authenticated %}
+
+	{% if request.user.picture %}
+
+
+	<img src="{{request.user.picture.url}}" alt="user image" width="150" height="150" style="border: 1px solid black">
+
+	{% endif %}
 
 	<p>Username: {{request.user.username}}</p>
 	<p>Full name: {{request.user.full_name}}</p> 
@@ -40,5 +47,8 @@
 <div class="profile_buttons">
 	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
 	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
-	<button id="photo_profile"><a class="color_text" href="">add photo</a></button>
+
+	<button id="photo_profile"><a class="color_text" href="/image_upload/">add photo</a></button>
+
+	{% endif %}
 </div>
