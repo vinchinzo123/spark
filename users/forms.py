@@ -19,7 +19,6 @@ class UpdateProfileForm(forms.Form):
     email = forms.EmailField( max_length=254)
     location = forms.CharField(max_length=50)
 
-<<<<<<< HEAD
 
 class PreferencesUpdateForm(forms.ModelForm):
     class Meta:
@@ -32,8 +31,6 @@ class PreferencesUpdateForm(forms.ModelForm):
         ]
 
         
-=======
->>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
 class ImageForm(forms.ModelForm):
     class Meta:
         model = User

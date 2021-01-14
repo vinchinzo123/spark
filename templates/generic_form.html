@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 {% extends 'base.html' %}
 {% block form %}
-=======
-{% include 'nav_bar.html' %}
->>>>>>> e6b3303d65ff9adc5599b6e43bee8f78ee3d30f9
 <form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
