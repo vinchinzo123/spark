@@ -1,4 +1,5 @@
 from django import forms
+from users.models import User
 
 
 class SignUpForm(forms.Form):
@@ -20,3 +21,14 @@ class UpdateProfileForm(forms.Form):
 
 class ImageForm(forms.Form):
     picture = forms.ImageField()
+
+
+class PreferencesUpdateForm(forms.ModelForm):
+    class Meta:
+        model= User
+        fields = [
+            'dining_preference',
+            'entertainment_preference',
+            'out_doors_preference',
+            'stay_home_preference'
+        ]

@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
+from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm, PreferencesUpdateForm
 from users.models import User, ImageModel
 from dates.models import DatesNightModel
 from notifications.models import Notification
@@ -147,13 +147,25 @@ def add_photo_view(request):
             saved = True
 
 
-def create_a_date_view(request):
-    return render(request, "create_A_date.html", {})
+class PreferencesUpdateView(LoginRequiredMixin, View):
+    form_class = PreferencesUpdateForm
+    template = 'form.html'
 
+    def get(self, request):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template, {'form': form})
 
-@login_required(login_url="login")
-def preferences_view(request):
-    return render(request, "preferences.html", {})
+    def post(self, request):
+        form = self.form_class(data=request.POST, instance=request.user)
+        if form.is_valid():
+            data = form.cleaned_data
+            current_user = User.objects.get(id=request.user.id)
+            current_user.dining_preference.set(data['dining_preference'])
+            current_user.entertainment_preference.set(data['entertainment_preference'])
+            current_user.out_doors_preference.set(data['out_doors_preference'])
+            current_user.stay_home_preference.set(data['stay_home_preference'])
+            return redirect(f"/profile/{request.user.id}/")
+
 
 
 # def login_view(request):
