@@ -104,7 +104,7 @@ def profile_view(request, profile_id):
      if user_profile is None then we can throw a 404 or user not found
     """
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
-    user_profile = User.objects.filter(id=profile_id).first()
+    user_profile = User.objects.get(id=profile_id)
     return render(
         request,
         "profile.html",
@@ -155,7 +155,8 @@ def profile_image_view(request):
             current_user.picture = data['picture']
             current_user.save()
             # breakpoint()
-            return redirect('success') 
+            messages.info(request, 'successfully upload!')
+            return HttpResponseRedirect(f"/profile/{current_user.id}/") 
     else: 
         form = ImageForm() 
     return render(request, 'generic_form.html', {'form' : form}) 
