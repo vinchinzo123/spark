@@ -1,9 +1,11 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
+from django.http import HttpResponse 
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm
-from users.models import User, ImageModel
+from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm, PreferencesUpdateForm
+from users.models import User
 from dates.models import DatesNightModel
 from notifications.models import Notification
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -21,7 +23,19 @@ def index(request):
             )
         )
     )
-    return render(request, "index.html", {"confirmed_dates": confirmed_dates})
+    # the following is to allow users to login from the landing page
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(
+                request, username=data["username"], password=data["password"]
+            )
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse("homepage"))
+    form = LoginForm()
+    return render(request, "index.html", {"confirmed_dates": confirmed_dates, 'form': form})
 
 
 # def sign_up(request):
@@ -49,7 +63,7 @@ def index(request):
 
 class SignupView(View):
     form_class = SignUpForm
-    template = "sign_up_form.html"
+    template = "index.html"
 
     def get(self, request):
         form = self.form_class()
@@ -122,26 +136,55 @@ def update_profile_view(request, profile_id):
     return render(request, html, {"form": form})
 
 
-def add_photo_view(request):
-    # needs to be complete
-    if request.method == "POST":
-        userImageForm = ImageForm(request.POST, request.FILES)
+def user_photo_view(request):
 
-        if MyProfileForm.is_valid():
-            profile = Profile()
-            profile.name = MyProfileForm.cleaned_data["name"]
-            profile.picture = MyProfileForm.cleaned_data["picture"]
-            profile.save()
-            saved = True
+    if request.method == 'GET':
+        user_image = User.objects.all()
+        
+    return render(request, 'profile.html', {'user_image' : user_image})
+
+def profile_image_view(request): 
+
+    if request.method == 'POST': 
+        form = ImageForm(request.POST, request.FILES) 
+
+        if form.is_valid(): 
+            # form.save() 
+            data = form.cleaned_data
+            current_user = User.objects.get(id=request.user.id)
+            current_user.picture = data['picture']
+            current_user.save()
+            # breakpoint()
+            return redirect('success') 
+    else: 
+        form = ImageForm() 
+    return render(request, 'generic_form.html', {'form' : form}) 
 
 
-def create_a_date_view(request):
-    return render(request, "create_A_date.html", {})
+def success(request): 
+    return HttpResponse('successfully uploaded')
 
 
-@login_required(login_url="login")
-def preferences_view(request):
-    return render(request, "preferences.html", {})
+
+class PreferencesUpdateView(LoginRequiredMixin, View):
+    form_class = PreferencesUpdateForm
+    template = 'form.html'
+
+    def get(self, request):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(data=request.POST, instance=request.user)
+        if form.is_valid():
+            data = form.cleaned_data
+            current_user = User.objects.get(id=request.user.id)
+            current_user.dining_preference.set(data['dining_preference'])
+            current_user.entertainment_preference.set(data['entertainment_preference'])
+            current_user.out_doors_preference.set(data['out_doors_preference'])
+            current_user.stay_home_preference.set(data['stay_home_preference'])
+            return redirect(f"/profile/{request.user.id}/")
+
 
 
 # def login_view(request):
@@ -161,7 +204,7 @@ def preferences_view(request):
 
 class LoginView(View):
     form_class = LoginForm
-    template = "form.html"
+    template = "index.html"
 
     def get(self, request):
         form = self.form_class()

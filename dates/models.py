@@ -12,12 +12,12 @@ class ActivityModel(models.Model):
 
 class DatesNightModel(models.Model):
     # Only select one of the dating category FKs
-    dining_category = models.ManyToManyField(Dining, null=True, blank=True)
+    dining_category = models.ManyToManyField(Dining, blank=True)
     entertainment_category = models.ManyToManyField(
-        Entertainment, null=True, blank=True
+        Entertainment, blank=True
     )
-    out_doors_category = models.ManyToManyField(OutDoors, null=True, blank=True)
-    stay_home_category = models.ManyToManyField(StayHome, null=True, blank=True)
+    out_doors_category = models.ManyToManyField(OutDoors, blank=True)
+    stay_home_category = models.ManyToManyField(StayHome, blank=True)
 
     users_one = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="one", null=True

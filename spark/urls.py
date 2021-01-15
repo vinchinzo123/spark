@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views
+from users.views import handler404, handler500
 from dates import views as dateViews
 from notifications.views import (
     notification_view,
@@ -23,12 +24,21 @@ from notifications.views import (
     confirm_date_night_view,
 )
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 handler404 = 'users.views.handler404'
 handler500 = 'users.views.handler500'
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="homepage"),
+
+    path('user_image/', views.user_photo_view, name = 'user_image'),
+    path('image_upload/', views.profile_image_view, name='image_upload'), 
+    path('success/', views.success, name = 'success'),
+
     path(
         "delete_profile/<int:profile_id>/",
         views.delete_profile_view,
@@ -40,11 +50,15 @@ urlpatterns = [
         name="update_profile",
     ),
     path("profile/<int:profile_id>/", views.profile_view, name="profile"),
-    path("preferences/", views.preferences_view, name="preferences"),
+
+    path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
+
     path("pending_dates/", notification_view, name="pending_dates"),
+
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("sign_up/", views.SignupView.as_view(), name="sign_up_page"),
+
     path("create_a_date/", dateViews.create_a_date_view, name="create_a_date"),
     path("create_a_date/dining", dateViews.send_date_view, name="dining"),
     path(
@@ -66,3 +80,6 @@ urlpatterns = [
 
     path('500error/', views.error500_view, name='500_error'),
 ]
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

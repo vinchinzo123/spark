@@ -28,17 +28,63 @@
 </style>
 <div class="user_info">
 	<h4>user profile</h4>
-	<img src="" alt="" width="100" height="100" style="border: 1px solid black">
+	{% if request.user.is_authenticated %}
+
+	{% if request.user.picture %}
+
+
+	<img src="{{request.user.picture.url}}" alt="user image" width="150" height="150" style="border: 1px solid black">
+
+	{% endif %}
 
 	<p>Username: {{request.user.username}}</p>
 	<p>Full name: {{request.user.full_name}}</p> 
 	<p>Email: {{request.user.email}}</p>
 	<p>Number of Dates: {{datesnight}}</p>
 	<p>Places Visited: {{request.user.location}}</p>
+	{% if request.user.dining_preference.values_list %}
+	<p>Prefered Dining: 
+	<ul>
+	{% for pref in request.user.dining_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.entertainment_preference.values_list %}
+	<p>Prefered Entertainment: 
+	<ul>
+	{% for pref in request.user.entertainment_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.out_doors_preference.values_list %}
+	<p>Prefered Out Door Activities: 
+	<ul>
+	{% for pref in request.user.out_doors_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
+	{% if request.user.stay_home_preference.values_list %}
+	<p>Prefered Stay Home Activities: 
+	<ul>
+	{% for pref in request.user.stay_home_preference.values_list %}
+		<li>{{pref.1}}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	</p>
 </div>
 <div class="profile_buttons">
 	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
 	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
-	<button id="photo_profile"><a class="color_text" href="">add photo</a></button>
+
+	<button id="photo_profile"><a class="color_text" href="/image_upload/">add photo</a></button>
+
+	{% endif %}
 </div>
 {% endblock profile%}

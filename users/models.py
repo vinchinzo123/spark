@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
+from preferences.models import Preferences, Dining, Entertainment, OutDoors, StayHome
+
 
 class User(AbstractUser):
     """Creates a new user with username and password created through the
@@ -20,19 +22,18 @@ class User(AbstractUser):
     # the date preferences model may need adjusted depending on future code
     # Instead of generic date preferences this would be 4 different fields 
     # example: dining_preferences = models.ManyToManyField("preferences.Dining")
-
-    date_preferences = models.ManyToManyField(
-        "preferences.Preferences",
-        blank=True,
-        symmetrical=False,
-        related_name="date_ideas",
+    dining_preference = models.ManyToManyField(Dining, blank=True)
+    entertainment_preference = models.ManyToManyField(
+        Entertainment, blank=True
     )
+    out_doors_preference = models.ManyToManyField(OutDoors, blank=True)
+    stay_home_preference = models.ManyToManyField(StayHome, blank=True)
     # the location may be updated later to utilize a geolocation field
     location = models.CharField(blank=True, null=True, max_length=50)
-    # profile_photo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
-    # level_of_interest = models.BooleanField(_(""))
+
+    # upload image for user 
+    picture = models.ImageField(null=True, blank=True, upload_to="images/")
+
     def __str__(self):
         return f'{self.full_name}'
 
-class ImageModel(models.Model):
-    picture = models.ImageField(upload_to = 'image')
