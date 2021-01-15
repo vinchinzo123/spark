@@ -85,11 +85,72 @@
 	</p>
 </div>
 <div class="profile_buttons">
-	<button id="update_profile"><a class="color_text" href="/update_profile/{{user.id}}/">update profile</a></button>
-	<button id="delete_profile"><a class="color_text" href="/delete_profile/{{user.id}}/">delete profile</a></button>
-
-	<button id="photo_profile"><a class="color_text" href="/image_upload/">add photo</a></button>
+	{% comment %} update profile modal {% endcomment %}
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Update Profile</a>
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+		<h4>Update your Profile</h4>
+		<form method="POST" action="/update_profile/{{user.id}}/" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ update_profile_form.as_p }}
+			<input type="submit" value="Update">
+		</form>
+		</div>
+		<div class="modal-footer">
+		<a href="/profile/{{request.user.id}}" class="modal-close waves-effect waves-green btn-flat">I've changed my mind.</a>
+		</div>
+	</div>
+	{% comment %} update date preferences modal {% endcomment %}
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal2">Update Your Date Preferences</a>
+	<div id="modal2" class="modal">
+		<div class="modal-content">
+		<h4>Update Your Date Preferences</h4>
+		<form method="POST" action="/preferences/" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ update_preferences_form.as_p }}
+			<input type="submit" value="submit">
+		</form>
+		</div>
+		<div class="modal-footer">
+		<a href="/profile/{{request.user.id}}" class="modal-close waves-effect waves-green btn-flat">I've changed my mind.</a>
+		</div>
+	</div>
+	{% comment %} update profile picture modal {% endcomment %}
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal3">Update Profile Picture</a>
+	<div id="modal3" class="modal">
+		<div class="modal-content">
+		<h4>Update your Profile Picture</h4>
+		<p>Select a photo</p>
+		<form method="POST" action="/image_upload/" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ update_pic_form.as_p }}
+			<input type="submit" value="Upload">
+		</form>
+		</div>
+		<div class="modal-footer">
+		<a href="/profile/{{request.user.id}}" class="modal-close waves-effect waves-green btn-flat">I've changed my mind.</a>
+		</div>
+	</div>
+	{% comment %} delete profile modal {% endcomment %}
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal4">Delete profile</a>
+	<div id="modal4" class="modal">
+		<div class="modal-content">
+		<h4>Delete Your Profile</h4>
+		<p>You are about to delete your profile. Are you sure you want to do this?</p>
+		</div>
+		<div class="modal-footer">
+		<a href="/delete_profile/{{request.user.id}}" class="modal-close waves-effect waves-green btn-flat">Delete My Profile</a>
+		<a href="/profile/{{request.user.id}}" class="modal-close waves-effect waves-green btn-flat">I've changed my mind.</a>
+		</div>
+	</div>
+			
 
 	{% endif %}
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
 {% endblock profile%}
