@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views
+from users.views import handler404, handler500
 from dates import views as dateViews
 from notifications.views import (
     notification_view,
