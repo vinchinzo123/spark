@@ -27,6 +27,11 @@
 
 </style>
 <div class="user_info">
+	{% if messages %}
+		{% for msg in messages %}
+			{{msg}}
+		{% endfor %}
+	{% endif %}
 	<h4>user profile</h4>
 	{% if request.user.is_authenticated %}
 
