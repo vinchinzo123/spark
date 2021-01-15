@@ -104,7 +104,7 @@ def profile_view(request, profile_id):
      if user_profile is None then we can throw a 404 or user not found
     """
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
-    user_profile = User.objects.filter(id=profile_id).first()
+    user_profile = User.objects.get(id=profile_id)
     return render(
         request,
         "profile.html",
