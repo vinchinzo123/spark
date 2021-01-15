@@ -105,10 +105,17 @@ def profile_view(request, profile_id):
     """
     dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
     user_profile = User.objects.filter(id=profile_id).first()
+    update_profile_form = UpdateProfileForm(instance=request.user)
+    update_preferences_form = PreferencesUpdateForm(instance=request.user)
+    update_pic_form = ImageForm()
     return render(
         request,
         "profile.html",
-        {"datesnight": dates_night, "userprofile": user_profile},
+        {"datesnight": dates_night, "userprofile": user_profile,
+        'update_pic_form': update_pic_form,
+        'update_profile_form': update_profile_form,
+        'update_preferences_form': update_preferences_form,
+        }
     )
 
 
