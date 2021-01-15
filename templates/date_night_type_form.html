@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block activity_form %}
-{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
 <form method="POST">
     {% csrf_token %}
+          <label for="choice">Date Night Type</label>
         <div class="input-field col s12">
     <select id="choice" name="choice">
-        <option class=browser-default value="" disabled selected>Date Night Type</option>
+        <option class=browser-default value="" disabled selected>Select Date Type</option>
         {% for choice in date_night_choices %}
         <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
         {% endfor %}
