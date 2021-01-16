@@ -1,53 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spark</title>
-</head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<body>
-{% include 'nav_bar.html' %}
-{% block index %}
-{% endblock %}
-{% block form %}
-{% endblock %}
-{% block pending_dates %}
-{% endblock pending_dates %}
-{% block date %}
-{% endblock %}
-{% block activity_form %}
-{% block date_night_details %}
-{% endblock date_night_details %}
-{% endblock %}
-{% block profile %}
-{% endblock profile %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
+  </head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+  <body>
+    {% include 'nav_bar.html' %}
+     {% block index %} {% endblock index %} 
+      {% block form %} {% endblock form %}
+      {% block pending_dates %} {% endblock pending_dates %}
+      {% block date %} {% endblock date %} 
+      {% block activity_form %} {% endblock activity_form%}
+      {% block date_night_details %} {% endblock date_night_details %} 
+      {% block profile %} {% endblock profile %}
+  </body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll("select");
         var instances = M.FormSelect.init(elems);
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.datepicker');
-        var instances = M.Datepicker.init(elems, {format:'m/d/yyyy'});
-    });
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.timepicker');
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".datepicker");
+        var instances = M.Datepicker.init(elems, { format: "m/d/yyyy" });
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".timepicker");
         var instances = M.Timepicker.init(elems);
-    });
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".sidenav");
         var instances = M.Sidenav.init(elems);
-    });
-</script>
-</body>
+      });
+    </script>
 </html>
-
-
-
-
-
-
-
