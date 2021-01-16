@@ -45,7 +45,7 @@ def decline_date_night_view(path, notification_id):
     notification.status = "Declined"
     notification.received_user = None
     notification.save()
-    return redirect("/pending_dates/")
+    return redirect("/")
 
 
 @login_required()

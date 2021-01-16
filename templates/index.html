@@ -3,15 +3,31 @@
 {% if request.user.is_authenticated %}
   <h4>Welcome, {{ request.user.username }}</h4>
     {% if declined_notifications %}
-      <h3>declined dates</h3>
+      <h3>Declined dates</h3>
     {% endif %}
     <ul>
+  
     {% for note in declined_notifications  %}
-      <ol>Date sent to {{note.received_user.received_user.username}} has been declined.
+      <ol>Date sent to {{note.received_user.username}} has been declined.
       Try again later or with a different friend!
       </ol>
     {% endfor %}
     </ul>
+    {% if no_match_notifications %}
+    <ul>
+    {% for note in no_match_notifications  %}
+      {% if request.user.username == note.received_user.username %}
+      <ol>Date sent from {{note.sent_user.username}} has not been matched.
+      Try again later or with a different friend!
+      </ol>  
+      {% else %}    
+      <ol>Date sent to {{note.received_user.username}} has not been matched.
+      Try again later or with a different friend!
+      </ol>
+      {% endif %}
+    {% endfor %}
+    </ul>
+    {% endif %}
   <h6>Coming up dates!</h6>
   <ul>
     {% for notes in confirmed_dates %}
