@@ -51,6 +51,9 @@ def index(request):
         .filter(status="No Match")
         .filter(archived=False)
     )
+    for note in declined_notifications:
+        note.archived = True
+        note.save()
 
     for note in no_match_notifications:
         breakpoint()
