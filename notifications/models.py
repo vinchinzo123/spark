@@ -26,5 +26,7 @@ class Notification(models.Model):
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Sent")
 
+    archived = models.BooleanField(default=False)
+
     def __str__(self):
         return f"Notification for: {self.date_night.__str__()} "

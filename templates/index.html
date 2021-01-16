@@ -2,6 +2,16 @@
 {% block index %} 
 {% if request.user.is_authenticated %}
   <h4>Welcome, {{ request.user.username }}</h4>
+    {% if declined_notifications %}
+      <h3>declined dates</h3>
+    {% endif %}
+    <ul>
+    {% for note in declined_notifications  %}
+      <ol>Date sent to {{note.received_user.received_user.username}} has been declined.
+      Try again later or with a different friend!
+      </ol>
+    {% endfor %}
+    </ul>
   <h6>Coming up dates!</h6>
   <ul>
     {% for notes in confirmed_dates %}
@@ -18,6 +28,7 @@
     </ol>
     {% endfor %}
   </ul>
+  {% include 'pending_dates.html' %}
 {% else %}
 <div class="row" style='padding-top: 2em'>
   <div class="col s11 m5 l5 offset-s1 offset-m1 offset-l1">

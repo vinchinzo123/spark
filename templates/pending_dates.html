@@ -1,20 +1,11 @@
-{% extends 'base.html' %}
-{% block pending_dates %}
-{% if declined_notifications %}
-<h3>declined dates</h3>
+
+{% if active_notifications %}
+<h6>Sent dates</h6>
 {% endif %}
-
-{% for note in declined_notifications  %}
-<br/>
-Date sent to {{note.received_user.received_user.username}} has been declined.
-Try again later or with a different friend!
-{% endfor %}
-<br />
-<h3>pending dates</h3>
+<ul>
 {% for note in active_notifications  %}
-<br/>
+<ol>
 {% if note.status != "Declined" %}
-
 Sent to {{note.received_user.username}}
 Date {{note.date_night.when_date_time}}
 Where {{note.date_night.location}}
@@ -22,7 +13,9 @@ Where {{note.date_night.location}}
 Date sent to {{note.received_user.username}} has been declined.
 Try again later or with a different friend!
 {% endif %}
+</ol>
 {% endfor %}
+</ul>
 <br />
 {% for note in received_notifications  %}
 {% if note.status == "Declined" %}
@@ -38,4 +31,3 @@ Where {{note.date_night.location}}
 {% endif %}
 {% endfor %}
 
-{% endblock pending_dates %}

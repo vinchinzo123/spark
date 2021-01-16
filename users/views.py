@@ -1,10 +1,16 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
-from django.http import HttpResponse 
+from django.http import HttpResponse
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm, PreferencesUpdateForm
+from users.forms import (
+    LoginForm,
+    UpdateProfileForm,
+    ImageForm,
+    SignUpForm,
+    PreferencesUpdateForm,
+)
 from users.models import User
 from dates.models import DatesNightModel
 from notifications.models import Notification
@@ -14,6 +20,10 @@ from django.views import View
 
 
 def index(request):
+    """
+    needs to fix when the declined note gets deleted
+    and how to filter the notificaitons
+    """
     confirmed_dates = (
         Notification.objects.filter(status="Confirmed")
         .filter(sent_user=request.user.id)
@@ -23,6 +33,20 @@ def index(request):
             )
         )
     )
+    active_notifications = Notification.objects.filter(
+        sent_user=request.user.id
+    ).filter(status="Sent")
+    declined_notifications = (
+        Notification.objects.filter(sent_user=request.user.id)
+        .filter(status="Declined")
+        .filter(archived=False)
+    )
+    for note in declined_notifications:
+        note.archived = True
+        note.save()
+    received_notifications = Notification.objects.filter(
+        received_user=request.user.id
+    ).filter(status="Sent")
     # the following is to allow users to login from the landing page
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -35,7 +59,17 @@ def index(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
     form = LoginForm()
-    return render(request, "index.html", {"confirmed_dates": confirmed_dates, 'form': form})
+    return render(
+        request,
+        "index.html",
+        {
+            "confirmed_dates": confirmed_dates,
+            "received_notifications": received_notifications,
+            "active_notifications": active_notifications,
+            "declined_notifications": declined_notifications,
+            "form": form,
+        },
+    )
 
 
 # def sign_up(request):
@@ -111,11 +145,13 @@ def profile_view(request, profile_id):
     return render(
         request,
         "profile.html",
-        {"datesnight": dates_night, "userprofile": user_profile,
-        'update_pic_form': update_pic_form,
-        'update_profile_form': update_profile_form,
-        'update_preferences_form': update_preferences_form,
-        }
+        {
+            "datesnight": dates_night,
+            "userprofile": user_profile,
+            "update_pic_form": update_pic_form,
+            "update_profile_form": update_profile_form,
+            "update_preferences_form": update_preferences_form,
+        },
     )
 
 
@@ -145,54 +181,53 @@ def update_profile_view(request, profile_id):
 
 def user_photo_view(request):
 
-    if request.method == 'GET':
+    if request.method == "GET":
         user_image = User.objects.all()
-        
-    return render(request, 'profile.html', {'user_image' : user_image})
 
-def profile_image_view(request): 
+    return render(request, "profile.html", {"user_image": user_image})
 
-    if request.method == 'POST': 
-        form = ImageForm(request.POST, request.FILES) 
 
-        if form.is_valid(): 
-            # form.save() 
+def profile_image_view(request):
+
+    if request.method == "POST":
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # form.save()
             data = form.cleaned_data
             current_user = User.objects.get(id=request.user.id)
-            current_user.picture = data['picture']
+            current_user.picture = data["picture"]
             current_user.save()
             # breakpoint()
-            messages.info(request, 'successfully upload!')
-            return HttpResponseRedirect(f"/profile/{current_user.id}/") 
-    else: 
-        form = ImageForm() 
-    return render(request, 'generic_form.html', {'form' : form}) 
+            messages.info(request, "successfully upload!")
+            return HttpResponseRedirect(f"/profile/{current_user.id}/")
+    else:
+        form = ImageForm()
+    return render(request, "generic_form.html", {"form": form})
 
 
-def success(request): 
-    return HttpResponse('successfully uploaded')
-
+def success(request):
+    return HttpResponse("successfully uploaded")
 
 
 class PreferencesUpdateView(LoginRequiredMixin, View):
     form_class = PreferencesUpdateForm
-    template = 'form.html'
+    template = "form.html"
 
     def get(self, request):
         form = self.form_class(instance=request.user)
-        return render(request, self.template, {'form': form})
+        return render(request, self.template, {"form": form})
 
     def post(self, request):
         form = self.form_class(data=request.POST, instance=request.user)
         if form.is_valid():
             data = form.cleaned_data
             current_user = User.objects.get(id=request.user.id)
-            current_user.dining_preference.set(data['dining_preference'])
-            current_user.entertainment_preference.set(data['entertainment_preference'])
-            current_user.out_doors_preference.set(data['out_doors_preference'])
-            current_user.stay_home_preference.set(data['stay_home_preference'])
+            current_user.dining_preference.set(data["dining_preference"])
+            current_user.entertainment_preference.set(data["entertainment_preference"])
+            current_user.out_doors_preference.set(data["out_doors_preference"])
+            current_user.stay_home_preference.set(data["stay_home_preference"])
             return redirect(f"/profile/{request.user.id}/")
-
 
 
 # def login_view(request):
