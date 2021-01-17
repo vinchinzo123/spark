@@ -2,12 +2,12 @@
       {% if confirmed_dates %}
       <h6 >Coming up Date Nights!</h6>
       {% else %}
-      <h6 >No Date Nights coming up!</h6>
+      <h6 >No Confirmed Date Nights</h6>
       
       {% endif %}
       <div class="">
         {% for notes in confirmed_dates %}
-          <div class="horizontal card s4 gray lighten-5">
+          <div class="horizontal card hoverable s4 gray lighten-5">
             <div class="card-stacked">
               <div class="card-content">
                 {{notes.date_night.confirmed_activity.choice}} in

@@ -8,20 +8,23 @@
       </div>
     </div>
     {% include 'home_toasts.html' %}
-
-    <div class="col m6 s12">
-      {% include 'confirmed_dates.html' %}
-      <div class="divider"></div>
-      <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
-        {% include 'pending_dates.html' %}
+    <div class='row '>
+      <div class="col l6 s12">
+        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        Include date form here
+        </div>
       </div>
-      <div class="divider"></div>
-      <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
-        {% include 'requested_dates.html' %}
+      <div class="col l6  s12">
+        {% include 'confirmed_dates.html' %}
+        <div class="divider"></div>
+        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+          {% include 'requested_dates.html' %}
+        </div>
+        <div class="divider"></div>
+        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+          {% include 'pending_dates.html' %}
+        </div>
       </div>
-    </div>
-    <div class="col m6 s12">
-      Date form here
     </div>
   </div>
 {% else %}

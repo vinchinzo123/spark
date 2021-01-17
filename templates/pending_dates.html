@@ -6,7 +6,7 @@
 {% endif %}
 <div>
 {% for note in active_notifications  %}
-  <div class="horizontal card s4 gray lighten-5">
+  <div class="horizontal hoverable card s4 gray lighten-5">
     <div class="card-stacked">
       <div class="card-content">
         Sent to {{note.received_user.username}}
@@ -14,7 +14,7 @@
         Where {{note.date_night.location}}
       </div>
       <div class="grey lighten-5 card-action">
-        <a class="waves-effect waves-red btn red-text white wa modal-trigger" href="#modalCancelDate{{note.date_night.id}}">Cancel Date</a>
+        <a class="waves-effect waves-red btn red-text white modal-trigger" href="#modalCancelDate{{note.date_night.id}}">Cancel Date</a>
       </div>
     </div>
   </div>

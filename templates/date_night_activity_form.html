@@ -1,47 +1,50 @@
 {% extends 'base.html' %}
 {% block date %}
-{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
-<form method="post">
-    {% csrf_token %}
-    {% if receiver %}
-            <div class="input-field col s12">
+<div class='row container' >
+  <div class="col s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+    <form method="post">
+      {% csrf_token %}
+      {% if receiver %}
+        <div class="input-field col s12">
           <select id="{{category}}" name="{{category}}" required multiple>
-          <option class=browser-default value="" disabled selected>Fun date to pick</option>
-          {% for date_activity in dates_to_pick %}
-            <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
-          {% endfor %}
+            <option class=browser-default value="" disabled selected>Fun date to pick</option>
+            {% for date_activity in dates_to_pick %}
+              <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+            {% endfor %}
           </select>
           <label for="{{category}}">Date Night Activity</label>
         </div>
-    {% else %}
+      {% else %}
         <label for="users_two">Your Spark</label>
         <select id="users_two" name="users_two">
-        <option class=browser-default value="" disabled selected>Users to pick</option>
-        {% for user in date_night_users %}
-          <option class=browser-default value="{{ user.instance }}">{{ user.value }}</option>
-        {% endfor %}
+          <option class=browser-default value="" disabled selected>Users to pick</option>
+          {% for user in date_night_users %}
+            <option class=browser-default value="{{ user.instance }}">{{ user.value }}</option>
+          {% endfor %}
         </select>
         <div class="input-field col s12">
           <select id="{{category}}" name="{{category}}" required multiple>
-          <option class=browser-default value="" disabled selected>Fun date to pick</option>
-          {% for date_activity in dates_to_pick %}
-            <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
-          {% endfor %}
+            <option class=browser-default value="" disabled selected>Fun date to pick</option>
+            {% for date_activity in dates_to_pick %}
+              <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+            {% endfor %}
           </select>
           <label for="{{category}}">Date Night Type</label>
         </div>
-    <label for="location" class="active">Location</label>
-    <input type="text" name="location" maxlength="100" required="" id="location">
+        
+        <label for="location">Location</label>
+        <input type="text" name="location" maxlength="100" required="" id="location">
 
-    <label for="date_day">Date Night</label>
-    <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker">
+        <label for="date_day">Date Night</label>
+        <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker">
 
-    <label for="date_time">Date Time</label>
-    <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
-    {% endif %}
+        <label for="date_time">Date Time</label>
+        <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
+        {% endif %}
 
-    <input  type="submit" class="waves-effect light-blue waves-yellow btn" value="Confirm Date">
+        <input  type="submit" class="waves-effect light-blue waves-yellow btn" value="Confirm Date">
 
-</form>
-
+    </form>
+  </div>
+</div>
 {% endblock date %}

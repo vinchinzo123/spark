@@ -1,17 +1,17 @@
-  {% for note in declined_notifications  %}
+  {% comment %} {% for note in declined_notifications  %}
     <script type="text/javascript">
       M.toast({displayLength:5000, html: "Date sent to {{note.date_night.users_two.username}} has been declined. Try again later or with a different friend!"})
     </script>
-  {% endfor %}
+  {% endfor %} {% endcomment %}
 
   {% for note in declined_notifications  %}
   {% if request.user.username == note.sent_user.username %}
     <script type="text/javascript">
-      M.toast({displayLength:5000, html: "Date with {{note.received_user.username}} has been cancelled. Try again later or with a different friend!"})
+      M.toast({displayLength:5000, html: "Date with {{note.received_user.username}} has been declined. Try again later or with a different friend!"})
     </script>
   {% else %}
     <script type="text/javascript">
-      M.toast({displayLength:5000, html: "Date with {{note.sent_user.username}} has been cancelled. Try again later or with a different friend!"})
+      M.toast({displayLength:5000, html: "Date with {{note.sent_user.username}} has been declined. Try again later or with a different friend!"})
     </script>
     {% endif %}
   {% endfor %}
