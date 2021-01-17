@@ -108,7 +108,7 @@
 		<form method="POST" action="/preferences/" enctype="multipart/form-data">
 			{% csrf_token %}
 			{{ update_preferences_form.as_p }}
-			<input type="submit" value="submit">
+			<input type="submit" class="waves-effect light-blue waves-yellow btn" value="submit">
 		</form>
 		</div>
 		<div class="modal-footer">

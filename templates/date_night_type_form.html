@@ -3,15 +3,16 @@
 {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
 <form method="POST">
     {% csrf_token %}
-        <div class="input-field col s12">
-    <select id="choice" name="choice">
-        <option class=browser-default value="" disabled selected>Date Night Type</option>
-        {% for choice in date_night_choices %}
-        <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
-        {% endfor %}
-    </select>
+    <div class="input-field col s12 ">
+        <select id="choice" name="choice">
+            <option class=browser-default value="" disabled selected>Select Date Night Type</option>
+            {% for choice in date_night_choices %}
+            <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
+            {% endfor %}
+        </select>
+        <label>Date Type</label>
     </div>
     <br><br>
-    <input type="submit" value="Next" />
+    <input type="submit"  class="waves-effect light-blue waves-yellow btn" value="Next" />
 </form>
 {% endblock activity_form %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from notifications.models import Notification
+from dates.models import DatesNightModel
 
 # Create your views here.
 
@@ -37,6 +38,15 @@ def notification_view(request):
             "declined_notifications": declined_notifications,
         },
     )
+
+
+@login_required()
+def cancel_date_view(path, date_id):
+    date_night = DatesNightModel.objects.get(id=date_id)
+    notification = Notification.objects.get(date_night=date_night)
+    notification.status = "Cancelled"
+    notification.save()
+    return redirect("/")
 
 
 @login_required()

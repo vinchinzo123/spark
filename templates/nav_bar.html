@@ -1,6 +1,6 @@
 {% if request.user.is_authenticated %}
- <nav>
-    <div class="nav-wrapper">
+ <nav class="transparent">
+    <div class="nav-wrapper ">
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="/">Home</a></li>
@@ -8,33 +8,33 @@
         <li><a href="/create_a_date/">Create A Date</a></li>
         <li><a href="/preferences/">Preferences</a></li>
         <li><a href="/pending_dates/">Pending Dates</a></li>
+        <li><a href="/date_history/">Date History</a></li>
         <li><a href="/logout/">Logout</a></li>
       </ul>
     </div>
   </nav>
     <ul class="sidenav" id="mobile-demo">
         <li><a href="/">Home</a></li>
-        <li><a href="/profile/">Profile</a></li>
+        <li><a href="/profile/{{user.id}}">Profile</a></li>
         <li><a href="/create_a_date/">Create A Date</a></li>
         <li><a href="/preferences/">Preferences</a></li>
         <li><a href="/pending_dates/">Pending Dates</a></li>        
+        <li><a href="/date_history/">Date History</a></li>        
         <li><a href="/logout/">Logout</a></li>
   </ul>
 {%else%}
 
-  <nav>
+  <nav class='transparent'>
     <div class="nav-wrapper">
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <a href="#!" class="brand-logo center">Spark</a>
+      <a href="/" class="brand-logo center">Spark</a>
       <ul class="left hide-on-med-and-down">
-        <li><a href="/">Home</a></li>
         <li><a href="/login/">Login</a></li>
         <li><a href="/sign_up/">Sign Up</a></li>
       </ul>
     </div>
   </nav>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="/">Home</a></li>       
         <li><a href="/login/">Login</a></li>
         <li><a href="/sign_up/">Sign Up</a></li>
   </ul>

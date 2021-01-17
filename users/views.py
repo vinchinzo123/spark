@@ -51,7 +51,21 @@ def index(request):
         .filter(status="No Match")
         .filter(archived=False)
     )
+    user_notifications = Notification.objects.filter(sent_user=request.user.id) | (
+        Notification.objects.filter(received_user=request.user.id)
+    )
+    cancelled_notifications = (
+        user_notifications.distinct().filter(status="Cancelled").filter(archived=False)
+    )
+
+    for note in cancelled_notifications:
+        breakpoint()
+        if note.received_user == request.user:
+            note.archived = True
+            note.save()
+
     for note in declined_notifications:
+        breakpoint()
         note.archived = True
         note.save()
 
@@ -81,6 +95,7 @@ def index(request):
         "index.html",
         {
             "confirmed_dates": confirmed_dates,
+            "cancelled_notifications": cancelled_notifications,
             "no_match_notifications": no_match_notifications,
             "received_notifications": received_notifications,
             "active_notifications": active_notifications,

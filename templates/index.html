@@ -1,50 +1,29 @@
 {% extends 'base.html' %} 
 {% block index %} 
 {% if request.user.is_authenticated %}
-  <h4>Welcome, {{ request.user.username }}</h4>
-    {% if declined_notifications %}
-      <h3>Declined dates</h3>
-    {% endif %}
-    <ul>
-  
-    {% for note in declined_notifications  %}
-      <ol>Date sent to {{note.date_night.users_two.username}} has been declined.
-      Try again later or with a different friend!
-      </ol>
-    {% endfor %}
-    </ul>
-    {% if no_match_notifications %}
-    <ul>
-    {% for note in no_match_notifications  %}
-      {% if request.user.username == note.received_user.username %}
-      <ol>Date sent from {{note.sent_user.username}} has not been matched.
-      Try again later or with a different friend!
-      </ol>  
-      {% else %}    
-      <ol>Date sent to {{note.received_user.username}} has not been matched.
-      Try again later or with a different friend!
-      </ol>
-      {% endif %}
-    {% endfor %}
-    </ul>
-    {% endif %}
-  <h6>Coming up dates!</h6>
-  <ul>
-    {% for notes in confirmed_dates %}
-    <ol>
-      {{notes.date_night.confirmed_activity.choice}} in
-      {{notes.date_night.location}}
-      with 
-      {% if notes.sent_user.username == request.user.username %}
-        {{notes.received_user.username}} 
-      {% else %}
-        {{notes.sent_user.username}}
-      {% endif %} at
-      {{notes.date_night.when_date_time}}
-    </ol>
-    {% endfor %}
-  </ul>
-  {% include 'pending_dates.html' %}
+  <div class="container row">
+    <div class='row'>
+      <div class=' offset-s1 col'>
+        <h4 class="grey-text text-darken-4  ">Welcome back, {{ request.user.username }}!</h4>
+      </div>
+    </div>
+    {% include 'home_toasts.html' %}
+
+    <div class="col m6 s12">
+      {% include 'confirmed_dates.html' %}
+      <div class="divider"></div>
+      <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        {% include 'pending_dates.html' %}
+      </div>
+      <div class="divider"></div>
+      <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        {% include 'requested_dates.html' %}
+      </div>
+    </div>
+    <div class="col m6 s12">
+      Date form here
+    </div>
+  </div>
 {% else %}
 <div class="row" style='padding-top: 2em'>
   <div class="col s11 m5 l5 offset-s1 offset-m1 offset-l1">
@@ -78,14 +57,14 @@
                   class="tab waves-effect waves-light white btn hoverable"
                   style="margin: 0px 5px 0px 10px"
                 >
-                  <a href="/login/">Login</a>
-                </li>
+                <a href="/login/">Login</a>
+              </li>
                 <li
                   class="tab waves-effect waves-light white btn hoverable"
                   style="margin: 0px 10px 0px 5px"
                 >
-                  <a class="active" href="/sign_up/">Sign up</a>
-                </li>
+                <a class="active" href="/sign_up/">Sign up</a>
+              </li>
               </ul>
             </div>
           </div>

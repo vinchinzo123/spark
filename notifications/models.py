@@ -23,6 +23,7 @@ class Notification(models.Model):
         ("Confirmed", "Confirmed"),
         ("Declined", "Declined"),
         ("No Match", "No Match"),
+        ("Cancelled", "Cancelled"),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Sent")
 
