@@ -15,7 +15,6 @@
     rel="stylesheet"
   />
   <style>
-
     body {background-image: url(https://trello-backgrounds.s3.amazonaws.com/53baf533e697a982248cd73f/2048x2048/22ec03aab9d36ea49139c569a62bb079/shutterstock_134707556.jpg);
           background-size: 217%;
           background-position: top left;}
@@ -54,7 +53,7 @@
         const tomorrow = new Date(today.getFullYear(),today.getMonth(), today.getDate() + 1)
         console.log(tomorrow)
         var elems = document.querySelectorAll(".datepicker");
-        var instances = M.Datepicker.init(elems, { format: "m/d/yyyy", autoClose: true });
+        var instances = M.Datepicker.init(elems, { format: "m/d/yyyy", minDate: tomorrow, autoClose: true });
       });
 
       document.addEventListener("DOMContentLoaded", function () {

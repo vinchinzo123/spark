@@ -13,6 +13,7 @@ from users.forms import (
 )
 from users.models import User
 from dates.models import DatesNightModel
+from dates.forms import ChooseDateCategory
 from notifications.models import Notification
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -89,7 +90,6 @@ def index(request):
     expired_notifications = []
 
     for note in confirmed_dates:
-        breakpoint()
         if note.date_night.when_date_time < timezone.now():
             if note.received_user == request.user:
                 note.notified_received_user = True
@@ -139,6 +139,11 @@ def index(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
     form = LoginForm()
+    date_type_form = ChooseDateCategory()
+    date_night_choices = [
+        {"instance": x[0], "value": x[1]}
+        for x in date_type_form.fields["choice"].choices
+    ][1:]
     return render(
         request,
         "index.html",
@@ -151,6 +156,8 @@ def index(request):
             "active_notifications": active_notifications,
             "declined_notifications": declined_notifications,
             "form": form,
+            "date_type_form": date_type_form,
+            "date_night_choices": date_night_choices,
         },
     )
 

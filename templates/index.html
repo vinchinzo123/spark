@@ -10,9 +10,15 @@
     {% include 'home_toasts.html' %}
     <div class='row '>
       <div class="col l5 s12">
-        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
-        Include date form here
-        </div>
+      {% include 'date_night_type_form.html' %}
+        {% comment %} <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+          <form method="POST" action="#">
+            <div class="input-field col s12 ">
+              {{date_type_form.choice}}
+            </div>
+            <input type="submit" value="Create Date">
+          </form>
+        </div> {% endcomment %}
       </div>
       <div class="col l7  s12">
         {% include 'confirmed_dates.html' %}
