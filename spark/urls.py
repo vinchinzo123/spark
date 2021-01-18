@@ -23,7 +23,10 @@ from notifications.views import (
     decline_date_night_view,
     confirm_date_night_view,
 )
-
+from preferences.views import (
+    AddToCategoriesView,
+    AddToStayHomeOptionsView
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -52,6 +55,8 @@ urlpatterns = [
     path("profile/<int:profile_id>/", views.profile_view, name="profile"),
 
     path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
+    path('add_a_category/', AddToCategoriesView.as_view()),
+    path('add_to_stay_home/', AddToStayHomeOptionsView.as_view()),
 
     path("pending_dates/", notification_view, name="pending_dates"),
 
