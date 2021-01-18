@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
-{% block activity_form %}
-<div class='row container' >
-    <div class="col s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+{% comment %} {% extends 'base.html' %}
+{% block activity_form %} {% endcomment %}
+    <div class="card-panel"  style="background-color:hsla(0,0%,100%,.24);">
+        <h6>Make a Date!</h6>
         <form method="POST">
             {% csrf_token %}
             <div class="input-field col s12 ">
@@ -11,10 +11,9 @@
                     <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
                     {% endfor %}
                 </select>
-                <label>Date Type</label>
+                <label class="grey-text text-darken-2">Date Type</label>
             </div>
             <input type="submit"  class="waves-effect white blue-text waves-yellow btn" value="Next" />
         </form>
     </div>
-</div>
-{% endblock activity_form %}
+{% comment %} {% endblock activity_form %} {% endcomment %}
