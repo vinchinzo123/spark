@@ -45,20 +45,20 @@
 
 	{% if request.user.is_authenticated %}
 
-	{% if request.user.picture %}
-
-
 	
-	{% endif %}
+	
+	
 	<div class="container">
-	<div class="row">		
-		<div class="col s12 m4">
-			<div class="">
-				<div class="card teal">
-					<div class="">
+		<div class="row">		
+			<div class="col s12 m4">
+				<div class="">
+					<div class="card teal">
+						<div class="">
+							{% if request.user.picture %}
 							<img src="{{userprofile.picture.url}}" alt="user image" width="200" height="190" style="border: 1px solid black">
-								<div class="card-content">
-									<span class="white-text">
+							{% endif %}
+							<div class="card-content">
+								<span class="white-text">
 										<p>Username: {{userprofile.username}}</p>
 										<p>Full name: {{userprofile.full_name}}</p> 
 										<p>Email: {{userprofile.email}}</p>

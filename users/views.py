@@ -252,7 +252,7 @@ def delete_profile_view(request, profile_id):
     delete_profile = User.objects.get(id=profile_id)
     delete_profile.delete()
 
-    return render(request, "index.html", {"delete_profile": delete_profile})
+    return HttpResponseRedirect(reverse('homepage'))
 
 
 def update_profile_view(request, profile_id):
