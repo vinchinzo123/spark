@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block date_history %}
+<div class='container scrolling row grey-text text-darken-4' style="background-color:hsla(0,0%,100%,.24);">
+  <h6>
+    This is the date history
+  </h6>
+
+  {% for note in notifications %}
+  <div class="testtest card scale-transition scale-out hoverable rounded grey-text text-darken-3 col center offset-s1 offset-m1 s5 m4">
+    <div class="card-title">
+    {{note.status}}
+    {{note.id}}
+    </div>
+    <div class="card-content">
+    {{note.date_night.location}}
+    {{note.date_night.when_date_time}}
+    {% if note.date_night.confirmed_activity.choice %}
+    {{note.date_night.confirmed_activity.choice}}
+    {% else %}
+    Activity not confirmed
+    {% endif %}
+    Sent from: {{note.sent_user.username}}
+    Received: {{note.received_user.username}}
+    </div>
+  </div>
+  {% endfor %}
+  <script>
+    setTimeout(()=> {
+      let cards = document.querySelectorAll('.scale-transition')
+      cards.forEach(card => card.classList += ' scale-in')
+      console.log(M)
+    },400)
+  </script>
+<div>
+
+{% endblock date_history %}

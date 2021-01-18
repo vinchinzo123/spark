@@ -1,12 +1,19 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
-from django.http import HttpResponse 
-
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from users.forms import LoginForm, UpdateProfileForm, ImageForm, SignUpForm, PreferencesUpdateForm
+from django.utils import timezone
+from users.forms import (
+    LoginForm,
+    UpdateProfileForm,
+    ImageForm,
+    SignUpForm,
+    PreferencesUpdateForm,
+)
 from users.models import User
 from dates.models import DatesNightModel
+from dates.forms import ChooseDateCategory
 from notifications.models import Notification
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -14,15 +21,112 @@ from django.views import View
 
 
 def index(request):
-    confirmed_dates = (
-        Notification.objects.filter(status="Confirmed")
-        .filter(sent_user=request.user.id)
-        .union(
-            Notification.objects.filter(status="Confirmed").filter(
-                received_user=request.user.id
-            )
+    confirmed_dates = Notification.objects.filter(
+        status="Confirmed",
+        sent_user=request.user.id,
+        archived=False,
+        notified_sent_user=False,
+    ).union(
+        Notification.objects.filter(
+            status="Confirmed",
+            received_user=request.user.id,
+            archived=False,
+            notified_received_user=False,
         )
     )
+
+    active_notifications = Notification.objects.filter(
+        sent_user=request.user.id
+    ).filter(status="Sent")
+
+    received_notifications = Notification.objects.filter(
+        received_user=request.user.id, status="Sent"
+    )
+
+    declined_notifications = Notification.objects.filter(
+        sent_user=request.user.id,
+        status="Declined",
+        archived=False,
+        notified_sent_user=False,
+    ) | (
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="Declined",
+            notified_received_user=False,
+            archived=False,
+        )
+    )
+
+    no_match_notifications = (
+        Notification.objects.filter(
+            sent_user=request.user.id,
+            status="No Match",
+            archived=False,
+            notified_sent_user=False,
+        )
+    ).union(
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="No Match",
+            archived=False,
+            notified_received_user=False,
+        )
+    )
+
+    cancelled_notifications = Notification.objects.filter(
+        sent_user=request.user.id,
+        status="Cancelled",
+        archived=False,
+        notified_sent_user=False,
+    ) | (
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="Cancelled",
+            archived=False,
+            notified_received_user=False,
+        )
+    )
+
+    expired_notifications = []
+
+    for note in confirmed_dates:
+        if note.date_night.when_date_time < timezone.now():
+            if note.received_user == request.user:
+                note.notified_received_user = True
+            else:
+                note.notified_sent_user = True
+            if note.notified_sent_user and note.notified_received_user:
+                note.archived = True
+            expired_notifications.append(note)
+            note.save()
+
+    for note in cancelled_notifications:
+        if note.received_user == request.user:
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+        note.save()
+
+    for note in declined_notifications:
+        if note.received_user == request.user:
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+        note.save()
+
+    for note in no_match_notifications:
+        if note.received_user == request.user:
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+        note.save()
+
     # the following is to allow users to login from the landing page
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -35,7 +139,27 @@ def index(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse("homepage"))
     form = LoginForm()
-    return render(request, "index.html", {"confirmed_dates": confirmed_dates, 'form': form})
+    date_type_form = ChooseDateCategory()
+    date_night_choices = [
+        {"instance": x[0], "value": x[1]}
+        for x in date_type_form.fields["choice"].choices
+    ][1:]
+    return render(
+        request,
+        "index.html",
+        {
+            "expired_notifications": expired_notifications,
+            "confirmed_dates": confirmed_dates,
+            "cancelled_notifications": cancelled_notifications,
+            "no_match_notifications": no_match_notifications,
+            "received_notifications": received_notifications,
+            "active_notifications": active_notifications,
+            "declined_notifications": declined_notifications,
+            "form": form,
+            "date_type_form": date_type_form,
+            "date_night_choices": date_night_choices,
+        },
+    )
 
 
 # def sign_up(request):
@@ -111,11 +235,13 @@ def profile_view(request, profile_id):
     return render(
         request,
         "profile.html",
-        {"datesnight": dates_night, "userprofile": user_profile,
-        'update_pic_form': update_pic_form,
-        'update_profile_form': update_profile_form,
-        'update_preferences_form': update_preferences_form,
-        }
+        {
+            "datesnight": dates_night,
+            "userprofile": user_profile,
+            "update_pic_form": update_pic_form,
+            "update_profile_form": update_profile_form,
+            "update_preferences_form": update_preferences_form,
+        },
     )
 
 
@@ -145,54 +271,53 @@ def update_profile_view(request, profile_id):
 
 def user_photo_view(request):
 
-    if request.method == 'GET':
+    if request.method == "GET":
         user_image = User.objects.all()
-        
-    return render(request, 'profile.html', {'user_image' : user_image})
 
-def profile_image_view(request): 
+    return render(request, "profile.html", {"user_image": user_image})
 
-    if request.method == 'POST': 
-        form = ImageForm(request.POST, request.FILES) 
 
-        if form.is_valid(): 
-            # form.save() 
+def profile_image_view(request):
+
+    if request.method == "POST":
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # form.save()
             data = form.cleaned_data
             current_user = User.objects.get(id=request.user.id)
-            current_user.picture = data['picture']
+            current_user.picture = data["picture"]
             current_user.save()
             # breakpoint()
-            messages.info(request, 'successfully upload!')
-            return HttpResponseRedirect(f"/profile/{current_user.id}/") 
-    else: 
-        form = ImageForm() 
-    return render(request, 'generic_form.html', {'form' : form}) 
+            messages.info(request, "successfully upload!")
+            return HttpResponseRedirect(f"/profile/{current_user.id}/")
+    else:
+        form = ImageForm()
+    return render(request, "generic_form.html", {"form": form})
 
 
-def success(request): 
-    return HttpResponse('successfully uploaded')
-
+def success(request):
+    return HttpResponse("successfully uploaded")
 
 
 class PreferencesUpdateView(LoginRequiredMixin, View):
     form_class = PreferencesUpdateForm
-    template = 'form.html'
+    template = "form.html"
 
     def get(self, request):
         form = self.form_class(instance=request.user)
-        return render(request, self.template, {'form': form})
+        return render(request, self.template, {"form": form})
 
     def post(self, request):
         form = self.form_class(data=request.POST, instance=request.user)
         if form.is_valid():
             data = form.cleaned_data
             current_user = User.objects.get(id=request.user.id)
-            current_user.dining_preference.set(data['dining_preference'])
-            current_user.entertainment_preference.set(data['entertainment_preference'])
-            current_user.out_doors_preference.set(data['out_doors_preference'])
-            current_user.stay_home_preference.set(data['stay_home_preference'])
+            current_user.dining_preference.set(data["dining_preference"])
+            current_user.entertainment_preference.set(data["entertainment_preference"])
+            current_user.out_doors_preference.set(data["out_doors_preference"])
+            current_user.stay_home_preference.set(data["stay_home_preference"])
             return redirect(f"/profile/{request.user.id}/")
-
 
 
 # def login_view(request):

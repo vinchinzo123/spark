@@ -84,7 +84,7 @@ class Preferences(models.Model):
         ("Entertainment", "Entertainment"),
         ("Dining", "Dining"),
         ("Outdoors", "Outdoors"),
-        ("Stay_Home", "Stay_At_Home"),
+        ("Stay Home", "Stay Home"),
     ]
     choice = models.CharField(max_length=50, choices=P_CHOICES)
 

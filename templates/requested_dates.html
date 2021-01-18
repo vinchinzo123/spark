@@ -1,0 +1,31 @@
+{% if received_notifications %}
+<h6>Requested dates!</h6>
+{% else %}
+<h6>No Requested Dates!</h6>
+{% endif %}
+<div>
+{% for note in received_notifications  %}
+<div class="horizontal card s4 gray lighten-5 hoverable">
+  <div class="card-stacked">
+    <div class="card-content">
+      Received from {{note.sent_user.username}}
+      Date {{note.date_night.when_date_time}}
+      Where {{note.date_night.location}}
+    </div>
+      <div class="grey lighten-5 card-action">
+        <a class="waves-effect waves-yellow btn blue-text white wa modal-trigger" href="/confirm_date/{{note.id}}">Confirm</a>
+        <a class="waves-effect waves-red btn red-text white wa modal-trigger" href="#modalDeclineDate{{note.id}}">Decline</a>
+      </div>
+  </div>
+</div>
+<div id="modalDeclineDate{{note.id}}" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure you want to decline the date?</h4>
+  </div>
+  <div class="modal-footer">
+    <a href="/decline_date/{{note.id}}" class="modal-close red lighten-2 waves-effect hoverable  btn">Yup.</a>
+    <a href="/" class="modal-close  btn-flat">On second thought, it's fine.</a>
+  </div>
+</div>
+{% endfor %}
+</div>

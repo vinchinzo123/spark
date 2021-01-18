@@ -1,3 +1,4 @@
 {
-  "python.pythonPath": "/Users/vincentnewsom/.local/share/virtualenvs/capstone--TbMudof/bin/python"
+  "python.pythonPath": "/Users/vincentnewsom/.local/share/virtualenvs/capstone--TbMudof/bin/python",
+  "python.linting.enabled": true
 }

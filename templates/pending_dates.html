@@ -1,41 +1,35 @@
-{% extends 'base.html' %}
-{% block pending_dates %}
-{% if declined_notifications %}
-<h3>declined dates</h3>
-{% endif %}
 
-{% for note in declined_notifications  %}
-<br/>
-Date sent to {{note.received_user.received_user.username}} has been declined.
-Try again later or with a different friend!
-{% endfor %}
-<br />
-<h3>pending dates</h3>
+{% if active_notifications %}
+<h6>Sent dates!</h6>
+{% else %}
+<h6>No Sent Dates!</h6>
+{% endif %}
+<div>
 {% for note in active_notifications  %}
-<br/>
-{% if note.status != "Declined" %}
+  <div class="horizontal hoverable card s4 gray lighten-5">
+    <div class="card-stacked">
+      <div class="card-content">
+        Sent to {{note.received_user.username}}
+        Date {{note.date_night.when_date_time}}
+        Where {{note.date_night.location}}
+      </div>
+      <div class="grey lighten-5 card-action">
+        <a class="waves-effect waves-red btn red-text white modal-trigger" href="#modalCancelDate{{note.date_night.id}}">Cancel Date</a>
+      </div>
+    </div>
+  </div>
+  <div id="modalCancelDate{{note.date_night.id}}" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure you want to cancel the date?</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="/cancel_date/{{note.date_night.id}}" class="modal-close red lighten-2 waves-effect hoverable  btn">Yup.</a>
+      <a href="/" class="modal-close  btn-flat">On second thought, it's fine.</a>
+    </div>
+  </div>
 
-Sent to {{note.received_user.username}}
-Date {{note.date_night.when_date_time}}
-Where {{note.date_night.location}}
-{% else %}
-Date sent to {{note.received_user.username}} has been declined.
-Try again later or with a different friend!
-{% endif %}
-{% endfor %}
-<br />
-{% for note in received_notifications  %}
-{% if note.status == "Declined" %}
-You delined a date sent by {{note.sent_user.username}}.
-Sometimes it just doesn't work out! Try again!
-{% else %}
-Received from {{note.sent_user.username}}
-Date {{note.date_night.when_date_time}}
-Where {{note.date_night.location}}
-<a href="/confirm_date/{{note.id}}"><button>Confirm</button></a>
-<a href="/decline_date/{{note.id}}"><button>Decline</button></a>
-<br />
-{% endif %}
-{% endfor %}
 
-{% endblock pending_dates %}
+{% endfor %}
+</div>
+
+

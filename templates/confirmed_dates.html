@@ -1,0 +1,41 @@
+<div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+      {% if confirmed_dates %}
+      <h6 >Coming up Date Nights!</h6>
+      {% else %}
+      <h6 >No Confirmed Date Nights</h6>
+      
+      {% endif %}
+      <div class="">
+        {% for notes in confirmed_dates %}
+          <div class="horizontal card hoverable s4 gray lighten-5">
+            <div class="card-stacked">
+              <div class="card-content">
+                {{notes.date_night.confirmed_activity.choice}} in
+                {{notes.date_night.location}}
+                with 
+                {% if notes.sent_user.username == request.user.username %}
+                {{notes.received_user.username}} 
+                {% else %}
+                {{notes.sent_user.username}}
+                {% endif %}
+                at
+                {{notes.date_night.when_date_time}}
+              </div>
+              <div class="grey lighten-5 card-action">
+                <a class="waves-effect waves-red btn red-text white wa modal-trigger" href="#modalCancelDate{{notes.date_night.id}}">Cancel Date</a>
+              </div>
+            </div>
+          </div>
+          {% comment %} cancel date modal {% endcomment %}
+          <div id="modalCancelDate{{notes.date_night.id}}" class="modal">
+            <div class="modal-content">
+              <h4>Are you sure you want to cancel the date?</h4>
+            </div>
+            <div class="modal-footer">
+              <a href="/cancel_date/{{notes.date_night.id}}" class="modal-close red lighten-2 waves-effect hoverable  btn">Yup.</a>
+              <a href="/" class="modal-close  btn-flat">On second thought, it's fine.</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
