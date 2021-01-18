@@ -4,9 +4,11 @@
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="/">Home</a></li>
-        <li><a href="/profile/{{user.id}}">profile</a></li>
-        <li><a href="/create_a_date/">Create A Date</a></li>
-        <li><a href="/preferences/">Preferences</a></li>
+        <li><a href="/profile/{{user.id}}">Profile</a></li>
+        <li><a href="/add_a_date_option/">Add a Date Option</a></li>   
+        {% comment %} <li><a href="/create_a_date/">Create A Date</a></li> {% endcomment %}
+        {% comment %} <li><a href="/preferences/">Preferences</a></li> {% endcomment %}
+        {% comment %} <li><a href="/add_a_category/">Add a category</a></li>    {% endcomment %}
         {% comment %} <li><a href="/pending_dates/">Pending Dates</a></li> {% endcomment %}
         <li><a href="/date_history/">Date History</a></li>
         <li><a href="/logout/">Logout</a></li>
@@ -16,8 +18,10 @@
     <ul class="sidenav" id="mobile-demo">
         <li><a href="/">Home</a></li>
         <li><a href="/profile/{{user.id}}">Profile</a></li>
-        <li><a href="/create_a_date/">Create A Date</a></li>
-        <li><a href="/preferences/">Preferences</a></li>
+        <li><a href="/add_a_preference_option/">Add a Preference Option</a></li>   
+        {% comment %} <li><a href="/create_a_date/">Create A Date</a></li> {% endcomment %}
+        {% comment %} <li><a href="/preferences/">Preferences</a></li> {% endcomment %}
+        {% comment %} <li><a href="/add_a_category/">Add a category</a></li>         {% endcomment %}
         {% comment %} <li><a href="/pending_dates/">Pending Dates</a></li>         {% endcomment %}
         <li><a href="/date_history/">Date History</a></li>        
         <li><a href="/logout/">Logout</a></li>
