@@ -24,7 +24,14 @@ from notifications.views import (
     confirm_date_night_view,
     cancel_date_view,
 )
-
+from preferences.views import (
+    AddADateOptionView,
+    AddToCategoriesView,
+    AddToEntertainmentOptionsView,
+    AddToDiningOptionsView,
+    AddToOutdoorsOptionsView,
+    AddToStayHomeOptionsView,
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -50,6 +57,13 @@ urlpatterns = [
     ),
     path("profile/<int:profile_id>/", views.profile_view, name="profile"),
     path("preferences/", views.PreferencesUpdateView.as_view(), name="preferences"),
+    path('add_a_date_option/', AddADateOptionView.as_view(), name='add_a_date_option'),
+    path('add_a_category/', AddToCategoriesView.as_view()),
+    path('add_to_entertainment/', AddToEntertainmentOptionsView.as_view(), name='add_to_entertainment'),
+    path('add_to_dining/', AddToDiningOptionsView.as_view(), name='add_to_dining'),
+    path('add_to_outdoors/', AddToOutdoorsOptionsView.as_view(), name='add_to_outdoors'),
+    path('add_to_stay_home/', AddToStayHomeOptionsView.as_view(), name='add_to_stayhome'),
+
     path("pending_dates/", notification_view, name="pending_dates"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),

@@ -84,13 +84,14 @@
 	{% endif %}
 	</p>
 </div>
+{% if userprofile.id == request.user.id %}
 <div class="profile_buttons">
 	{% comment %} update profile modal {% endcomment %}
 	<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Update Profile</a>
 	<div id="modal1" class="modal">
 		<div class="modal-content">
 		<h4>Update your Profile</h4>
-		<form method="POST" action="/update_profile/{{user.id}}/" enctype="multipart/form-data">
+		<form method="POST" action="/update_profile/{{request.user.id}}/" enctype="multipart/form-data">
 			{% csrf_token %}
 			{{ update_profile_form.as_p }}
 			<input type="submit" value="Update">
@@ -145,6 +146,7 @@
 	</div>
 			
 
+{% endif %}
 	{% endif %}
 </div>
 <script>

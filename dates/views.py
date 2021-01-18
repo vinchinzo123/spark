@@ -34,7 +34,7 @@ def create_a_date_view(request):
                 return HttpResponseRedirect(reverse("entertainment"))
             elif date_category == "Outdoors":
                 return HttpResponseRedirect(reverse("outdoors"))
-            elif date_category == "Stay_Home":
+            elif date_category == "Stay Home":
                 return HttpResponseRedirect(reverse("stayhome"))
     form = ChooseDateCategory()
     date_night_choices = [
