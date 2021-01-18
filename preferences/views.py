@@ -28,7 +28,7 @@ class AddADateOptionView(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse("add_to_dining"))
             elif date_category == "Outdoors":
                 return HttpResponseRedirect(reverse("add_to_outdoors"))
-            elif date_category == "Stay_Home":
+            elif date_category == "Stay Home":
                 return HttpResponseRedirect(reverse("add_to_stayhome"))
 
 
