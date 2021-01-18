@@ -23,8 +23,13 @@ class Notification(models.Model):
         ("Confirmed", "Confirmed"),
         ("Declined", "Declined"),
         ("No Match", "No Match"),
+        ("Cancelled", "Cancelled"),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="Sent")
+
+    archived = models.BooleanField(default=False)
+    notified_sent_user = models.BooleanField(default=False)
+    notified_received_user = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Notification for: {self.date_night.__str__()} "

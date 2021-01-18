@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% block activity_form %}
-{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> {% endcomment %}
-<form method="POST">
-    {% csrf_token %}
-        <div class="input-field col s12">
-    <select id="choice" name="choice">
-        <option class=browser-default value="" disabled selected>Date Night Type</option>
-        {% for choice in date_night_choices %}
-        <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
-        {% endfor %}
-    </select>
+<div class='row container' >
+    <div class="col s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-field col s12 ">
+                <select id="choice" name="choice">
+                    <option class=browser-default  value="" disabled selected>Select Date Night Type</option>
+                    {% for choice in date_night_choices %}
+                    <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
+                    {% endfor %}
+                </select>
+                <label>Date Type</label>
+            </div>
+            <input type="submit"  class="waves-effect white blue-text waves-yellow btn" value="Next" />
+        </form>
     </div>
-    <br><br>
-    <input type="submit" value="Next" />
-</form>
+</div>
 {% endblock activity_form %}
