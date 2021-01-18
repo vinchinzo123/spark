@@ -165,6 +165,15 @@ def receive_date_view(request, notification_id):
     )
 
 
+@login_required()
+def date_history_view(request):
+    notifications = Notification.objects.filter(
+        sent_user=request.user.id, archived=True
+    ) | (Notification.objects.filter(received_user=request.user.id, archived=True))
+    notifications = notifications.order_by("-id")
+    return render(request, "date_history.html", {"notifications": notifications})
+
+
 def entertainment_date(request):
     if request.method == "POST":
         form = CreateAnEntertainmentDate(request.POST)

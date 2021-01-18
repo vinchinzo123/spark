@@ -1,9 +1,9 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect, redirect
 from django.http import HttpResponse
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
 from users.forms import (
     LoginForm,
     UpdateProfileForm,
@@ -20,64 +20,113 @@ from django.views import View
 
 
 def index(request):
-    """
-    needs to fix when the declined note gets deleted
-    and how to filter the notificaitons
-    """
-    confirmed_dates = (
-        Notification.objects.filter(status="Confirmed")
-        .filter(sent_user=request.user.id)
-        .union(
-            Notification.objects.filter(status="Confirmed").filter(
-                received_user=request.user.id
-            )
+    confirmed_dates = Notification.objects.filter(
+        status="Confirmed",
+        sent_user=request.user.id,
+        archived=False,
+        notified_sent_user=False,
+    ).union(
+        Notification.objects.filter(
+            status="Confirmed",
+            received_user=request.user.id,
+            archived=False,
+            notified_received_user=False,
         )
     )
+
     active_notifications = Notification.objects.filter(
         sent_user=request.user.id
     ).filter(status="Sent")
-    declined_notifications = (
-        Notification.objects.filter(sent_user=request.user.id)
-        .filter(status="Declined")
-        .filter(archived=False)
+
+    received_notifications = Notification.objects.filter(
+        received_user=request.user.id, status="Sent"
+    )
+
+    declined_notifications = Notification.objects.filter(
+        sent_user=request.user.id,
+        status="Declined",
+        archived=False,
+        notified_sent_user=False,
+    ) | (
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="Declined",
+            notified_received_user=False,
+            archived=False,
+        )
     )
 
     no_match_notifications = (
-        Notification.objects.filter(sent_user=request.user.id)
-        .filter(status="No Match")
-        .filter(archived=False)
+        Notification.objects.filter(
+            sent_user=request.user.id,
+            status="No Match",
+            archived=False,
+            notified_sent_user=False,
+        )
     ).union(
-        Notification.objects.filter(received_user=request.user.id)
-        .filter(status="No Match")
-        .filter(archived=False)
-    )
-    user_notifications = Notification.objects.filter(sent_user=request.user.id) | (
-        Notification.objects.filter(received_user=request.user.id)
-    )
-    cancelled_notifications = (
-        user_notifications.distinct().filter(status="Cancelled").filter(archived=False)
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="No Match",
+            archived=False,
+            notified_received_user=False,
+        )
     )
 
-    for note in cancelled_notifications:
+    cancelled_notifications = Notification.objects.filter(
+        sent_user=request.user.id,
+        status="Cancelled",
+        archived=False,
+        notified_sent_user=False,
+    ) | (
+        Notification.objects.filter(
+            received_user=request.user.id,
+            status="Cancelled",
+            archived=False,
+            notified_received_user=False,
+        )
+    )
+
+    expired_notifications = []
+
+    for note in confirmed_dates:
         breakpoint()
-        if note.received_user == request.user:
-            note.archived = True
+        if note.date_night.when_date_time < timezone.now():
+            if note.received_user == request.user:
+                note.notified_received_user = True
+            else:
+                note.notified_sent_user = True
+            if note.notified_sent_user and note.notified_received_user:
+                note.archived = True
+            expired_notifications.append(note)
             note.save()
 
+    for note in cancelled_notifications:
+        if note.received_user == request.user:
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+        note.save()
+
     for note in declined_notifications:
-        breakpoint()
-        note.archived = True
+        if note.received_user == request.user:
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
         note.save()
 
     for note in no_match_notifications:
-        breakpoint()
         if note.received_user == request.user:
-            continue
-        note.archived = True
+            note.notified_received_user = True
+        else:
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
         note.save()
-    received_notifications = Notification.objects.filter(
-        received_user=request.user.id
-    ).filter(status="Sent")
+
     # the following is to allow users to login from the landing page
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -94,6 +143,7 @@ def index(request):
         request,
         "index.html",
         {
+            "expired_notifications": expired_notifications,
             "confirmed_dates": confirmed_dates,
             "cancelled_notifications": cancelled_notifications,
             "no_match_notifications": no_match_notifications,

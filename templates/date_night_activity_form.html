@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block date %}
 <div class='row container' >
-  <div class="col s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+  <div class="col container s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+  <div class="card-panel s4 " style="background-color:hsla(0,0%,100%,.61);" >
     <form method="post">
       {% csrf_token %}
       {% if receiver %}
@@ -33,18 +34,19 @@
         </div>
         
         <label for="location">Location</label>
-        <input type="text" name="location" maxlength="100" required="" id="location">
+        <input type="text" name="location" maxlength="100" required="" id="location" class='transparent grey-text text-darken-4'>
 
         <label for="date_day">Date Night</label>
-        <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker">
+        <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker grey-text text-darken-4">
 
         <label for="date_time">Date Time</label>
-        <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
+        <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker grey-text text-darken-4">
         {% endif %}
 
-        <input  type="submit" class="waves-effect light-blue waves-yellow btn" value="Confirm Date">
+        <input  type="submit" class="waves-effect grey lighten-4 waves-green hoverable btn" value="Confirm Date">
 
     </form>
+    </div>
   </div>
 </div>
 {% endblock date %}

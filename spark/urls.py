@@ -72,6 +72,7 @@ urlpatterns = [
     path("confirm_date/<int:notification_id>/", confirm_date_night_view),
     path("decline_date/<int:notification_id>/", decline_date_night_view),
     path("cancel_date/<int:date_id>/", cancel_date_view),
+    path("date_history/", dateViews.date_history_view),
     path("500error/", views.error500_view, name="500_error"),
 ]
 if settings.DEBUG:

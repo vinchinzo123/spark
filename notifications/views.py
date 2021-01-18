@@ -53,7 +53,6 @@ def cancel_date_view(path, date_id):
 def decline_date_night_view(path, notification_id):
     notification = Notification.objects.get(id=notification_id)
     notification.status = "Declined"
-    notification.received_user = None
     notification.save()
     return redirect("/")
 
