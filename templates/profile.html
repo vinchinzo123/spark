@@ -22,7 +22,10 @@
 	padding: 10px 25px;
 }
 .color_text{
-	color: azure;
+	color: #f0ffff;
+}
+#col_item_css{
+	background-color:#009688;
 }
 
 </style>
@@ -32,57 +35,109 @@
 			{{msg}}
 		{% endfor %}
 	{% endif %}
-	<h4>user profile</h4>
+
 	{% if request.user.is_authenticated %}
 
 	{% if request.user.picture %}
 
 
-	<img src="{{request.user.picture.url}}" alt="user image" width="150" height="150" style="border: 1px solid black">
-
+	
 	{% endif %}
+	
+	<div class="row">
+		<div class="col s8 m2">
+			<div class="card teal">
+				<div class="card-image">
+						<img src="{{request.user.picture.url}}" alt="user image" width="200" height="190" style="border: 1px solid black">
+							<div class="card-content">
+								<span class="white-text">
+									<p>Username: {{request.user.username}}</p>
+									<p>Full name: {{request.user.full_name}}</p> 
+									<p>Email: {{request.user.email}}</p>
+									<p>Number of Dates: {{datesnight}}</p>
+									<p>Places Visited: {{request.user.location}}</p>
+								</span>
+							</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<p>Username: {{request.user.username}}</p>
-	<p>Full name: {{request.user.full_name}}</p> 
-	<p>Email: {{request.user.email}}</p>
-	<p>Number of Dates: {{datesnight}}</p>
-	<p>Places Visited: {{request.user.location}}</p>
+	
+
 	{% if request.user.dining_preference.values_list %}
-	<p>Prefered Dining: 
-	<ul>
-	{% for pref in request.user.dining_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
+	<div class="row">
+		<div class="col s8 m2">
+			<div class="card teal">
+				<span class="white-text">
+				<span class="card-title"><i class="material-icons small">local_dining</i>Prefered Dining:</span>  
+					<ul class="collection">
+						{% for pref in request.user.dining_preference.values_list %}
+						
+							<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+						
+						{% endfor %}
+					</ul>
+				</span>
+			</div>
+		</div>
+	</div>
 	{% endif %}
-	</p>
+
+
 	{% if request.user.entertainment_preference.values_list %}
-	<p>Prefered Entertainment: 
-	<ul>
-	{% for pref in request.user.entertainment_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
+	<div class="row">
+		<div class="col s8 m2">
+			<div class="card teal">
+				<span class="white-text">
+					<span class="card-title"><i class="material-icons small">local_movies</i>Prefered Entertainment:</span>
+						<ul class="collection">
+						{% for pref in request.user.entertainment_preference.values_list %}
+							<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+						{% endfor %}
+						</ul>
+					</span>
+				</div>
+			</div>
+		</div>
 	{% endif %}
-	</p>
+
 	{% if request.user.out_doors_preference.values_list %}
-	<p>Prefered Out Door Activities: 
-	<ul>
-	{% for pref in request.user.out_doors_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
+	<div class="row">
+		<div class="col s8 m2">
+			<div class="card teal">
+				<span class="white-text">
+					<span class="card-title"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</span>
+						<ul class="collection">
+							{% for pref in request.user.out_doors_preference.values_list %}
+								<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+							{% endfor %}
+						</ul>
+				</span>
+			</div>
+		</div>
+	</div>
 	{% endif %}
-	</p>
+
 	{% if request.user.stay_home_preference.values_list %}
-	<p>Prefered Stay Home Activities: 
-	<ul>
-	{% for pref in request.user.stay_home_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
+	<div class="row">
+		<div class="col s8 m2">
+			<div class="card teal">
+				<span class="white-text">
+					<span class="card-title"><i class="material-icons small">home</i>Prefered Stay Home Activities:</span>
+						<ul class="collection">
+								{% for pref in request.user.stay_home_preference.values_list %}
+								<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+							{% endfor %}
+						</ul>
+				</span>
+			</div>
+		</div>
+	</div>
 	{% endif %}
-	</p>
+	
+
+
 </div>
 <div class="profile_buttons">
 	{% comment %} update profile modal {% endcomment %}
