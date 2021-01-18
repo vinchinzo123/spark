@@ -227,7 +227,9 @@ def profile_view(request, profile_id):
 
      if user_profile is None then we can throw a 404 or user not found
     """
-    dates_night = len(DatesNightModel.objects.filter(users_one=profile_id))
+    dates_sender = len(DatesNightModel.objects.filter(users_one=profile_id))
+    dates_reciever = len(DatesNightModel.objects.filter(users_two=profile_id))
+    dates_night = dates_reciever + dates_sender
     user_profile = User.objects.filter(id=profile_id).first()
     update_profile_form = UpdateProfileForm(instance=request.user)
     update_preferences_form = PreferencesUpdateForm(instance=request.user)
