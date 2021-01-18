@@ -2,7 +2,7 @@
 {% block activity_form %} {% endcomment %}
     <div class="card-panel"  style="background-color:hsla(0,0%,100%,.24);">
         <h6>Make a Date!</h6>
-        <form method="POST">
+        <form method="POST" action="/create_a_date/">
             {% csrf_token %}
             <div class="input-field col s12 ">
                 <select id="choice" name="choice">
@@ -13,7 +13,7 @@
                 </select>
                 <label class="grey-text text-darken-2">Date Type</label>
             </div>
-            <input type="submit"  class="waves-effect white blue-text waves-yellow btn" value="Next" />
+            <input type="submit"  class="waves-effect amber lighten-3 waves-yellow btn" value="Next" />
         </form>
     </div>
 {% comment %} {% endblock activity_form %} {% endcomment %}

@@ -14,31 +14,28 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
 
+
 class UpdateProfileForm(forms.ModelForm):
     # full_name = forms.CharField(max_length=100)
     # email = forms.EmailField( max_length=254)
     # location = forms.CharField(max_length=50)
     class Meta:
         model = User
-        fields = [
-            'full_name',
-            'email',
-            'location'
-        ]
+        fields = ["full_name", "email", "location"]
 
 
 class PreferencesUpdateForm(forms.ModelForm):
     class Meta:
-        model= User
+        model = User
         fields = [
-            'dining_preference',
-            'entertainment_preference',
-            'out_doors_preference',
-            'stay_home_preference'
+            "dining_preference",
+            "entertainment_preference",
+            "out_doors_preference",
+            "stay_home_preference",
         ]
 
-        
+
 class ImageForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['picture']
+        fields = ["picture"]

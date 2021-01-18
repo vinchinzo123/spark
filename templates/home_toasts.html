@@ -3,7 +3,6 @@
       M.toast({displayLength:5000, html: "Date sent to {{note.date_night.users_two.username}} has been declined. Try again later or with a different friend!"})
     </script>
   {% endfor %} {% endcomment %}
-
   {% for note in expired_notifications  %}
   {% if request.user.username == note.sent_user.username %}
     <script type="text/javascript">

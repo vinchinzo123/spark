@@ -144,7 +144,6 @@ def index(request):
         {"instance": x[0], "value": x[1]}
         for x in date_type_form.fields["choice"].choices
     ][1:]
-    breakpoint()
     return render(
         request,
         "index.html",
