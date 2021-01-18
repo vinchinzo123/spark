@@ -17,6 +17,7 @@ from datetime import datetime
 from notifications.models import Notification
 from preferences.models import Preferences, Dining, OutDoors, StayHome, Entertainment
 from users.models import User
+from preferences.forms import AddToEntertainmentForm, AddToDiningForm, AddToOutDoorsForm, AddToStayHomeForm
 
 import random
 
@@ -64,6 +65,14 @@ def send_date_view(request):
     takes care of all date types
     maybe we can make one url and have <str:category/>
     """
+    endpoint = request.path.split('/')[-1]
+    add_to_form = AddToEntertainmentForm
+    if endpoint == 'dining':
+        add_to_form = AddToDiningForm
+    elif endpoint == 'outdoors':
+        add_to_form = AddToOutDoorsForm
+    elif endpoint == 'stayhome':
+        add_to_form = AddToStayHomeForm
     form, category = determine_choice_form(request.path.split("/")[-1], request.POST)
     if request.method == "POST":
         if form.is_valid():
@@ -107,6 +116,8 @@ def send_date_view(request):
             "dates_to_pick": dates_to_pick,
             "date_night_users": date_night_users,
             "category": category,
+            'endpoint': endpoint,
+            'add_to_form': add_to_form,
         },
     )
 
