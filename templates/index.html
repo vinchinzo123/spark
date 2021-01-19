@@ -4,7 +4,7 @@
   <div class="container row">
     <div class='row'>
       <div class=' offset-s1 col'>
-        <h5 class="grey-text text-darken-4  ">Welcome back, {{ request.user.username }}!</h5>
+        <h4 class="">Welcome back, {{ request.user.fullname }}!</h4>
       </div>
     </div>
     {% include 'home_toasts.html' %}
@@ -23,11 +23,11 @@
       <div class="col l7  s12">
         {% include 'confirmed_dates.html' %}
         <div class="divider"></div>
-        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        <div class='card-panel transparent_div'>
           {% include 'requested_dates.html' %}
         </div>
         <div class="divider"></div>
-        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        <div class='card-panel transparent_div'>
           {% include 'pending_dates.html' %}
         </div>
       </div>

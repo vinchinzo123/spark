@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block date %}
 <div class='row container' >
-  <div class="col container s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
-  <div class="card-panel s4 " style="background-color:hsla(0,0%,100%,.61);" >
+  <div class="col container s12 m6 transparent_div">
+  <div class="card-panel s4 allForm">
     <form method="post" action='/create_a_date/{{endpoint}}'>
       {% csrf_token %}
       {% if receiver %}
@@ -10,7 +10,7 @@
           <select id="{{category}}" name="{{category}}" required multiple>
             <option class=browser-default value="" disabled selected>Fun date to pick</option>
             {% for date_activity in dates_to_pick %}
-              <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+              <option value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
             {% endfor %}
           </select>
           <label for="{{category}}">Date Night Activity</label>
@@ -34,31 +34,31 @@
         </div>
         
         <label for="location">Location</label>
-        <input type="text" name="location" maxlength="100" required="" id="location" class='transparent grey-text text-darken-4'>
+        <input type="text" name="location" maxlength="100" required="" id="location" class='transparent'>
 
         <label for="date_day">Date Night</label>
-        <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker grey-text text-darken-4">
+        <input for="date_day" name="date_day" id="date_day" type="text" class="datepicker">
 
         <label for="date_time">Date Time</label>
-        <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker grey-text text-darken-4">
+        <input for="date_time" name="date_time" id="date_time" type="text" class="timepicker">
         {% endif %}
 
-        <input  type="submit" class="waves-effect grey lighten-4 waves-green hoverable btn" value="Confirm Date">
+        <input  type="submit" class="hoverable btn" value="Confirm Date">
 
     </form>
     </div>
   </div>
 </div>
 <div class='row container' >
-  <div class="col container s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
-  <div class="card-panel s4 " style="background-color:hsla(0,0%,100%,.61);" >
+  <div class="col container s12 m6 transparent_div">
+  <div class="card-panel s4 allForm">
     Don't see a date type above that interests you? Add your own ideas below. Keep in mind, these will be available for all users.
     <form method="post" action='/create_a_date/{{endpoint}}/add_option/'>
         <div class="input-field col s12">
         {% csrf_token %}
         {{ add_to_form.as_p }}
         </div>
-        <input  type="submit" class="waves-effect grey lighten-4 waves-green hoverable btn" value="Add Date Night Option">
+        <input  type="submit" class="hoverable btn" value="Add Date Night Option">
     </form>
     </div>
   </div>
