@@ -112,7 +112,7 @@ def send_date_view(request):
     ][1:]
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
-    ][1:]
+    ]
     return render(
         request,
         "date_night_activity_form.html",
@@ -177,7 +177,7 @@ def receive_date_view(request, notification_id):
             #  adds a date notification at home
     dates_to_pick = [
         {"instance": x[0], "value": x[1]} for x in form.fields[category].choices
-    ][1:]
+    ]
     return render(
         request,
         "date_night_activity_form.html",
