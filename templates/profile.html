@@ -1,88 +1,159 @@
+	<style>
+	.user_info{
+		text-align: center;
+	}
+	.profile_buttons{
+		text-align: center;
+		
+	
+	}
+	#update_profile{
+		background-color: rgb(139, 218, 113);
+		padding: 10px 25px;
+	}
+	#delete_profile{
+		background-color: rgb(231, 86, 86);
+		padding: 10px 25px;
+	}
+	#photo_profile{
+		background-color: rgb(99, 179, 245);
+		padding: 10px 25px;
+	}
+	.color_text{
+		color: #f0ffff;
+	}
+	#col_item_css{
+		background-color:#009688;
+	}
+	.all-preferences{
+		/* display: flex; */
+	}
+	.dinner-preference{
+		
+	}
+	
+	</style>
+<body>
 {% extends 'base.html' %}
 {% block profile %}
-<style>
-.user_info{
-	text-align: center;
-}
-.profile_buttons{
-	text-align: center;
-	
-
-}
-#update_profile{
-	background-color: rgb(139, 218, 113);
-	padding: 10px 25px;
-}
-#delete_profile{
-	background-color: rgb(231, 86, 86);
-	padding: 10px 25px;
-}
-#photo_profile{
-	background-color: rgb(99, 179, 245);
-	padding: 10px 25px;
-}
-.color_text{
-	color: azure;
-}
-
-</style>
 <div class="user_info">
 	{% if messages %}
 		{% for msg in messages %}
 			{{msg}}
 		{% endfor %}
 	{% endif %}
-	<h4>user profile</h4>
+
 	{% if request.user.is_authenticated %}
 
-	{% if request.user.picture %}
+	
+	
+	
+	<div class="container">
+		<div class="row">		
+			<div class="col s12 m4">
+				<div class="">
+					<div class="card teal">
+						<div class="">
+							{% if userprofile.picture %}
+							<img src="{{userprofile.picture.url}}" alt="user image" width="200" height="190" style="border: 1px solid black">
+							{% endif %}
+							<div class="card-content">
+								<span class="white-text">
+										<p>Username: {{userprofile.username}}</p>
+										<p>Full name: {{userprofile.full_name}}</p> 
+										<p>Email: {{userprofile.email}}</p>
+										<p>Number of Dates: {{datesnight}}</p>
+										<p>location/ where i live: {{userprofile.location}}</p>
+									</span>
+								</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+
+	<div class="all-preferences col s12 m4">
+		
+		<div class="row">
+			{% if userprofile.dining_preference.values_list %}
+			<div class="col s12">
+				<div class="col s12">
+					<div class="card teal">
+						<span class="white-text">
+						<span class="card-title"><i class="material-icons small">local_dining</i>Prefered Dining:</span>  
+							<ul class="collection">
+								{% for pref in request.user.dining_preference.values_list %}
+								
+									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+								
+								{% endfor %}
+							</ul>
+						</span>
+					</div>
+				<!-- </div> -->
+			</div>
+		</div>
+		{% endif %}
 
 
-	<img src="{{request.user.picture.url}}" alt="user image" width="150" height="150" style="border: 1px solid black">
+		{% if userprofile.entertainment_preference.values_list %}
+		<div class="col s12">
+			<div class="col s12">
+				<div class="card teal">
+					<span class="white-text">
+						<span class="card-title"><i class="material-icons small">local_movies</i>Prefered Entertainment:</span>
+							<ul class="collection">
+							{% for pref in request.user.entertainment_preference.values_list %}
+								<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+							{% endfor %}
+							</ul>
+						</span>
+					</div>
+				</div>
+			</div>
+		{% endif %}
 
-	{% endif %}
+		{% if userprofile.out_doors_preference.values_list %}
+		<div class="col s12">
+			<div class="col s12">
+				<div class="card teal">
+					<span class="white-text">
+						<span class="card-title"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</span>
+							<ul class="collection">
+								{% for pref in request.user.out_doors_preference.values_list %}
+									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+								{% endfor %}
+							</ul>
+					</span>
+				</div>
+			</div>
+		</div>
+		{% endif %}
 
-	<p>Username: {{request.user.username}}</p>
-	<p>Full name: {{request.user.full_name}}</p> 
-	<p>Email: {{request.user.email}}</p>
-	<p>Number of Dates: {{datesnight}}</p>
-	<p>Places Visited: {{request.user.location}}</p>
-	{% if request.user.dining_preference.values_list %}
-	<p>Prefered Dining: 
-	<ul>
-	{% for pref in request.user.dining_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
-	{% endif %}
-	</p>
-	{% if request.user.entertainment_preference.values_list %}
-	<p>Prefered Entertainment: 
-	<ul>
-	{% for pref in request.user.entertainment_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
-	{% endif %}
-	</p>
-	{% if request.user.out_doors_preference.values_list %}
-	<p>Prefered Out Door Activities: 
-	<ul>
-	{% for pref in request.user.out_doors_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
-	{% endif %}
-	</p>
-	{% if request.user.stay_home_preference.values_list %}
-	<p>Prefered Stay Home Activities: 
-	<ul>
-	{% for pref in request.user.stay_home_preference.values_list %}
-		<li>{{pref.1}}</li>
-	{% endfor %}
-	</ul>
-	{% endif %}
-	</p>
+		{% if userprofile.stay_home_preference.values_list %}
+		<div class="col s12">
+			<div class="col s12">
+				<div class="card teal">
+					<span class="white-text">
+						<span class="card-title"><i class="material-icons small">home</i>Prefered Stay Home Activities:</span>
+							<ul class="collection">
+									{% for pref in request.user.stay_home_preference.values_list %}
+									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+								{% endfor %}
+							</ul>
+					</span>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		
+	
+	</div>
+	</div>
+	</div>
+
+
 </div>
 {% if userprofile.id == request.user.id %}
 <div class="profile_buttons">
@@ -156,3 +227,4 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 </script>
 {% endblock profile%}
+</body>

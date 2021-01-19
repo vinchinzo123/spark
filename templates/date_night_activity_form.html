@@ -3,7 +3,7 @@
 <div class='row container' >
   <div class="col container s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
   <div class="card-panel s4 " style="background-color:hsla(0,0%,100%,.61);" >
-    <form method="post">
+    <form method="post" action='/create_a_date/{{endpoint}}'>
       {% csrf_token %}
       {% if receiver %}
         <div class="input-field col s12">
@@ -45,6 +45,20 @@
 
         <input  type="submit" class="waves-effect grey lighten-4 waves-green hoverable btn" value="Confirm Date">
 
+    </form>
+    </div>
+  </div>
+</div>
+<div class='row container' >
+  <div class="col container s12 m6"  style="background-color:hsla(0,0%,100%,.24);">
+  <div class="card-panel s4 " style="background-color:hsla(0,0%,100%,.61);" >
+    Don't see a date type above that interests you? Add your own ideas below. Keep in mind, these will be available for all users.
+    <form method="post" action='/create_a_date/{{endpoint}}/add_option/'>
+        <div class="input-field col s12">
+        {% csrf_token %}
+        {{ add_to_form.as_p }}
+        </div>
+        <input  type="submit" class="waves-effect grey lighten-4 waves-green hoverable btn" value="Add Date Night Option">
     </form>
     </div>
   </div>
