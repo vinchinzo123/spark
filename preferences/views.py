@@ -80,6 +80,9 @@ class HelperView(View):
         return render(request, self.template, {'form': form})
     
     def post(self, request):
+        destination = 'homepage'
+        if request.path.split('/')[-4] == 'create_a_date':
+            destination = request.path.split('/')[-3]
         form = self.class_form(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -87,7 +90,7 @@ class HelperView(View):
             new_option = self.obj.objects.create(
                 choice=new_date_option
             )
-            return HttpResponseRedirect(reverse('homepage'))  
+            return HttpResponseRedirect(reverse(destination))  
 
 
 class AddToEntertainmentOptionsView(LoginRequiredMixin, View):
