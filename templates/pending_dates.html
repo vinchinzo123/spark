@@ -1,30 +1,30 @@
 
 {% if active_notifications %}
-<h6>Sent dates!</h6>
+<h5>Sent dates!</h5>
 {% else %}
-<h6>No Sent Dates!</h6>
+<h5>No Sent Dates!</h5>
 {% endif %}
 <div>
 {% for note in active_notifications  %}
-  <div class="horizontal hoverable card s4 gray lighten-5">
+  <div class="horizontal hoverable card s4 dates">
     <div class="card-stacked">
       <div class="card-content">
         Sent to {{note.received_user.username}}
         Date {{note.date_night.when_date_time}}
         Where {{note.date_night.location}}
       </div>
-      <div class="grey lighten-5 card-action">
-        <a class="waves-effect waves-red btn red-text white modal-trigger" href="#modalCancelDate{{note.date_night.id}}">Cancel Date</a>
+      <div class="card-action">
+        <a class="btn modal-trigger" href="#modalCancelDate{{note.date_night.id}}">Cancel Date</a>
       </div>
     </div>
   </div>
-  <div id="modalCancelDate{{note.date_night.id}}" class="modal">
+  <div id="modalCancelDate{{note.date_night.id}}" class="modal link">
     <div class="modal-content">
       <h4>Are you sure you want to cancel the date?</h4>
     </div>
     <div class="modal-footer">
-      <a href="/cancel_date/{{note.date_night.id}}" class="modal-close red lighten-2 waves-effect hoverable  btn">Yup.</a>
-      <a href="/" class="modal-close  btn-flat">On second thought, it's fine.</a>
+      <a href="/cancel_date/{{note.date_night.id}}" class="modal-close hoverable bad_btn btn">Yup.</a>
+      <a href="/" class="modal-close btn">On second thought, it's fine.</a>
     </div>
   </div>
 

@@ -15,7 +15,9 @@ class AddADateOptionView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.class_form()
-        return render(request, self.template, {'form': form})
+        return render(request, self.template,
+            {'form': form,
+            'title': 'Add your date idea to the list!'})
     
     def post(self, request):
         form = ChooseDateCategory(request.POST)
@@ -77,9 +79,14 @@ class HelperView(View):
 
     def get(self, request):
         form = self.class_form()
-        return render(request, self.template, {'form': form})
+        return render(request, self.template,
+            {'form': form,
+            'title': 'Add your date idea to the list!'})
     
     def post(self, request):
+        destination = 'homepage'
+        if request.path.split('/')[-4] == 'create_a_date':
+            destination = request.path.split('/')[-3]
         form = self.class_form(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -87,7 +94,7 @@ class HelperView(View):
             new_option = self.obj.objects.create(
                 choice=new_date_option
             )
-            return HttpResponseRedirect(reverse('homepage'))  
+            return HttpResponseRedirect(reverse(destination))  
 
 
 class AddToEntertainmentOptionsView(LoginRequiredMixin, View):

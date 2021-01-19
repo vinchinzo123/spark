@@ -62,4 +62,4 @@ def confirm_date_night_view(path, notification_id):
     notification = Notification.objects.get(id=notification_id)
     notification.status = "Confirmed"
     notification.save()
-    return redirect(f"/append_a_date/{notification.date_night.id}")
+    return redirect(f"/append_a_date/{notification.id}")
