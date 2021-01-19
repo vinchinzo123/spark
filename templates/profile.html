@@ -50,7 +50,7 @@
 	
 	<div class="container">
 		<div class="row">		
-			<div class="col s12 m4">
+			<div class="col s12 m9 l3">
 				<div class="">
 					<div class="card teal">
 						<div class="">
@@ -73,12 +73,11 @@
 
 	
 
-	<div class="all-preferences col s12 m4">
+	<div class="all-preferences row s12 m4">
 		
-		<div class="row">
+		<div class="row s12 l4">
 			{% if userprofile.dining_preference.values_list %}
 			<div class="col s12">
-				<div class="col s12">
 					<div class="card teal">
 						<span class="white-text">
 						<span class="card-title"><i class="material-icons small">local_dining</i>Prefered Dining:</span>  
@@ -91,15 +90,14 @@
 							</ul>
 						</span>
 					</div>
-				<!-- </div> -->
+				</div>
 			</div>
-		</div>
 		{% endif %}
 
 
 		{% if userprofile.entertainment_preference.values_list %}
 		<div class="col s12">
-			<div class="col s12">
+			<!-- <div class="col s12"> -->
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">local_movies</i>Prefered Entertainment:</span>
@@ -110,13 +108,13 @@
 							</ul>
 						</span>
 					</div>
-				</div>
+				<!-- </div> -->
 			</div>
 		{% endif %}
 
 		{% if userprofile.out_doors_preference.values_list %}
 		<div class="col s12">
-			<div class="col s12">
+			<!-- <div class="col s12"> -->
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</span>
@@ -127,13 +125,13 @@
 							</ul>
 					</span>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 		{% endif %}
 
 		{% if userprofile.stay_home_preference.values_list %}
 		<div class="col s12">
-			<div class="col s12">
+			<!-- <div class="col s12"> -->
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">home</i>Prefered Stay Home Activities:</span>
@@ -144,7 +142,7 @@
 							</ul>
 					</span>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 		{% endif %}
 		
