@@ -70,34 +70,50 @@
 				</div>
 			</div>
 		</div>
-
-	
+	</div>
+	 {% comment %} <ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+  </ul>
+	 {% endcomment %}
 
 	<div class="all-preferences row s12 m4">
 		
-		<div class="row s12 l4">
+		<div class="col s12 l3">
 			{% if userprofile.dining_preference.values_list %}
 			<div class="col s12">
-					<div class="card teal">
-						<span class="white-text">
-						<span class="card-title"><i class="material-icons small">local_dining</i>Prefered Dining:</span>  
-							<ul class="collection">
+				<div class="col s12">
+					<ul class="card teal collapsible">
+					<li>
+						{% comment %} <div class="white-text"> {% endcomment %}
+						<div class="card-title collapsible-header"><i class="material-icons small">local_dining</i>Prefered Dining:</div>  
+							<div class="collection collapsible-body">
 								{% for pref in request.user.dining_preference.values_list %}
 								
-									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
 								
 								{% endfor %}
-							</ul>
-						</span>
-					</div>
-				</div>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		{% endif %}
 
 
 		{% if userprofile.entertainment_preference.values_list %}
-		<div class="col s12">
-			<!-- <div class="col s12"> -->
+		<div class="col s12 l3">
+			<div class="col s12">
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">local_movies</i>Prefered Entertainment:</span>
@@ -113,8 +129,8 @@
 		{% endif %}
 
 		{% if userprofile.out_doors_preference.values_list %}
-		<div class="col s12">
-			<!-- <div class="col s12"> -->
+		<div class="col s12 l3">
+			<div class="col s12">
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</span>
@@ -130,8 +146,8 @@
 		{% endif %}
 
 		{% if userprofile.stay_home_preference.values_list %}
-		<div class="col s12">
-			<!-- <div class="col s12"> -->
+		<div class="col s12 l3">
+			<div class="col s12">
 				<div class="card teal">
 					<span class="white-text">
 						<span class="card-title"><i class="material-icons small">home</i>Prefered Stay Home Activities:</span>
@@ -223,6 +239,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems);
   });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
+
 </script>
 {% endblock profile%}
 </body>

@@ -37,10 +37,10 @@ def index(request):
 
     active_notifications = Notification.objects.filter(
         sent_user=request.user.id
-    ).filter(status="Sent")
+    ).filter(status="Sent", notified_sent_user=False)
 
     received_notifications = Notification.objects.filter(
-        received_user=request.user.id, status="Sent"
+        received_user=request.user.id, status="Sent", notified_received_user=False
     )
 
     declined_notifications = Notification.objects.filter(
@@ -88,6 +88,24 @@ def index(request):
     )
 
     expired_notifications = []
+
+    for note in received_notifications:
+        if note.date_night.when_date_time < timezone.now():
+            note.notified_received_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+            note.status = "Cancelled"
+        note.save()
+        expired_notifications.append(note)
+
+    for note in active_notifications:
+        if note.date_night.when_date_time < timezone.now():
+            note.notified_sent_user = True
+        if note.notified_sent_user and note.notified_received_user:
+            note.archived = True
+            note.status = "Cancelled"
+        note.save()
+        expired_notifications.append(note)
 
     for note in confirmed_dates:
         if note.date_night.when_date_time < timezone.now():
@@ -252,7 +270,7 @@ def delete_profile_view(request, profile_id):
     delete_profile = User.objects.get(id=profile_id)
     delete_profile.delete()
 
-    return HttpResponseRedirect(reverse('homepage'))
+    return HttpResponseRedirect(reverse("homepage"))
 
 
 def update_profile_view(request, profile_id):
