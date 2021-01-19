@@ -1,4 +1,4 @@
-# .gitignore images
+# Removes uploaded images
 media/images/
 # Byte-compiled / optimized / DLL files
 __pycache__/
