@@ -10,7 +10,7 @@
           <select id="{{category}}" name="{{category}}" required multiple>
             <option class=browser-default value="" disabled selected>Fun date to pick</option>
             {% for date_activity in dates_to_pick %}
-              <option value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
+              <option class=browser-default value="{{ date_activity.instance }}">{{ date_activity.value }}</option>
             {% endfor %}
           </select>
           <label for="{{category}}">Date Night Activity</label>
