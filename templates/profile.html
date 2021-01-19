@@ -23,7 +23,10 @@
 		color: #f0ffff;
 	}
 	#col_item_css{
-		background-color:#009688;
+		background-color:#ff8a65;
+	}
+	#background_card{
+		background-color: #ff8a65;
 	}
 	.all-preferences{
 		/* display: flex; */
@@ -44,21 +47,20 @@
 	{% endif %}
 
 	{% if request.user.is_authenticated %}
-
-	
-	
 	
 	<div class="container">
-		<div class="row">		
-			<div class="col s12 m9 l3">
-				<div class="">
-					<div class="card teal">
-						<div class="">
+
+		<!-- user information and image -->
+		<div class="row" id="background-color">		
+			<div class="card col s12 m9 l3">
+				<div id="background-color">
 							{% if userprofile.picture %}
-							<img src="{{userprofile.picture.url}}" alt="user image" width="200" height="190" style="border: 1px solid black">
+							<div class="card-image">
+								<img src="{{userprofile.picture.url}}" alt="user image">
+							</div>
 							{% endif %}
 							<div class="card-content">
-								<span class="white-text">
+								<span class="black-text">
 										<p>Username: {{userprofile.username}}</p>
 										<p>Full name: {{userprofile.full_name}}</p> 
 										<p>Email: {{userprofile.email}}</p>
@@ -66,106 +68,89 @@
 										<p>location/ where i live: {{userprofile.location}}</p>
 									</span>
 								</div>
-					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	 {% comment %} <ul class="collapsible">
-    <li>
-      <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-  </ul>
-	 {% endcomment %}
 
 	<div class="all-preferences row s12 m4">
 		
 		<div class="col s12 l3">
 			{% if userprofile.dining_preference.values_list %}
-			<div class="col s12">
 				<div class="col s12">
-					<ul class="card teal collapsible">
+					<ul class="collapsible">
 					<li>
-						{% comment %} <div class="white-text"> {% endcomment %}
-						<div class="card-title collapsible-header"><i class="material-icons small">local_dining</i>Prefered Dining:</div>  
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_dining</i>Prefered Dining:</div>  
 							<div class="collection collapsible-body">
 								{% for pref in request.user.dining_preference.values_list %}
 								
 									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
 								
-								{% endfor %}
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		{% endif %}
-
-
-		{% if userprofile.entertainment_preference.values_list %}
-		<div class="col s12 l3">
-			<div class="col s12">
-				<div class="card teal">
-					<span class="white-text">
-						<span class="card-title"><i class="material-icons small">local_movies</i>Prefered Entertainment:</span>
-							<ul class="collection">
-							{% for pref in request.user.entertainment_preference.values_list %}
-								<li class="collection-item" id="col_item_css">{{pref.1}}</li>
-							{% endfor %}
-							</ul>
-						</span>
-					</div>
-				<!-- </div> -->
-			</div>
-		{% endif %}
-
-		{% if userprofile.out_doors_preference.values_list %}
-		<div class="col s12 l3">
-			<div class="col s12">
-				<div class="card teal">
-					<span class="white-text">
-						<span class="card-title"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</span>
-							<ul class="collection">
-								{% for pref in request.user.out_doors_preference.values_list %}
-									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
-								{% endfor %}
-							</ul>
-					</span>
+									{% endfor %}
+								</div>
+							
+						</li>
+					</ul>
 				</div>
-			<!-- </div> -->
 		</div>
 		{% endif %}
 
-		{% if userprofile.stay_home_preference.values_list %}
+
 		<div class="col s12 l3">
+		{% if userprofile.entertainment_preference.values_list %}
 			<div class="col s12">
-				<div class="card teal">
-					<span class="white-text">
-						<span class="card-title"><i class="material-icons small">home</i>Prefered Stay Home Activities:</span>
-							<ul class="collection">
-									{% for pref in request.user.stay_home_preference.values_list %}
-									<li class="collection-item" id="col_item_css">{{pref.1}}</li>
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_movies</i>Prefered Entertainment:</div>
+							<div class="collection collapsible-body">
+							{% for pref in request.user.entertainment_preference.values_list %}
+								<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+							{% endfor %}
+							</div>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="col s12 l3">
+		{% if userprofile.out_doors_preference.values_list %}
+			<div class="col s12">
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</div>
+							<div class="collection collapsible-body">
+								{% for pref in request.user.out_doors_preference.values_list %}
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
 								{% endfor %}
-							</ul>
-					</span>
-				</div>
-			<!-- </div> -->
+							</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="col s12 l3">
+		{% if userprofile.stay_home_preference.values_list %}
+			<div class="col s12">
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">home</i>Prefered Stay Home Activities:</div>
+							<div class="collection collapsible-body">
+									{% for pref in request.user.stay_home_preference.values_list %}
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+								{% endfor %}
+							</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 		{% endif %}
 		
 	
-	</div>
-	</div>
-	</div>
+	</div> <!--all-preferences -->
+	</div> <!-- container -->
+	</div> <!-- user -->
 
 
 </div>
