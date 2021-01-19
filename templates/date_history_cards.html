@@ -1,0 +1,29 @@
+<div class="card-panel col row" style="background-color:hsla(0,0%,100%,.24);">
+  <h6 >{{header}}</h6>
+
+  {% for note in notifications %}
+  <div
+    class="horizontal scale-transition scale-out card  grey lighten-5 col m4 offset-m1 s12">
+    <div class="card-stacked">
+
+      <div class="card-content">
+        {{note.date_night.location}}
+        {{note.date_night.when_date_time}}
+        <div class="divider"></div>
+        {% if note.date_night.confirmed_activity.choice %}
+        {{note.date_night.confirmed_activity.choice}}
+        {% else %}
+        Activity not confirmed
+        {% endif %}
+        Sent from: {{note.sent_user.username}}
+        Received: {{note.received_user.username}}
+      </div>
+      <div class="card-action grey lighten-5 ">
+        {{note.status}}
+        {{note.id}}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
