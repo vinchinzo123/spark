@@ -4,7 +4,7 @@
   <div class="container row">
     <div class='row'>
       <div class=' offset-s1 col'>
-        <h5 class="grey-text text-darken-4  ">Welcome back, {{ request.user.username }}!</h5>
+        <h4 class="">Welcome back, {{ request.user.fullname }}!</h4>
       </div>
     </div>
     {% include 'home_toasts.html' %}
@@ -23,27 +23,27 @@
       <div class="col l7  s12">
         {% include 'confirmed_dates.html' %}
         <div class="divider"></div>
-        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        <div class='card-panel transparent_div'>
           {% include 'requested_dates.html' %}
         </div>
         <div class="divider"></div>
-        <div class='card-panel' style="background-color:hsla(0,0%,100%,.24);">
+        <div class='card-panel transparent_div'>
           {% include 'pending_dates.html' %}
         </div>
       </div>
     </div>
   </div>
 {% else %}
-<div class="row grey-text text-darken-4" style='padding-top: 2em'>
+<div class="row" style='padding-top: 2em'>
   <div class="col s11 m5 l5 offset-s1 offset-m1 offset-l1">
-    <h1 class='section' style='padding-top: 2rem'>Spark</h1>
+    <h1 class='section spark' style='padding-top: 2rem'>Spark</h1>
     <h5 class='section'>Helping you find what's for dinner</h5>
   </div>
   <div class="col s11 m5 l5">
     <div class="row">
       <div class="col s12">
-        <div class="card amber lighten-5">
-          <div class="card-content grey-text text-darken-4">
+        <div class="card allForm">
+          <div class="card-content">
             {% if request.path == '/sign_up/' %}
             <span class="card-title">Sign Up</span>
             {% else %}
@@ -53,7 +53,7 @@
             <form method="POST">
               {% csrf_token %} {{ form.as_p }}
               <input
-                class="waves-effect waves-light orange lighten-2 btn"
+                class="waves-effect waves-light btn"
                 type="submit"
                 value="Submit"
               />
@@ -63,16 +63,16 @@
             <div class="card-tabs">
               <ul class="tabs amber lighten-5 tabs-fixed-width">
                 <li
-                  class="tab waves-effect waves-light white btn hoverable"
+                  class="tab waves-effect waves-light btn hoverable"
                   style="margin: 0px 5px 0px 10px"
                 >
-                <a href="/login/">Login</a>
+                <a class='link' href="/login/">Login</a>
               </li>
                 <li
-                  class="tab waves-effect waves-light white btn hoverable"
+                  class="tab waves-effect waves-light btn hoverable"
                   style="margin: 0px 10px 0px 5px"
                 >
-                <a class="active" href="/sign_up/">Sign up</a>
+                <a class="active link" href="/sign_up/">Sign up</a>
               </li>
               </ul>
             </div>

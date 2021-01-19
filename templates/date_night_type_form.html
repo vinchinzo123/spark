@@ -1,19 +1,19 @@
 {% comment %} {% extends 'base.html' %}
 {% block activity_form %} {% endcomment %}
-    <div class="card-panel"  style="background-color:hsla(0,0%,100%,.24);">
-        <h6>Make a Date!</h6>
+    <div class="card-panel allForm">
+        <h5 class='link'>Make a Date!</h5>
         <form method="POST" action="/create_a_date/">
             {% csrf_token %}
-            <div class="input-field col s12 ">
+            <div class="input-field col s12">
                 <select id="choice" name="choice">
                     <option class=browser-default  value="" disabled selected>Select Date Night Type</option>
                     {% for choice in date_night_choices %}
                     <option class=browser-default value="{{ choice.instance }}">{{ choice.value }}</option>
                     {% endfor %}
                 </select>
-                <label class="grey-text text-darken-2">Date Type</label>
+                <label>Date Type</label>
             </div>
-            <input type="submit"  class="waves-effect amber lighten-3 waves-yellow btn" value="Next" />
+            <input type="submit"  class="waves-effect waves-yellow btn" value="Next" />
         </form>
     </div>
 {% comment %} {% endblock activity_form %} {% endcomment %}

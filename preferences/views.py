@@ -15,7 +15,9 @@ class AddADateOptionView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.class_form()
-        return render(request, self.template, {'form': form})
+        return render(request, self.template,
+            {'form': form,
+            'title': 'Add your date idea to the list!'})
     
     def post(self, request):
         form = ChooseDateCategory(request.POST)
@@ -77,7 +79,9 @@ class HelperView(View):
 
     def get(self, request):
         form = self.class_form()
-        return render(request, self.template, {'form': form})
+        return render(request, self.template,
+            {'form': form,
+            'title': 'Add your date idea to the list!'})
     
     def post(self, request):
         destination = 'homepage'
