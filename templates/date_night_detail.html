@@ -1,16 +1,37 @@
 {% extends 'base.html' %}
 {% block date_night_details %}
-<div class=" card-panel transparent">
-DATE ID: {{date_night.id}}
-SENT USER: {{date_night.users_one}}
-RECEIVING USER(PENDING): {{date_night.users_two}}
-LOCATION: {{date_night.location}}
-WHEN {{date_night.when_date_time}}
-<div>
-{% for activity in activities  %}
-<div>{{activity }}</div>
-{% endfor %}
-</div>
-Activities you chose
+<div class='container'>
+  <div class=" card-panel transparent_div">
+    <h4>Date {{date_night.id}} Confirmation</h4>
+    <div class="horizontal card dates">
+      <div class="card-stacked center ">
+        <div class="card-content">          
+          Date with
+          {% if receiver %}
+          {{date_night.users_one}}
+          {% else %}
+          {{date_night.users_two}} (PENDING)
+          {% endif %} 
+          <div class="section">
+            Where? {{date_night.location}}
+          </div>
+          <div class="section">
+            When? {{date_night.when_date_time}}
+          </div>
+        </div>
+        <div class="section">
+          <h5>
+            Activities you've chosen
+          </h5>
+          <div class=" row center">
+            {% for activity in activities  %}
+            <h6 class="hoverable col btn-block">{{activity }}</h6>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock date_night_details %}

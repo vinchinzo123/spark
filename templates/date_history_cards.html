@@ -1,24 +1,24 @@
-<div class="card-panel col row" style="background-color:hsla(0,0%,100%,.24);">
-  <h6 >{{header}}</h6>
-
+<div class="card-panel transparent_div  s12 row">
+  <h5 >{{header}}</h5>
+<div class=" col row s12 ">
   {% for note in notifications %}
   <div
-    class="horizontal scale-transition scale-out card  grey lighten-5 col m4 offset-m1 s12">
+    class="horizontal dates scale-transition scale-out card col offset-l1 l5 m12">
     <div class="card-stacked">
 
       <div class="card-content">
-        {{note.date_night.location}}
-        {{note.date_night.when_date_time}}
-        <div class="divider"></div>
         {% if note.date_night.confirmed_activity.choice %}
         {{note.date_night.confirmed_activity.choice}}
         {% else %}
         Activity not confirmed
         {% endif %}
+        {{note.date_night.location}}
+        {{note.date_night.when_date_time}}
+        <div class="section"></div>
         Sent from: {{note.sent_user.username}}
         Received: {{note.received_user.username}}
       </div>
-      <div class="card-action grey lighten-5 ">
+      <div class="card-action s12 ">
         {{note.status}}
         {{note.id}}
       </div>

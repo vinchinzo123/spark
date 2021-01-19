@@ -3,9 +3,9 @@
 <div class='row container' >
   <div class="col container s12 m6 transparent_div">
   <div class="card-panel s4 allForm">
-    <form method="post" action='/create_a_date/{{endpoint}}'>
-      {% csrf_token %}
       {% if receiver %}
+    <form method="post">
+      {% csrf_token %}
         <div class="input-field col s12">
           <select id="{{category}}" name="{{category}}" required multiple>
             <option class=browser-default value="" disabled selected>Fun date to pick</option>
@@ -16,6 +16,8 @@
           <label for="{{category}}">Date Night Activity</label>
         </div>
       {% else %}
+          <form method="post" action='/create_a_date/{{endpoint}}'>
+      {% csrf_token %}
         <label for="users_two">Your Spark</label>
         <select id="users_two" name="users_two">
           <option class=browser-default value="" disabled selected>Users to pick</option>

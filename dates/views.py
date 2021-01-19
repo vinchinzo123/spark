@@ -158,6 +158,15 @@ def receive_date_view(request, notification_id):
                 date_night.confirmed_activity = activity
                 date_night.save()
                 notification.status = "Confirmed"
+                return render(
+                    request,
+                    "date_night_detail.html",
+                    {
+                        "date_night": date_night,
+                        "activities": receiver_choices,
+                        "receiver": True,
+                    },
+                )
                 return redirect(reverse("homepage"))
             notification.status = "No Match"
             notification.save()
