@@ -69,6 +69,8 @@ class Command(BaseCommand):
     ]
     pref_ops = ["Entertainment", "Dining", "Out Doors", "Stay At Home"]
 
+    user_number_to_create_dates_for = 1
+
     def create_user(self):
         '''creates a user using the mimesis package'''
         person = {
@@ -82,8 +84,8 @@ class Command(BaseCommand):
     
 
     def send_date(self):
-        random_id2 = random.randint(0,25)
-        user1 = User.objects.get(id=1)
+        random_id2 = random.randint(2,25)
+        user1 = User.objects.get(id=self.user_number_to_create_dates_for)
         user2 = User.objects.get(id=random_id2)
         date = {
             'random_user1': user1,
@@ -95,9 +97,9 @@ class Command(BaseCommand):
 
     
     def recieve_date(self):
-        random_id1 = random.randint(0,25)
+        random_id1 = random.randint(2,25)
         user1 = User.objects.get(id=random_id1)
-        user2 = User.objects.get(id=1)
+        user2 = User.objects.get(id=self.user_number_to_create_dates_for)
         date = {
             'random_user1': user1,
             'random_user2': user2,
@@ -124,43 +126,45 @@ class Command(BaseCommand):
             for option in self.pref_ops:
                 new_preferences = Preferences.objects.create(choice=option)
    
-        for _ in range(0,25):
-            person = self.create_user()
-            new_person = User.objects.create(
-                username=person['username'],
-                password=person['password'],
-                full_name=person['full_name'],
-                email=person['email'],
-                location=person['location']
-            )
+        if len(User.objects.all()) < 25:
+            for _ in range(0,25):
+                person = self.create_user()
+                new_person = User.objects.create(
+                    username=person['username'],
+                    password=person['password'],
+                    full_name=person['full_name'],
+                    email=person['email'],
+                    location=person['location']
+                )
 
-        for _ in range(0,10):
-            random_date = random.randint(0,3)
-            # random_amt_of_choices = random.randint(0,9)
-            if _ % 2:
-                date = self.recieve_date()
-            else:
-                date = self.send_date()
-            new_date = DatesNightModel.objects.create(
-                users_one=date['random_user1'],
-                users_two=date['random_user2'],
-                location=date['location'],
-                when_date_time=date['when'],
-            )
-            if random_date == 0:
-                # random_choices = sorted(random.sample(range(0,9), random_amt_of_choices))
-                new_date.entertainment_category.set([1,3,5,6])
-            elif random_date == 1:
-                new_date.dining_category.set([1,3,5,6])
-            elif random_date == 2:
-                new_date.out_doors_category.set([1,3,5,6])
-            else:
-                new_date.stay_home_category.set([1,3,5,6])
-            new_notification = Notification.objects.create(
-                date_night=new_date,
-                sent_user=date['random_user1'],
-                received_user=date["random_user2"],
-            )
+        if len(User.objects.all()) > 25:
+            for _ in range(0,10):
+                random_date = random.randint(0,3)
+                # random_amt_of_choices = random.randint(0,9)
+                if _ % 2:
+                    date = self.recieve_date()
+                else:
+                    date = self.send_date()
+                new_date = DatesNightModel.objects.create(
+                    users_one=date['random_user1'],
+                    users_two=date['random_user2'],
+                    location=date['location'],
+                    when_date_time=date['when'],
+                )
+                if random_date == 0:
+                    # random_choices = sorted(random.sample(range(0,9), random_amt_of_choices))
+                    new_date.entertainment_category.set([1,3,5,6])
+                elif random_date == 1:
+                    new_date.dining_category.set([1,3,5,6])
+                elif random_date == 2:
+                    new_date.out_doors_category.set([1,3,5,6])
+                else:
+                    new_date.stay_home_category.set([1,3,5,6])
+                new_notification = Notification.objects.create(
+                    date_night=new_date,
+                    sent_user=date['random_user1'],
+                    received_user=date["random_user2"],
+                )
             
 
         self.stdout.write(self.style.SUCCESS("Successfully added Preferences"))
