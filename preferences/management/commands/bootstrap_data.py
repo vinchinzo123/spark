@@ -139,10 +139,12 @@ class Command(BaseCommand):
 
         if len(User.objects.all()) > 25:
             for _ in range(0,10):
+                # notified_receiver = False
                 random_date = random.randint(0,3)
                 # random_amt_of_choices = random.randint(0,9)
                 if _ % 2:
                     date = self.recieve_date()
+                    # notified_receiver = True
                 else:
                     date = self.send_date()
                 new_date = DatesNightModel.objects.create(
@@ -160,11 +162,19 @@ class Command(BaseCommand):
                     new_date.out_doors_category.set([1,3,5,6])
                 else:
                     new_date.stay_home_category.set([1,3,5,6])
-                new_notification = Notification.objects.create(
+                # if notified_receiver:
+                    new_notification = Notification.objects.create(
                     date_night=new_date,
                     sent_user=date['random_user1'],
                     received_user=date["random_user2"],
+                    # notified_received_user=notified_receiver,
                 )
+                # else:
+                #     new_notification = Notification.objects.create(
+                #         date_night=new_date,
+                #         sent_user=date['random_user1'],
+                #         received_user=date["random_user2"],
+                #     )
             
 
         self.stdout.write(self.style.SUCCESS("Successfully added Preferences"))
