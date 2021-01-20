@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "63efa55fc8fbb696835f71ecac01d67f796144578e55678bbdd0f928aaf1549c"
+            "sha256": "0f55a8f8096ef09bf55055fc656e4f401378fc67d837950ab88f9ecae4fea842"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -116,6 +116,13 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==7.1.2"
+        },
+        "mimesis": {
+            "hashes": [
+                "sha256:90f36c21c1bb9944afc17178eb5868b0c85aa1fe49eb04bcbdafafd1ad4ca2ba"
+            ],
+            "index": "pypi",
+            "version": "==4.1.3"
         },
         "mypy-extensions": {
             "hashes": [
