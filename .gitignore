@@ -1,5 +1,5 @@
 # Removes uploaded images
-media/images/
+# media/images/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
