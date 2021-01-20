@@ -86,7 +86,7 @@ def index(request):
             notified_received_user=False,
         )
     )
-    breakpoint()
+    # breakpoint()
     expired_notifications = []
 
     for note in received_notifications:
