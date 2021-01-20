@@ -163,7 +163,7 @@ class Command(BaseCommand):
                 else:
                     new_date.stay_home_category.set([1,3,5,6])
                 # if notified_receiver:
-                    new_notification = Notification.objects.create(
+                new_notification = Notification.objects.create(
                     date_night=new_date,
                     sent_user=date['random_user1'],
                     received_user=date["random_user2"],
