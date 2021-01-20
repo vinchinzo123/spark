@@ -4,7 +4,6 @@
 	}
 	.profile_buttons{
 		text-align: center;
-		
 	
 	}
 	#update_profile{
@@ -51,8 +50,8 @@
 	<div class="container">
 
 		<!-- user information and image -->
-		<div class="row" id="background-color">		
-			<div class="card col s12 m9 l3">
+		<div class="row">		
+			<div class="card col s12 m9 l4 allForm">
 				<div id="background-color">
 							{% if userprofile.picture %}
 							<div class="card-image">
@@ -71,89 +70,6 @@
 				</div>
 			</div>
 		</div>
-
-	<div class="all-preferences row s12 m4">
-		
-		<div class="col s12 l3">
-			{% if userprofile.dining_preference.values_list %}
-				<div class="col s12">
-					<ul class="collapsible">
-					<li>
-						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_dining</i>Prefered Dining:</div>  
-							<div class="collection collapsible-body">
-								{% for pref in request.user.dining_preference.values_list %}
-								
-									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
-								
-									{% endfor %}
-								</div>
-							
-						</li>
-					</ul>
-				</div>
-		</div>
-		{% endif %}
-
-
-		<div class="col s12 l3">
-		{% if userprofile.entertainment_preference.values_list %}
-			<div class="col s12">
-				<ul class="collapsible">
-					<li>
-						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_movies</i>Prefered Entertainment:</div>
-							<div class="collection collapsible-body">
-							{% for pref in request.user.entertainment_preference.values_list %}
-								<div class="collection-item" id="col_item_css">{{pref.1}}</div>
-							{% endfor %}
-							</div>
-						
-					</li>
-				</ul>
-			</div>
-		</div>
-		{% endif %}
-
-		<div class="col s12 l3">
-		{% if userprofile.out_doors_preference.values_list %}
-			<div class="col s12">
-				<ul class="collapsible">
-					<li>
-						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</div>
-							<div class="collection collapsible-body">
-								{% for pref in request.user.out_doors_preference.values_list %}
-									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
-								{% endfor %}
-							</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		{% endif %}
-
-		<div class="col s12 l3">
-		{% if userprofile.stay_home_preference.values_list %}
-			<div class="col s12">
-				<ul class="collapsible">
-					<li>
-						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">home</i>Prefered Stay Home Activities:</div>
-							<div class="collection collapsible-body">
-									{% for pref in request.user.stay_home_preference.values_list %}
-									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
-								{% endfor %}
-							</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		{% endif %}
-		
-	
-	</div> <!--all-preferences -->
-	</div> <!-- container -->
-	</div> <!-- user -->
-
-
-</div>
 {% if userprofile.id == request.user.id %}
 <div class="profile_buttons">
 	{% comment %} update profile modal {% endcomment %}
@@ -217,6 +133,89 @@
 			
 
 {% endif %}
+	<div class="all-preferences row s12 m4">
+		
+		<div class="col s12 l3">
+			{% if userprofile.dining_preference.values_list %}
+				<div class="col s12">
+					<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_dining</i>Prefered Dining:</div>  
+							<div class="collection collapsible-body  transparent_div">
+								{% for pref in request.user.dining_preference.values_list %}
+								
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+								
+									{% endfor %}
+								</div>
+							
+						</li>
+					</ul>
+				</div>
+		</div>
+		{% endif %}
+
+
+		<div class="col s12 l3">
+		{% if userprofile.entertainment_preference.values_list %}
+			<div class="col s12">
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">local_movies</i>Prefered Entertainment:</div>
+							<div class="collection collapsible-body transparent_div">
+							{% for pref in request.user.entertainment_preference.values_list %}
+								<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+							{% endfor %}
+							</div>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="col s12 l3">
+		{% if userprofile.out_doors_preference.values_list %}
+			<div class="col s12">
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">directions_walk</i>Prefered Out Door Activities:</div>
+							<div class="collection collapsible-body transparent_div">
+								{% for pref in request.user.out_doors_preference.values_list %}
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+								{% endfor %}
+							</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="col s12 l3">
+		{% if userprofile.stay_home_preference.values_list %}
+			<div class="col s12">
+				<ul class="collapsible">
+					<li>
+						<div class="card-title collapsible-header" id="background_card"><i class="material-icons small">home</i>Prefered Stay Home Activities:</div>
+							<div class="collection collapsible-body transparent_div">
+									{% for pref in request.user.stay_home_preference.values_list %}
+									<div class="collection-item" id="col_item_css">{{pref.1}}</div>
+								{% endfor %}
+							</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+		
+	
+	</div> <!--all-preferences -->
+	</div> <!-- container -->
+	</div> <!-- user -->
+
+
+</div>
+
 	{% endif %}
 </div>
 <script>
