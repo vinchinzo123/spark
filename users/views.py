@@ -86,26 +86,28 @@ def index(request):
             notified_received_user=False,
         )
     )
-
+    breakpoint()
     expired_notifications = []
 
     for note in received_notifications:
         if note.date_night.when_date_time < timezone.now():
             note.notified_received_user = True
+            expired_notifications.append(note)
         if note.notified_sent_user and note.notified_received_user:
+            expired_notifications.append(note)
             note.archived = True
             note.status = "Cancelled"
         note.save()
-        expired_notifications.append(note)
 
     for note in active_notifications:
         if note.date_night.when_date_time < timezone.now():
             note.notified_sent_user = True
+            expired_notifications.append(note)
         if note.notified_sent_user and note.notified_received_user:
             note.archived = True
             note.status = "Cancelled"
+            expired_notifications.append(note)
         note.save()
-        expired_notifications.append(note)
 
     for note in confirmed_dates:
         if note.date_night.when_date_time < timezone.now():
