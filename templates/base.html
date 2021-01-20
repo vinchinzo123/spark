@@ -24,7 +24,14 @@
     body {background-image: url(https://trello-backgrounds.s3.amazonaws.com/53baf533e697a982248cd73f/2048x2048/22ec03aab9d36ea49139c569a62bb079/shutterstock_134707556.jpg);
           background-size: 217%;
           background-position: top left;
-          font-family: 'Thasadith', sans-serif !important;}
+          font-family: 'Thasadith', sans-serif !important;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
     @media (min-width: 600px){
       body {background-size: 150%;}
     }
@@ -85,7 +92,7 @@
     }
   </style>
   <body >
-    
+    <main>
     {% include 'nav_bar.html' %}
      {% block index %} {% endblock index %} 
       {% block form %} {% endblock form %}
@@ -95,6 +102,11 @@
       {% block date_history %}  {% endblock date_history %}
       {% block date_night_details %} {% endblock date_night_details %} 
       {% block profile %} {% endblock profile %}
+      {% block about_us %} {% endblock about_us %}
+      {% block 404 %} {% endblock 404 %}
+      {% block 500 %} {% endblock 500 %}
+      </main>
+      {% include 'footer.html' %}
   </body>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

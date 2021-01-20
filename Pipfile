@@ -10,6 +10,7 @@ pillow = "*"
 
 [dev-packages]
 black = "*"
+mimesis = "*"
 
 [requires]
 python_version = "3.9"

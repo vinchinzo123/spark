@@ -409,3 +409,7 @@ def handler500(request):
 
 def error500_view(request):
     raise Exception("Make response code 500!")
+
+
+def about_us_view(request):
+    return render(request, 'about_us.html', {})

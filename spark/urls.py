@@ -93,6 +93,7 @@ urlpatterns = [
     path("cancel_date/<int:date_id>/", cancel_date_view),
     path("date_history/", dateViews.date_history_view),
     path("500error/", views.error500_view, name="500_error"),
+    path('about_us/', views.about_us_view, name='about_us'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
